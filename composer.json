@@ -1,11 +1,11 @@
 {
-    "name": "xml-world/api-package-php",
+    "name": "xml-world/api-client",
     "description": "Client-side API for integrating XML World API",
     "type": "library",
     "license": "XMLWorld",
     "autoload": {
         "psr-4": {
-            "XmlWorld\\ApiPClient\\": "src/"
+            "XmlWorld\\ApiClient\\": "src/"
         }
     },
     "minimum-stability": "stable",
