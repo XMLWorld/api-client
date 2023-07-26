@@ -1,0 +1,23 @@
+{
+    "name": "xml-world/api-package-php",
+    "description": "Client-side API for integrating XML World API",
+    "type": "library",
+    "license": "XMLWorld",
+    "autoload": {
+        "psr-4": {
+            "XmlWorld\\ApiPClient\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "7.7.0",
+        "ext-simplexml": "*",
+        "ext-dom": "*"
+    },
+    "require-dev" : {
+        "behat/behat" : "~3.10",
+        "phpunit/phpunit": "^9",
+        "phpstan/phpstan": "^1.9"
+    }
+}
