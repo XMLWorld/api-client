@@ -1,14 +1,24 @@
 <?php
 
-use XmlWorld\ApiPackagePhp\XMLClient;
+use XmlWorld\ApiClient\XMLClient;
 
-//require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../../autoload.php';
+$autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'autoload.php']);
+if(!file_exists($autoload)){
+	$autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'vendor', 'autoload.php']);
+}
+require_once $autoload;
 
-$xmlClient = new XMLClient('login', 'pass');
+//XMLClient::setDevURL('your own dev url');
+
+$login = 'login';
+$password = 'pass';
+$bookingReference = 'reference';
+$env = XMLClient::ENV_DEV;
+
+$xmlClient = new XMLClient(login: $login, password: $password, env: $env);
 
 try {
-	$result = $xmlClient->booking('reference');
+	$result = $xmlClient->booking(reference: $bookingReference);
 
 	print_r($result);
 } catch (Throwable $e) {

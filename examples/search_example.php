@@ -1,33 +1,48 @@
 <?php
 
-use XmlWorld\ApiPackagePhp\Requests\Properties;
-use XmlWorld\ApiPackagePhp\Requests\RoomRequest;
-use XmlWorld\ApiPackagePhp\Requests\RoomRequests;
-use XmlWorld\ApiPackagePhp\Requests\SearchDetails;
-use XmlWorld\ApiPackagePhp\XMLClient;
+use XmlWorld\ApiClient\Requests\Properties;
+use XmlWorld\ApiClient\Requests\RoomRequest;
+use XmlWorld\ApiClient\Requests\RoomRequests;
+use XmlWorld\ApiClient\Requests\SearchDetails;
+use XmlWorld\ApiClient\XMLClient;
 
-//require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../../autoload.php';
+$autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'autoload.php']);
+if(!file_exists($autoload)){
+	$autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'vendor', 'autoload.php']);
+}
+require_once $autoload;
 
-$xmlClient = new XMLClient('login', 'pass');
+//XMLClient::setDevURL('your own dev url');
+
+$login = 'login';
+$password = 'pass';
+$env = XMLClient::ENV_DEV;
+
+$xmlClient = new XMLClient(login: $login, password: $password, env: $env);
 
 $searchDetails = new SearchDetails(
-	'2023-11-01',
-	5,
-	0,
-	new RoomRequests(
-		RoomRequest::fromAges(2)
+	arrivalDate: '2023-09-01',	// arrival date
+	duration: 5,				// duration in days
+	regionID: 0,				// region
+	roomRequests: new RoomRequests(		// list of rooms
+		RoomRequest::fromAges(2),
+		RoomRequest::fromAges(
+			1,		// number of adults
+			16,		// age of first child (variadic)
+			8,			// age of second child
+			2			// age of third child
+		),
 	),
-	new Properties(70011),
-	null,
-	0,
-	0,
-	0,
-	0
+	properties: new Properties(19, 21),	// list of properties if searching for some
+	propertyID: null,								// if only one we can use this param, but they exclude each other
+	mealBasisID: 0,									// meal basis
+	minStarRating: 0,								// filter by star rating
+	minimumPrice: 0,								// filter by minimum price
+	maximumPrice: 0									// filter by max price
 );
 
 try {
-	$result = $xmlClient->search($searchDetails);
+	$result = $xmlClient->search(searchDetails: $searchDetails);
 
 	print_r($result);
 } catch (Throwable $e) {

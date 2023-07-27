@@ -1,7 +1,6 @@
 <?php
 
-
-namespace XmlWorld\ApiPackagePhp\Responses;
+namespace XmlWorld\ApiClient\Responses;
 
 class RoomType extends AbstractResponse
 {

@@ -1,9 +1,8 @@
 <?php
 
+namespace XmlWorld\ApiClient\Requests;
 
-namespace XmlWorld\ApiPackagePhp\Requests;
-
-use XmlWorld\ApiPackagePhp\Classes\CommonCollection;
+use XmlWorld\ApiClient\Classes\CommonCollection;
 
 /**
  * @extends CommonCollection<RoomBooking>

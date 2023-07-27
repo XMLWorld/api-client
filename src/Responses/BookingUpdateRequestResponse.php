@@ -1,6 +1,5 @@
 <?php
 
-
-namespace XmlWorld\ApiPackagePhp\Responses;
+namespace XmlWorld\ApiClient\Responses;
 
 class BookingUpdateRequestResponse extends BookResponse {}

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace XmlWorld\ApiPackagePhp\Responses;
+namespace XmlWorld\ApiClient\Responses;
 
 
 class RequestInfo extends AbstractResponse

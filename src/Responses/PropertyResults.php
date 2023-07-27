@@ -1,9 +1,9 @@
 <?php
 
 
-namespace XmlWorld\ApiPackagePhp\Responses;
+namespace XmlWorld\ApiClient\Responses;
 
-use XmlWorld\ApiPackagePhp\Classes\CommonCollection;
+use XmlWorld\ApiClient\Classes\CommonCollection;
 
 /**
  * @extends CommonCollection<int|PropertyResult>

@@ -1,8 +1,6 @@
 <?php
 
-
-namespace XmlWorld\ApiPackagePhp\Requests;
-
+namespace XmlWorld\ApiClient\Requests;
 
 class Request extends AbstractRequest
 {

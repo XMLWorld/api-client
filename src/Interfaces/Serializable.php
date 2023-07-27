@@ -1,10 +1,5 @@
 <?php
 
+namespace XmlWorld\ApiClient\Interfaces;
 
-namespace XmlWorld\ApiPackagePhp\Interfaces;
-
-
-interface Serializable
-{
-
-}
+interface Serializable {}

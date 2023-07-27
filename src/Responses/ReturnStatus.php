@@ -1,8 +1,6 @@
 <?php
 
-
-namespace XmlWorld\ApiPackagePhp\Responses;
-
+namespace XmlWorld\ApiClient\Responses;
 
 class ReturnStatus extends AbstractResponse
 {

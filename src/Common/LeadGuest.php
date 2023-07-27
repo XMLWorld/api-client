@@ -1,10 +1,6 @@
 <?php
 
-
-namespace XmlWorld\ApiPackagePhp\Common;
-
-
-use XmlWorld\ApiPackagePhp\Interfaces\Serializable;
+namespace XmlWorld\ApiClient\Common;
 
 class LeadGuest extends AbstractCommon
 {

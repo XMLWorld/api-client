@@ -1,39 +1,40 @@
 <?php
+declare(strict_types = 1);
 
-
-namespace XmlWorld\ApiPackagePhp;
+namespace XmlWorld\ApiClient;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 use SimpleXMLElement;
 use Throwable;
-use XmlWorld\ApiPackagePhp\Interfaces\Logger;
-use XmlWorld\ApiPackagePhp\Interfaces\Serializable;
-use XmlWorld\ApiPackagePhp\Interfaces\Serializer;
+use XmlWorld\ApiClient\Interfaces\Logger;
+use XmlWorld\ApiClient\Interfaces\Serializable;
+use XmlWorld\ApiClient\Interfaces\Serializer;
 
-use XmlWorld\ApiPackagePhp\Requests\BookDetails;
-use XmlWorld\ApiPackagePhp\Requests\BookingRequest;
-use XmlWorld\ApiPackagePhp\Requests\BookingUpdateRequest;
-use XmlWorld\ApiPackagePhp\Requests\BookRequest;
-use XmlWorld\ApiPackagePhp\Requests\CancelRequest;
-use XmlWorld\ApiPackagePhp\Requests\LoginDetails;
-use XmlWorld\ApiPackagePhp\Requests\Request;
-use XmlWorld\ApiPackagePhp\Requests\SearchDetails;
-use XmlWorld\ApiPackagePhp\Requests\SearchRequest;
-use XmlWorld\ApiPackagePhp\Responses\BookingResponse;
-use XmlWorld\ApiPackagePhp\Responses\BookingUpdateRequestResponse;
-use XmlWorld\ApiPackagePhp\Responses\BookResponse;
-use XmlWorld\ApiPackagePhp\Responses\CancelResponse;
-use XmlWorld\ApiPackagePhp\Responses\Response;
+use XmlWorld\ApiClient\Requests\BookDetails;
+use XmlWorld\ApiClient\Requests\BookingRequest;
+use XmlWorld\ApiClient\Requests\BookingUpdateRequest;
+use XmlWorld\ApiClient\Requests\BookRequest;
+use XmlWorld\ApiClient\Requests\CancelRequest;
+use XmlWorld\ApiClient\Requests\LoginDetails;
+use XmlWorld\ApiClient\Requests\Request;
+use XmlWorld\ApiClient\Requests\SearchDetails;
+use XmlWorld\ApiClient\Requests\SearchRequest;
+use XmlWorld\ApiClient\Responses\BookingResponse;
+use XmlWorld\ApiClient\Responses\BookingUpdateRequestResponse;
+use XmlWorld\ApiClient\Responses\BookResponse;
+use XmlWorld\ApiClient\Responses\CancelResponse;
+use XmlWorld\ApiClient\Responses\Response;
 
 class XMLClient
 {
 	const ENV_DEV = 'DEV';
 	const ENV_LIV = 'LIVE';
-    const ENVS = [
-        self::ENV_DEV => 'http://xml.centriumres.com.localdomain.ee',
-		self::ENV_LIV => 'https://xml.centriumres.com'
+
+	/** @var string[] */
+    protected static array $envs = [
+        self::ENV_DEV => 'https://xmldev-xml.xml.world',
+		self::ENV_LIV => 'https://xml.xml.world'
     ];
 
     const VERSION = '6.0';
@@ -54,9 +55,9 @@ class XMLClient
 	 * @param string $env
 	 * @param Logger|null $logger
 	 */
-    public function __construct(string $login, string $password, string $env = self::ENV_DEV, Logger $logger = null)
+    public function __construct(string $login, string $password, string $env = self::ENV_LIV, Logger $logger = null)
     {
-    	if(!isset(self::ENVS[$env])){
+    	if(!isset(self::$envs[$env])){
     		throw new InvalidArgumentException('Invalid environment');
 		}
 
@@ -68,18 +69,22 @@ class XMLClient
 			$this->logger = $logger;
 		}
 
-
         $this->loginDetails = new LoginDetails($login, $password, self::VERSION);
 
-		$this->client = $this->getClient($env);
+		$this->client = $this->getClient();
 
 		$this->serializer = new SerializeXML;
     }
 
-    protected function getClient(string $env) : Client
+	public static function setDevURL(string $url) : void
+	{
+		self::$envs[self::ENV_DEV] = $url;
+	}
+
+    protected function getClient() : Client
 	{
 		return new Client([
-			'base_uri' => self::ENVS[$env],
+			'base_uri' => self::$envs[$this->env],
 			'headers' => ['Content-Type' => 'text/xml; charset=utf-8']
 		]);
 	}
@@ -92,7 +97,7 @@ class XMLClient
 		return $this->post(new SearchRequest(
 			$this->loginDetails,
 			$searchDetails,
-			true
+			$this->env == self::ENV_DEV
 		));
 	}
 
@@ -149,7 +154,7 @@ class XMLClient
 		$response = $this->client->request('POST', '', ['body' => $request_row]);
 
 		$responseCode = $response->getStatusCode();
-		$responseBody = $response->getBody();
+		$responseBody = $response->getBody()->__toString();
 
 		//we log the response
 		$this->logger->logResponse(

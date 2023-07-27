@@ -1,5 +1,5 @@
 <?php
-namespace XmlWorld\ApiPackagePhp\Responses;
+namespace XmlWorld\ApiClient\Responses;
 
 class Response extends AbstractResponse
 {

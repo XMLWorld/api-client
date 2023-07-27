@@ -1,25 +1,21 @@
 <?php
 
-
-namespace XmlWorld\ApiPackagePhp;
+namespace XmlWorld\ApiClient;
 
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionParameter;
 use SimpleXMLElement;
 
-use XmlWorld\ApiPackagePhp\Interfaces\Serializable;
-use XmlWorld\ApiPackagePhp\Interfaces\Serializer;
-use XmlWorld\ApiPackagePhp\Requests\ChildAges;
-use XmlWorld\ApiPackagePhp\Requests\Properties;
-use XmlWorld\ApiPackagePhp\Requests\RoomRequests;
+use XmlWorld\ApiClient\Interfaces\Serializable;
+use XmlWorld\ApiClient\Interfaces\Serializer;
 
 class SerializeXML implements Serializer
 {
 	/** @var array <string, array<string>> */
-	protected static array $constuctorParams = [];
+	protected static array $constructorParams = [];
 
-	protected function boolIf(string|bool $value) : string
+	protected function boolIf(mixed $value) : string
 	{
 		if(!is_bool($value)){
 			return htmlspecialchars($value);
@@ -57,7 +53,6 @@ class SerializeXML implements Serializer
 					//if it's an array...
 					if(is_array($value)){
 						foreach($value as $val){
-
 							$xml->addChild(ucfirst($key), $this->boolIf($val));
 						}
 					} else {
@@ -83,30 +78,30 @@ class SerializeXML implements Serializer
 		if(empty($namespace)){
 			//we try to deduce whether it's a request or a response from the root name
 			if(str_ends_with($payload->getName(), 'Response')){
-				$namespace = 'XmlWorld\\ApiPackagePhp\\Responses';
+				$namespace = 'XmlWorld\\ApiClient\\Responses';
 			} elseif(str_ends_with($payload->getName(), 'Request')){
-				$namespace = 'XmlWorld\\ApiPackagePhp\\Requests';
+				$namespace = 'XmlWorld\\ApiClient\\Requests';
 			}
 		}
 
 		//if we couldn't deduce it from the root name...
 		if(empty($namespace)){
 			//we try whether a response fist then a request
-			$className = "XmlWorld\\ApiPackagePhp\\Responses\\{$payload->getName()}";
+			$className = "XmlWorld\\ApiClient\\Responses\\{$payload->getName()}";
 
 			//we check whether the class exists
 			if(!class_exists($className)){
-				$className = "XmlWorld\\ApiPackagePhp\\Requests\\{$payload->getName()}";
+				$className = "XmlWorld\\ApiClient\\Requests\\{$payload->getName()}";
 			}
 		//if we could deduce it we get the corresponding namespace
 		} else {
 			$className = "{$namespace}\\{$payload->getName()}";
 		}
 
-		//if the class didn't exist anyways
+		//if the class didn't exist anyway
 		if(!class_exists($className)){
 			//we try the common classes
-			$className = "XmlWorld\\ApiPackagePhp\\Common\\{$payload->getName()}";
+			$className = "XmlWorld\\ApiClient\\Common\\{$payload->getName()}";
 		}
 
 		//we check whether the class exists
@@ -136,15 +131,13 @@ class SerializeXML implements Serializer
 			$args[$paramName] = $value;
 		}
 
-
 		//if not cached yet...
-		if(!isset(self::$constuctorParams[$className])){
+		if(!isset(self::$constructorParams[$className])){
 			$reflectionClass = new ReflectionClass($className);
 			$params = $reflectionClass->getConstructor()->getParameters();
 
-			//exit(print_r($params, true));
 			foreach($params as $param){
-				self::$constuctorParams[$className][] = $param;
+				self::$constructorParams[$className][] = $param;
 			}
 		}
 
@@ -154,8 +147,6 @@ class SerializeXML implements Serializer
 			function($item) use ($args, &$args2) {
 				/** @var ReflectionParameter $item */
 				$paramName = lcfirst($item->getName());
-
-				$param = null;
 
 				/** @var ReflectionNamedType $type */
 				$type = $item->getType();
@@ -188,7 +179,6 @@ class SerializeXML implements Serializer
 								}
 							}
 						}
-						//settype($param, $type->getName());
 					}
 
 					//if the param is variadic and it's the only one...
@@ -204,28 +194,22 @@ class SerializeXML implements Serializer
 						} else {
 							if($type->isBuiltin()){
 								if($type->getName() == 'bool'){
-									//echo '[' . print_r($param, true) . ']' . PHP_EOL;
 									$param = is_bool($param) ? $param : strtolower($param) != 'false';
 								} else {
 									settype($param, $type->getName());
 								}
 							}
-							//settype($param, $type->getName());
+
 							$args2[] = $param;
 						}
 					}
 					return;
 				}
 				$args2[] = null;
-				return;
 			},
-			self::$constuctorParams[$className]
+			self::$constructorParams[$className]
 		);
-/*
-		if($className == Properties::class){
-			print_r($args2);
-		}
-*/
+
 		return new $className(...$args2);
 	}
 }

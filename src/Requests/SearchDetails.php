@@ -1,7 +1,6 @@
 <?php
 
-
-namespace XmlWorld\ApiPackagePhp\Requests;
+namespace XmlWorld\ApiClient\Requests;
 
 class SearchDetails extends AbstractRequest
 {

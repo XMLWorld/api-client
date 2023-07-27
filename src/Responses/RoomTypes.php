@@ -1,9 +1,8 @@
 <?php
 
+namespace XmlWorld\ApiClient\Responses;
 
-namespace XmlWorld\ApiPackagePhp\Responses;
-
-use XmlWorld\ApiPackagePhp\Classes\CommonCollection;
+use XmlWorld\ApiClient\Classes\CommonCollection;
 
 /**
  * @extends CommonCollection<RoomType>

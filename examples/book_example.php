@@ -1,43 +1,52 @@
 <?php
 
-use XmlWorld\ApiPackagePhp\Common\Guest;
-use XmlWorld\ApiPackagePhp\Common\Guests;
-use XmlWorld\ApiPackagePhp\Common\LeadGuest;
-use XmlWorld\ApiPackagePhp\Requests\BookDetails;
-use XmlWorld\ApiPackagePhp\Requests\RoomBooking;
-use XmlWorld\ApiPackagePhp\Requests\RoomBookings;
-use XmlWorld\ApiPackagePhp\XMLClient;
+use XmlWorld\ApiClient\Common\Guest;
+use XmlWorld\ApiClient\Common\Guests;
+use XmlWorld\ApiClient\Common\LeadGuest;
+use XmlWorld\ApiClient\Requests\BookDetails;
+use XmlWorld\ApiClient\Requests\RoomBooking;
+use XmlWorld\ApiClient\Requests\RoomBookings;
+use XmlWorld\ApiClient\XMLClient;
 
-//require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../../autoload.php';
+$autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'autoload.php']);
+if(!file_exists($autoload)){
+	$autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'vendor', 'autoload.php']);
+}
+require_once $autoload;
 
-$xmlClient = new XMLClient('login', 'pass');
+//XMLClient::setDevURL('your own dev url');
+
+$login = 'login';
+$password = 'pass';
+$env = XMLClient::ENV_DEV;
+
+$xmlClient = new XMLClient(login: $login, password: $password, env: $env);
 
 $bookingDetails = new BookDetails(
-	'2023-11-01',
-	5,
-	'TEST_REF',
-	1040,
-	new LeadGuest(
-		'TestLeadFName',
-		'TestLeadLName',
-		'Mr'
+	arrivalDate: '2023-11-01',
+	duration: 5,
+	tradeReference: 'TEST_REF',
+	totalPrice: 1040,
+	leadGuest: new LeadGuest(
+		firstName: 'TestLeadFName',
+		lastName: 'TestLeadLName',
+		title: 'Mr'
 	),
-	new RoomBookings(
+	roomBookings: new RoomBookings(
 		new RoomBooking(
-			20011,
-			6,
-			2,
-			0,
-			0,
-			new Guests(
+			roomID: 20011,
+			mealBasisID: 6,
+			adults: 2,
+			children: 0,
+			infants: 0,
+			guests: new Guests(
 				new Guest(
-					'Adult',
-					'TestGuestFName',
-					'TestGuestLName',
-					'Mrs',
-					null,
-					'French'
+					type: 'Adult',
+					firstName: 'TestGuestFName',
+					lastName: 'TestGuestLName',
+					title: 'Mrs',
+					age: null,
+					nationality: 'French'
 				)
 			)
 		),
@@ -45,7 +54,7 @@ $bookingDetails = new BookDetails(
 );
 
 try {
-	$result = $xmlClient->book($bookingDetails);
+	$result = $xmlClient->book(bookingDetails: $bookingDetails);
 
 	print_r($result);
 } catch (Throwable $e) {

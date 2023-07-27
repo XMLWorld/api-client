@@ -7,69 +7,68 @@ use GuzzleHttp\Psr7\Response;
 
 use PHPUnit\Framework\TestCase;
 
-use XmlWorld\ApiPackagePhp\Interfaces\Logger;
-use XmlWorld\ApiPackagePhp\Interfaces\Serializer;
-use XmlWorld\ApiPackagePhp\Interfaces\Serializable;
+use XmlWorld\ApiClient\Interfaces\Logger;
+use XmlWorld\ApiClient\Interfaces\Serializer;
+use XmlWorld\ApiClient\Interfaces\Serializable;
 
-use XmlWorld\ApiPackagePhp\Requests\AbstractRequest;
-use XmlWorld\ApiPackagePhp\Requests\BookDetails;
-use XmlWorld\ApiPackagePhp\Requests\BookingRequest;
-use XmlWorld\ApiPackagePhp\Requests\BookingUpdateRequest;
-use XmlWorld\ApiPackagePhp\Requests\BookRequest;
-use XmlWorld\ApiPackagePhp\Requests\CancelRequest;
-use XmlWorld\ApiPackagePhp\Requests\ChildAge;
-use XmlWorld\ApiPackagePhp\Requests\ChildAges;
-use XmlWorld\ApiPackagePhp\Requests\LoginDetails;
+use XmlWorld\ApiClient\Requests\AbstractRequest;
+use XmlWorld\ApiClient\Requests\BookDetails;
+use XmlWorld\ApiClient\Requests\BookingRequest;
+use XmlWorld\ApiClient\Requests\BookingUpdateRequest;
+use XmlWorld\ApiClient\Requests\BookRequest;
+use XmlWorld\ApiClient\Requests\CancelRequest;
+use XmlWorld\ApiClient\Requests\ChildAge;
+use XmlWorld\ApiClient\Requests\ChildAges;
+use XmlWorld\ApiClient\Requests\LoginDetails;
 
-use XmlWorld\ApiPackagePhp\Common\Guest;
-use XmlWorld\ApiPackagePhp\Common\Guests;
-use XmlWorld\ApiPackagePhp\Common\LeadGuest;
+use XmlWorld\ApiClient\Common\Guest;
+use XmlWorld\ApiClient\Common\Guests;
+use XmlWorld\ApiClient\Common\LeadGuest;
 
-use XmlWorld\ApiPackagePhp\Requests\Properties;
-use XmlWorld\ApiPackagePhp\Requests\RoomBooking;
-use XmlWorld\ApiPackagePhp\Requests\RoomBookings;
-use XmlWorld\ApiPackagePhp\Requests\RoomRequest;
-use XmlWorld\ApiPackagePhp\Requests\RoomRequests;
-use XmlWorld\ApiPackagePhp\Requests\SearchDetails;
-use XmlWorld\ApiPackagePhp\Requests\SearchRequest;
-use XmlWorld\ApiPackagePhp\Responses\BookingDetails;
-use XmlWorld\ApiPackagePhp\Responses\BookResponse;
-use XmlWorld\ApiPackagePhp\Responses\CancellationPolicies;
-use XmlWorld\ApiPackagePhp\Responses\CancellationPolicy;
-use XmlWorld\ApiPackagePhp\Responses\CancelResponse;
-use XmlWorld\ApiPackagePhp\Responses\Errata;
-use XmlWorld\ApiPackagePhp\Responses\Erratum;
-use XmlWorld\ApiPackagePhp\Responses\Image;
-use XmlWorld\ApiPackagePhp\Responses\Images;
-use XmlWorld\ApiPackagePhp\Responses\Property;
-use XmlWorld\ApiPackagePhp\Responses\PropertyResult;
-use XmlWorld\ApiPackagePhp\Responses\PropertyResults;
-use XmlWorld\ApiPackagePhp\Responses\RequestInfo;
-use XmlWorld\ApiPackagePhp\Responses\ReturnStatus;
+use XmlWorld\ApiClient\Requests\Properties;
+use XmlWorld\ApiClient\Requests\RoomBooking;
+use XmlWorld\ApiClient\Requests\RoomBookings;
+use XmlWorld\ApiClient\Requests\RoomRequest;
+use XmlWorld\ApiClient\Requests\RoomRequests;
+use XmlWorld\ApiClient\Requests\SearchDetails;
+use XmlWorld\ApiClient\Requests\SearchRequest;
+use XmlWorld\ApiClient\Responses\BookingDetails;
+use XmlWorld\ApiClient\Responses\BookResponse;
+use XmlWorld\ApiClient\Responses\CancellationPolicies;
+use XmlWorld\ApiClient\Responses\CancellationPolicy;
+use XmlWorld\ApiClient\Responses\CancelResponse;
+use XmlWorld\ApiClient\Responses\Errata;
+use XmlWorld\ApiClient\Responses\Erratum;
+use XmlWorld\ApiClient\Responses\Image;
+use XmlWorld\ApiClient\Responses\Images;
+use XmlWorld\ApiClient\Responses\Property;
+use XmlWorld\ApiClient\Responses\PropertyResult;
+use XmlWorld\ApiClient\Responses\PropertyResults;
+use XmlWorld\ApiClient\Responses\RequestInfo;
+use XmlWorld\ApiClient\Responses\ReturnStatus;
 
-use XmlWorld\ApiPackagePhp\Responses\RoomsAppliesTo;
-use XmlWorld\ApiPackagePhp\Responses\RoomType;
-use XmlWorld\ApiPackagePhp\Responses\RoomTypes;
-use XmlWorld\ApiPackagePhp\Responses\SearchResponse;
-use XmlWorld\ApiPackagePhp\Responses\SpecialOffer;
-use XmlWorld\ApiPackagePhp\Responses\SpecialOffers;
-use XmlWorld\ApiPackagePhp\Responses\Supplement;
-use XmlWorld\ApiPackagePhp\Responses\Supplements;
-use XmlWorld\ApiPackagePhp\Responses\Supplier;
-use XmlWorld\ApiPackagePhp\Responses\Tax;
-use XmlWorld\ApiPackagePhp\Responses\Taxes;
+use XmlWorld\ApiClient\Responses\RoomsAppliesTo;
+use XmlWorld\ApiClient\Responses\RoomType;
+use XmlWorld\ApiClient\Responses\RoomTypes;
+use XmlWorld\ApiClient\Responses\SearchResponse;
+use XmlWorld\ApiClient\Responses\SpecialOffer;
+use XmlWorld\ApiClient\Responses\SpecialOffers;
+use XmlWorld\ApiClient\Responses\Supplement;
+use XmlWorld\ApiClient\Responses\Supplements;
+use XmlWorld\ApiClient\Responses\Supplier;
+use XmlWorld\ApiClient\Responses\Tax;
+use XmlWorld\ApiClient\Responses\Taxes;
 
-use XmlWorld\ApiPackagePhp\Responses\RoomBooking as RoomBookingResponse;
-use XmlWorld\ApiPackagePhp\Responses\RoomBookings as RoomBookingsResponse;
-use XmlWorld\ApiPackagePhp\Responses\BookingDetails as BookingDetailsResponse;
-use XmlWorld\ApiPackagePhp\Responses\BookingResponse;
-use XmlWorld\ApiPackagePhp\Responses\BookingUpdateRequestResponse;
+use XmlWorld\ApiClient\Responses\RoomBooking as RoomBookingResponse;
+use XmlWorld\ApiClient\Responses\RoomBookings as RoomBookingsResponse;
+use XmlWorld\ApiClient\Responses\BookingDetails as BookingDetailsResponse;
+use XmlWorld\ApiClient\Responses\BookingResponse;
+use XmlWorld\ApiClient\Responses\BookingUpdateRequestResponse;
 
 
-use XmlWorld\ApiPackagePhp\SerializeXML;
-use XmlWorld\ApiPackagePhp\XMLClient;
+use XmlWorld\ApiClient\SerializeXML;
+use XmlWorld\ApiClient\XMLClient;
 
-// php vendor/bin/phpunit tests/SerializeXMLTest.php
 class SerializeXMLTest extends TestCase
 {
 	protected static Serializer $serializer;
@@ -84,7 +83,6 @@ class SerializeXMLTest extends TestCase
 	 * @param string $expected
 	 * @param AbstractRequest $obj
 	 */
-	// php vendor/bin/phpunit tests/SerializeXMLTest.php --filter testSerialize
 	public function testSerialize(string $expected, Serializable $obj)
 	{
 		$this->assertEquals(
@@ -97,11 +95,10 @@ class SerializeXMLTest extends TestCase
 	 * @dataProvider dataProviderUnserializePrimitives
 	 * @param AbstractRequest $expected
 	 * @param string $xml
+	 * @throws Exception
 	 */
-	//php vendor/bin/phpunit tests/SerializeXMLTest.php --filter testUnserialize
 	public function testUnserialize(string $xml, Serializable $expected)
 	{
-		//
 		$namespace = (new ReflectionClass($expected))->getNamespaceName();
 		$this->assertEquals($expected, self::$serializer->unserialize($xml, $namespace));
 	}
@@ -154,7 +151,7 @@ class SerializeXMLTest extends TestCase
 				parent::__construct($login, $password, $env, $logger);
 			}
 
-			protected function getClient(string $env): Client
+			protected function getClient(): Client
 			{
 				$mock = new MockHandler(
 					[

@@ -1,12 +1,9 @@
 <?php
 
-
-namespace XmlWorld\ApiPackagePhp;
-
+namespace XmlWorld\ApiClient;
 
 class NullLogger implements Interfaces\Logger
 {
-
 	public function logRequest(string $log) : void
 	{
 		// do nothing

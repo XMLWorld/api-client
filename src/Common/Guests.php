@@ -1,9 +1,8 @@
 <?php
 
+namespace XmlWorld\ApiClient\Common;
 
-namespace XmlWorld\ApiPackagePhp\Common;
-
-use XmlWorld\ApiPackagePhp\Classes\CommonCollection;
+use XmlWorld\ApiClient\Classes\CommonCollection;
 
 /**
  * @extends CommonCollection<Guest>

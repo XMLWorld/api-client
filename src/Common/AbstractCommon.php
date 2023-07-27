@@ -1,10 +1,7 @@
 <?php
 
-namespace XmlWorld\ApiPackagePhp\Common;
+namespace XmlWorld\ApiClient\Common;
 
-use XmlWorld\ApiPackagePhp\Interfaces\Serializable;
+use XmlWorld\ApiClient\Interfaces\Serializable;
 
-abstract class AbstractCommon implements Serializable
-{
-
-}
+abstract class AbstractCommon implements Serializable {}
