@@ -1,7 +1,6 @@
 {
     "name": "xmlworld/api-client",
     "description": "Simple connection to the xml.world API",
-    "version": "1.0.1",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -14,13 +13,13 @@
     },
     "autoload": {
         "psr-4": {
-            "XmlWorld\\ApiClient\\": "src/"
+            "xmlworld\\apiclient\\": "src/"
         }
     },
     "minimum-stability": "stable",
     "require": {
         "php": "^8.1",
-        "guzzlehttp/guzzle": "7.7.0",
+        "guzzlehttp/guzzle": "^7.7",
         "ext-simplexml": "*",
         "ext-dom": "*"
     },
