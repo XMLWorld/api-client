@@ -1,12 +1,17 @@
 {
     "name": "xml-world/api-client",
     "description": "Simple connection to the xml.world API",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "type": "library",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "keywords": [
         "api", "https", "client", "xml"
     ],
+    "homepage": "https://xml.world",
+    "support": {
+        "docs": "https://xml.world/for-developers",
+        "email": "dev@experienceengine.com"
+    },
     "autoload": {
         "psr-4": {
             "XmlWorld\\ApiClient\\": "src/"

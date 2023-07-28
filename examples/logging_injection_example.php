@@ -19,16 +19,27 @@ $login = 'login';
 $password = 'pass';
 $env = XMLClient::ENV_DEV;
 
+$myLogger = function($payload){
+	echo $payload;
+};
+
 //you can implement the Logger interface to inject your logging implementation in the client.
-$logging = new class implements Logger {
+$logging = new class($myLogger) implements Logger
+{
+	protected Closure $myLogger;
+	public function __construct(Closure $myLogger)
+	{
+		$this->myLogger = $myLogger;
+	}
+
 	public function logRequest(string $log): void
 	{
-		// TODO: Implement logRequest() method.
+		($this->myLogger)($log);
 	}
 
 	public function logResponse(int $statusCode, string $log): void
 	{
-		// TODO: Implement logResponse() method.
+		($this->myLogger)($log);
 	}
 };
 
