@@ -1,6 +1,6 @@
 <?php
 
-use XmlWorld\ApiClient\XMLClient;
+use xmlworld\apiclient\XMLClient;
 
 $autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'autoload.php']);
 if(!file_exists($autoload)){

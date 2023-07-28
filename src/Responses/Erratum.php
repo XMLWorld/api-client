@@ -1,7 +1,7 @@
 <?php
 
 
-namespace XmlWorld\ApiClient\Responses;
+namespace xmlworld\apiclient\Responses;
 
 class Erratum extends AbstractResponse
 {

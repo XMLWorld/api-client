@@ -1,30 +1,30 @@
 <?php
 declare(strict_types = 1);
 
-namespace XmlWorld\ApiClient;
+namespace xmlworld\apiclient;
 
 use GuzzleHttp\Client;
 use InvalidArgumentException;
 use SimpleXMLElement;
 use Throwable;
-use XmlWorld\ApiClient\Interfaces\Logger;
-use XmlWorld\ApiClient\Interfaces\Serializable;
-use XmlWorld\ApiClient\Interfaces\Serializer;
+use xmlworld\apiclient\Interfaces\Logger;
+use xmlworld\apiclient\Interfaces\Serializable;
+use xmlworld\apiclient\Interfaces\Serializer;
 
-use XmlWorld\ApiClient\Requests\BookDetails;
-use XmlWorld\ApiClient\Requests\BookingRequest;
-use XmlWorld\ApiClient\Requests\BookingUpdateRequest;
-use XmlWorld\ApiClient\Requests\BookRequest;
-use XmlWorld\ApiClient\Requests\CancelRequest;
-use XmlWorld\ApiClient\Requests\LoginDetails;
-use XmlWorld\ApiClient\Requests\Request;
-use XmlWorld\ApiClient\Requests\SearchDetails;
-use XmlWorld\ApiClient\Requests\SearchRequest;
-use XmlWorld\ApiClient\Responses\BookingResponse;
-use XmlWorld\ApiClient\Responses\BookingUpdateRequestResponse;
-use XmlWorld\ApiClient\Responses\BookResponse;
-use XmlWorld\ApiClient\Responses\CancelResponse;
-use XmlWorld\ApiClient\Responses\Response;
+use xmlworld\apiclient\Requests\BookDetails;
+use xmlworld\apiclient\Requests\BookingRequest;
+use xmlworld\apiclient\Requests\BookingUpdateRequest;
+use xmlworld\apiclient\Requests\BookRequest;
+use xmlworld\apiclient\Requests\CancelRequest;
+use xmlworld\apiclient\Requests\LoginDetails;
+use xmlworld\apiclient\Requests\Request;
+use xmlworld\apiclient\Requests\SearchDetails;
+use xmlworld\apiclient\Requests\SearchRequest;
+use xmlworld\apiclient\Responses\BookingResponse;
+use xmlworld\apiclient\Responses\BookingUpdateRequestResponse;
+use xmlworld\apiclient\Responses\BookResponse;
+use xmlworld\apiclient\Responses\CancelResponse;
+use xmlworld\apiclient\Responses\Response;
 
 class XMLClient
 {

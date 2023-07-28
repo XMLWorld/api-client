@@ -1,7 +1,7 @@
 <?php
 
-namespace XmlWorld\ApiClient\Requests;
+namespace xmlworld\apiclient\Requests;
 
-use XmlWorld\ApiClient\Interfaces\Serializable;
+use xmlworld\apiclient\Interfaces\Serializable;
 
 abstract class AbstractRequest implements Serializable {}

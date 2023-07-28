@@ -1,6 +1,6 @@
 <?php
 
-namespace XmlWorld\ApiClient\Common;
+namespace xmlworld\apiclient\Common;
 
 class Guest extends AbstractCommon
 {

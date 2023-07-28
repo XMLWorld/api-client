@@ -1,6 +1,6 @@
 <?php
 
-namespace XmlWorld\ApiClient\Interfaces;
+namespace xmlworld\apiclient\Interfaces;
 
 interface Logger
 {

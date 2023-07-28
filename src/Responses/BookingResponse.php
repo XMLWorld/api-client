@@ -1,5 +1,5 @@
 <?php
 
-namespace XmlWorld\ApiClient\Responses;
+namespace xmlworld\apiclient\Responses;
 
 class BookingResponse extends BookResponse {}

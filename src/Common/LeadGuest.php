@@ -1,6 +1,6 @@
 <?php
 
-namespace XmlWorld\ApiClient\Common;
+namespace xmlworld\apiclient\Common;
 
 class LeadGuest extends AbstractCommon
 {

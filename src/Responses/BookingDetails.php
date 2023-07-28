@@ -1,9 +1,9 @@
 <?php
 
-namespace XmlWorld\ApiClient\Responses;
+namespace xmlworld\apiclient\Responses;
 
-use XmlWorld\ApiClient\Common\LeadGuest;
-use XmlWorld\ApiClient\Requests\Request;
+use xmlworld\apiclient\Common\LeadGuest;
+use xmlworld\apiclient\Requests\Request;
 
 class BookingDetails extends AbstractResponse
 {

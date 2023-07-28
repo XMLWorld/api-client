@@ -1,8 +1,8 @@
 <?php
 
-namespace XmlWorld\ApiClient\Requests;
+namespace xmlworld\apiclient\Requests;
 
-use XmlWorld\ApiClient\Common\LeadGuest;
+use xmlworld\apiclient\Common\LeadGuest;
 
 class BookDetails extends AbstractRequest
 {

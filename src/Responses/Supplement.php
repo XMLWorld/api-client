@@ -1,6 +1,6 @@
 <?php
 
-namespace XmlWorld\ApiClient\Responses;
+namespace xmlworld\apiclient\Responses;
 
 class Supplement extends AbstractResponse
 {

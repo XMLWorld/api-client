@@ -1,8 +1,8 @@
 <?php
 
-namespace XmlWorld\ApiClient\Responses;
+namespace xmlworld\apiclient\Responses;
 
-use XmlWorld\ApiClient\Classes\CommonCollection;
+use xmlworld\apiclient\Classes\CommonCollection;
 
 /**
  * @extends CommonCollection<RoomBooking>

@@ -1,14 +1,14 @@
 <?php
 
-namespace XmlWorld\ApiClient;
+namespace xmlworld\apiclient;
 
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionParameter;
 use SimpleXMLElement;
 
-use XmlWorld\ApiClient\Interfaces\Serializable;
-use XmlWorld\ApiClient\Interfaces\Serializer;
+use xmlworld\apiclient\Interfaces\Serializable;
+use xmlworld\apiclient\Interfaces\Serializer;
 
 class SerializeXML implements Serializer
 {
@@ -74,24 +74,24 @@ class SerializeXML implements Serializer
 			$payload = simplexml_load_string($payload);
 		}
 
-		//if namespace is empty...
+		//if nameexit(__FUNCTION__.PHP_EOL);space is empty...
 		if(empty($namespace)){
 			//we try to deduce whether it's a request or a response from the root name
 			if(str_ends_with($payload->getName(), 'Response')){
-				$namespace = 'XmlWorld\\ApiClient\\Responses';
+				$namespace = 'xmlworld\\apiclient\\Responses';
 			} elseif(str_ends_with($payload->getName(), 'Request')){
-				$namespace = 'XmlWorld\\ApiClient\\Requests';
+				$namespace = 'xmlworld\\apiclient\\Requests';
 			}
 		}
 
 		//if we couldn't deduce it from the root name...
 		if(empty($namespace)){
 			//we try whether a response fist then a request
-			$className = "XmlWorld\\ApiClient\\Responses\\{$payload->getName()}";
+			$className = "xmlWorld\\apiclient\\Responses\\{$payload->getName()}";
 
 			//we check whether the class exists
 			if(!class_exists($className)){
-				$className = "XmlWorld\\ApiClient\\Requests\\{$payload->getName()}";
+				$className = "xmlWorld\\apiclient\\Requests\\{$payload->getName()}";
 			}
 		//if we could deduce it we get the corresponding namespace
 		} else {
@@ -101,7 +101,7 @@ class SerializeXML implements Serializer
 		//if the class didn't exist anyway
 		if(!class_exists($className)){
 			//we try the common classes
-			$className = "XmlWorld\\ApiClient\\Common\\{$payload->getName()}";
+			$className = "xmlworld\\apiclient\\Common\\{$payload->getName()}";
 		}
 
 		//we check whether the class exists

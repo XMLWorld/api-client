@@ -1,12 +1,12 @@
 <?php
 
-use XmlWorld\ApiClient\Common\Guest;
-use XmlWorld\ApiClient\Common\Guests;
-use XmlWorld\ApiClient\Common\LeadGuest;
-use XmlWorld\ApiClient\Requests\BookDetails;
-use XmlWorld\ApiClient\Requests\RoomBooking;
-use XmlWorld\ApiClient\Requests\RoomBookings;
-use XmlWorld\ApiClient\XMLClient;
+use xmlworld\apiclient\Common\Guest;
+use xmlworld\apiclient\Common\Guests;
+use xmlworld\apiclient\Common\LeadGuest;
+use xmlworld\apiclient\Requests\BookDetails;
+use xmlworld\apiclient\Requests\RoomBooking;
+use xmlworld\apiclient\Requests\RoomBookings;
+use xmlworld\apiclient\XMLClient;
 
 $autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'autoload.php']);
 if(!file_exists($autoload)){

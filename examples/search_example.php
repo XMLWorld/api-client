@@ -1,10 +1,10 @@
 <?php
 
-use XmlWorld\ApiClient\Requests\Properties;
-use XmlWorld\ApiClient\Requests\RoomRequest;
-use XmlWorld\ApiClient\Requests\RoomRequests;
-use XmlWorld\ApiClient\Requests\SearchDetails;
-use XmlWorld\ApiClient\XMLClient;
+use xmlworld\apiclient\Requests\Properties;
+use xmlworld\apiclient\Requests\RoomRequest;
+use xmlworld\apiclient\Requests\RoomRequests;
+use xmlworld\apiclient\Requests\SearchDetails;
+use xmlworld\apiclient\XMLClient;
 
 $autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'autoload.php']);
 if(!file_exists($autoload)){
@@ -42,8 +42,12 @@ $searchDetails = new SearchDetails(
 );
 
 try {
+	echo 'before' . PHP_EOL;
 	$result = $xmlClient->search(searchDetails: $searchDetails);
 
 	print_r($result);
 } catch (Throwable $e) {
+	echo '[' . $e->getMessage() . ']';
 }
+
+exit('Done');

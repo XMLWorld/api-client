@@ -7,67 +7,67 @@ use GuzzleHttp\Psr7\Response;
 
 use PHPUnit\Framework\TestCase;
 
-use XmlWorld\ApiClient\Interfaces\Logger;
-use XmlWorld\ApiClient\Interfaces\Serializer;
-use XmlWorld\ApiClient\Interfaces\Serializable;
+use xmlworld\apiclient\Interfaces\Logger;
+use xmlworld\apiclient\Interfaces\Serializer;
+use xmlworld\apiclient\Interfaces\Serializable;
 
-use XmlWorld\ApiClient\Requests\AbstractRequest;
-use XmlWorld\ApiClient\Requests\BookDetails;
-use XmlWorld\ApiClient\Requests\BookingRequest;
-use XmlWorld\ApiClient\Requests\BookingUpdateRequest;
-use XmlWorld\ApiClient\Requests\BookRequest;
-use XmlWorld\ApiClient\Requests\CancelRequest;
-use XmlWorld\ApiClient\Requests\ChildAge;
-use XmlWorld\ApiClient\Requests\ChildAges;
-use XmlWorld\ApiClient\Requests\LoginDetails;
+use xmlworld\apiclient\Requests\AbstractRequest;
+use xmlworld\apiclient\Requests\BookDetails;
+use xmlworld\apiclient\Requests\BookingRequest;
+use xmlworld\apiclient\Requests\BookingUpdateRequest;
+use xmlworld\apiclient\Requests\BookRequest;
+use xmlworld\apiclient\Requests\CancelRequest;
+use xmlworld\apiclient\Requests\ChildAge;
+use xmlworld\apiclient\Requests\ChildAges;
+use xmlworld\apiclient\Requests\LoginDetails;
 
-use XmlWorld\ApiClient\Common\Guest;
-use XmlWorld\ApiClient\Common\Guests;
-use XmlWorld\ApiClient\Common\LeadGuest;
+use xmlworld\apiclient\Common\Guest;
+use xmlworld\apiclient\Common\Guests;
+use xmlworld\apiclient\Common\LeadGuest;
 
-use XmlWorld\ApiClient\Requests\Properties;
-use XmlWorld\ApiClient\Requests\RoomBooking;
-use XmlWorld\ApiClient\Requests\RoomBookings;
-use XmlWorld\ApiClient\Requests\RoomRequest;
-use XmlWorld\ApiClient\Requests\RoomRequests;
-use XmlWorld\ApiClient\Requests\SearchDetails;
-use XmlWorld\ApiClient\Requests\SearchRequest;
-use XmlWorld\ApiClient\Responses\BookingDetails;
-use XmlWorld\ApiClient\Responses\BookResponse;
-use XmlWorld\ApiClient\Responses\CancellationPolicies;
-use XmlWorld\ApiClient\Responses\CancellationPolicy;
-use XmlWorld\ApiClient\Responses\CancelResponse;
-use XmlWorld\ApiClient\Responses\Errata;
-use XmlWorld\ApiClient\Responses\Erratum;
-use XmlWorld\ApiClient\Responses\Image;
-use XmlWorld\ApiClient\Responses\Images;
-use XmlWorld\ApiClient\Responses\Property;
-use XmlWorld\ApiClient\Responses\PropertyResult;
-use XmlWorld\ApiClient\Responses\PropertyResults;
-use XmlWorld\ApiClient\Responses\RequestInfo;
-use XmlWorld\ApiClient\Responses\ReturnStatus;
+use xmlworld\apiclient\Requests\Properties;
+use xmlworld\apiclient\Requests\RoomBooking;
+use xmlworld\apiclient\Requests\RoomBookings;
+use xmlworld\apiclient\Requests\RoomRequest;
+use xmlworld\apiclient\Requests\RoomRequests;
+use xmlworld\apiclient\Requests\SearchDetails;
+use xmlworld\apiclient\Requests\SearchRequest;
+use xmlworld\apiclient\Responses\BookingDetails;
+use xmlworld\apiclient\Responses\BookResponse;
+use xmlworld\apiclient\Responses\CancellationPolicies;
+use xmlworld\apiclient\Responses\CancellationPolicy;
+use xmlworld\apiclient\Responses\CancelResponse;
+use xmlworld\apiclient\Responses\Errata;
+use xmlworld\apiclient\Responses\Erratum;
+use xmlworld\apiclient\Responses\Image;
+use xmlworld\apiclient\Responses\Images;
+use xmlworld\apiclient\Responses\Property;
+use xmlworld\apiclient\Responses\PropertyResult;
+use xmlworld\apiclient\Responses\PropertyResults;
+use xmlworld\apiclient\Responses\RequestInfo;
+use xmlworld\apiclient\Responses\ReturnStatus;
 
-use XmlWorld\ApiClient\Responses\RoomsAppliesTo;
-use XmlWorld\ApiClient\Responses\RoomType;
-use XmlWorld\ApiClient\Responses\RoomTypes;
-use XmlWorld\ApiClient\Responses\SearchResponse;
-use XmlWorld\ApiClient\Responses\SpecialOffer;
-use XmlWorld\ApiClient\Responses\SpecialOffers;
-use XmlWorld\ApiClient\Responses\Supplement;
-use XmlWorld\ApiClient\Responses\Supplements;
-use XmlWorld\ApiClient\Responses\Supplier;
-use XmlWorld\ApiClient\Responses\Tax;
-use XmlWorld\ApiClient\Responses\Taxes;
+use xmlworld\apiclient\Responses\RoomsAppliesTo;
+use xmlworld\apiclient\Responses\RoomType;
+use xmlworld\apiclient\Responses\RoomTypes;
+use xmlworld\apiclient\Responses\SearchResponse;
+use xmlworld\apiclient\Responses\SpecialOffer;
+use xmlworld\apiclient\Responses\SpecialOffers;
+use xmlworld\apiclient\Responses\Supplement;
+use xmlworld\apiclient\Responses\Supplements;
+use xmlworld\apiclient\Responses\Supplier;
+use xmlworld\apiclient\Responses\Tax;
+use xmlworld\apiclient\Responses\Taxes;
 
-use XmlWorld\ApiClient\Responses\RoomBooking as RoomBookingResponse;
-use XmlWorld\ApiClient\Responses\RoomBookings as RoomBookingsResponse;
-use XmlWorld\ApiClient\Responses\BookingDetails as BookingDetailsResponse;
-use XmlWorld\ApiClient\Responses\BookingResponse;
-use XmlWorld\ApiClient\Responses\BookingUpdateRequestResponse;
+use xmlworld\apiclient\Responses\RoomBooking as RoomBookingResponse;
+use xmlworld\apiclient\Responses\RoomBookings as RoomBookingsResponse;
+use xmlworld\apiclient\Responses\BookingDetails as BookingDetailsResponse;
+use xmlworld\apiclient\Responses\BookingResponse;
+use xmlworld\apiclient\Responses\BookingUpdateRequestResponse;
 
 
-use XmlWorld\ApiClient\SerializeXML;
-use XmlWorld\ApiClient\XMLClient;
+use xmlworld\apiclient\SerializeXML;
+use xmlworld\apiclient\XMLClient;
 
 class SerializeXMLTest extends TestCase
 {
