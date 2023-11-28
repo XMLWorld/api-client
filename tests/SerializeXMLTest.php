@@ -448,7 +448,6 @@ class SerializeXMLTest extends TestCase
 				<SearchDetails>
 					<ArrivalDate>2023-08-01</ArrivalDate>
 					<Duration>7</Duration>
-					<RegionID>0</RegionID>
 					<RoomRequests>
 						<RoomRequest>
 							<Adults>2</Adults>
@@ -484,7 +483,6 @@ class SerializeXMLTest extends TestCase
 				new SearchDetails(
 					'2023-08-01',
 					7,
-					0,
 					new RoomRequests(
 						$twoAdultsTwoInfants,
 						$twoAdultsTwoChildrenTwoInfants
@@ -512,7 +510,6 @@ class SerializeXMLTest extends TestCase
 				<SearchDetails>
 					<ArrivalDate>2023-08-01</ArrivalDate>
 					<Duration>7</Duration>
-					<RegionID>0</RegionID>
 					<RoomRequests>
 						<RoomRequest>
 							<Adults>2</Adults>
@@ -545,7 +542,6 @@ class SerializeXMLTest extends TestCase
 				new SearchDetails(
 					'2023-08-01',
 					7,
-					0,
 					new RoomRequests(
 						$twoAdultsTwoInfants,
 						$twoAdultsTwoChildrenTwoInfants
@@ -4551,7 +4547,6 @@ class SerializeXMLTest extends TestCase
 				<SearchDetails>
 					<ArrivalDate>2023-08-01</ArrivalDate>
 					<Duration>7</Duration>
-					<RegionID>0</RegionID>
 					<Properties>
 						<PropertyID>2007</PropertyID>
 						<PropertyID>3008</PropertyID>
@@ -4587,7 +4582,6 @@ class SerializeXMLTest extends TestCase
 				new SearchDetails(
 					'2023-08-01',
 					7,
-					0,
 					new RoomRequests(
 						$twoAdultsTwoInfants,
 						$twoAdultsTwoChildrenTwoInfants
@@ -4615,7 +4609,6 @@ class SerializeXMLTest extends TestCase
 				<SearchDetails>
 					<ArrivalDate>2023-08-01</ArrivalDate>
 					<Duration>7</Duration>
-					<RegionID>0</RegionID>
 					<!-- a comment -->
 					<PropertyID>2007</PropertyID>
 					<MealBasisID>0</MealBasisID>
@@ -4650,7 +4643,6 @@ class SerializeXMLTest extends TestCase
 				new SearchDetails(
 					'2023-08-01',
 					7,
-					0,
 					new RoomRequests(
 						$twoAdultsTwoInfants,
 						$twoAdultsTwoChildrenTwoInfants

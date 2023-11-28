@@ -48,7 +48,6 @@ $xmlClient = new XMLClient(login: $login, password: $password, env: $env, logger
 $searchDetails = new SearchDetails(
 	arrivalDate: '2023-09-01',
 	duration: 5,
-	regionID: 0,
 	roomRequests: new RoomRequests(
 		RoomRequest::fromAges(2)
 	),

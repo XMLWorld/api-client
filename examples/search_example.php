@@ -23,7 +23,6 @@ $xmlClient = new XMLClient(login: $login, password: $password, env: $env);
 $searchDetails = new SearchDetails(
 	arrivalDate: '2023-09-01',	// arrival date
 	duration: 5,				// duration in days
-	regionID: 0,				// region
 	roomRequests: new RoomRequests(		// list of rooms
 		RoomRequest::fromAges(2),
 		RoomRequest::fromAges(
