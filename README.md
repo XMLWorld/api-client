@@ -40,7 +40,6 @@ We make use of the **SearchDetails** class which accepts params like *arrivalDat
 $searchDetails = new SearchDetails(
 	arrivalDate: '2023-09-01',	        // arrival date
 	duration: 5,				// duration in days
-	regionID: 0,				// region
 	roomRequests: new RoomRequests(		// list of rooms
 		RoomRequest::fromAges(2),
 		RoomRequest::fromAges(
