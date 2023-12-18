@@ -1,10 +1,10 @@
 <?php
 
-use xmlworld\apiclient\Requests\Properties;
-use xmlworld\apiclient\Requests\RoomRequest;
-use xmlworld\apiclient\Requests\RoomRequests;
-use xmlworld\apiclient\Requests\SearchDetails;
-use xmlworld\apiclient\XMLClient;
+use XMLWorld\ApiClient\Requests\Properties;
+use XMLWorld\ApiClient\Requests\RoomRequest;
+use XMLWorld\ApiClient\Requests\RoomRequests;
+use XMLWorld\ApiClient\Requests\SearchDetails;
+use XMLWorld\ApiClient\XMLClient;
 
 $autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'autoload.php']);
 if(!file_exists($autoload)){
@@ -21,7 +21,7 @@ $env = XMLClient::ENV_DEV;
 $xmlClient = new XMLClient(login: $login, password: $password, env: $env);
 
 $searchDetails = new SearchDetails(
-	arrivalDate: '2023-09-01',	// arrival date
+	arrivalDate: '2024-09-01',	// arrival date
 	duration: 5,				// duration in days
 	roomRequests: new RoomRequests(		// list of rooms
 		RoomRequest::fromAges(2),
@@ -46,7 +46,7 @@ try {
 
 	print_r($result);
 } catch (Throwable $e) {
-	echo '[' . $e->getMessage() . ']';
+	echo "[{$e->getMessage()}]";
 }
 
 exit('Done');

@@ -1,7 +1,7 @@
 <?php
 
-namespace xmlworld\apiclient\Responses;
+namespace XMLWorld\ApiClient\Responses;
 
-use xmlworld\apiclient\Interfaces\Serializable;
+use XMLWorld\ApiClient\Interfaces\Serializable;
 
 abstract class AbstractResponse implements Serializable {}

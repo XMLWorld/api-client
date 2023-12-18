@@ -1,8 +1,8 @@
 <?php
 
-namespace xmlworld\apiclient\Common;
+namespace XMLWorld\ApiClient\Common;
 
-use xmlworld\apiclient\Classes\CommonCollection;
+use XMLWorld\ApiClient\Classes\CommonCollection;
 
 /**
  * @extends CommonCollection<Guest>

@@ -1,6 +1,6 @@
 <?php
 
-namespace xmlworld\apiclient;
+namespace XMLWorld\ApiClient;
 
 class NullLogger implements Interfaces\Logger
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace xmlworld\apiclient\Requests;
+namespace XMLWorld\ApiClient\Requests;
 
-use xmlworld\apiclient\Common\Guests;
+use XMLWorld\ApiClient\Common\Guests;
 
 class RoomBooking extends AbstractRequest
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace xmlworld\apiclient;
+namespace XMLWorld\ApiClient;
 
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionParameter;
 use SimpleXMLElement;
 
-use xmlworld\apiclient\Interfaces\Serializable;
-use xmlworld\apiclient\Interfaces\Serializer;
+use XMLWorld\ApiClient\Interfaces\Serializable;
+use XMLWorld\ApiClient\Interfaces\Serializer;
 
 class SerializeXML implements Serializer
 {
@@ -78,20 +78,20 @@ class SerializeXML implements Serializer
 		if(empty($namespace)){
 			//we try to deduce whether it's a request or a response from the root name
 			if(str_ends_with($payload->getName(), 'Response')){
-				$namespace = 'xmlworld\\apiclient\\Responses';
+				$namespace = 'XMLWorld\\ApiClient\\Responses';
 			} elseif(str_ends_with($payload->getName(), 'Request')){
-				$namespace = 'xmlworld\\apiclient\\Requests';
+				$namespace = 'XMLWorld\\ApiClient\\Requests';
 			}
 		}
 
 		//if we couldn't deduce it from the root name...
 		if(empty($namespace)){
 			//we try whether a response fist then a request
-			$className = "xmlWorld\\apiclient\\Responses\\{$payload->getName()}";
+			$className = "XMLWorld\\ApiClient\\Responses\\{$payload->getName()}";
 
 			//we check whether the class exists
 			if(!class_exists($className)){
-				$className = "xmlWorld\\apiclient\\Requests\\{$payload->getName()}";
+				$className = "XMLWorld\\ApiClient\\Requests\\{$payload->getName()}";
 			}
 		//if we could deduce it we get the corresponding namespace
 		} else {
@@ -101,7 +101,7 @@ class SerializeXML implements Serializer
 		//if the class didn't exist anyway
 		if(!class_exists($className)){
 			//we try the common classes
-			$className = "xmlworld\\apiclient\\Common\\{$payload->getName()}";
+			$className = "XMLWorld\\ApiClient\\Common\\{$payload->getName()}";
 		}
 
 		//we check whether the class exists
@@ -209,7 +209,12 @@ class SerializeXML implements Serializer
 			},
 			self::$constructorParams[$className]
 		);
-
+/*
+		if($className == 'XMLWorld\ApiClient\Responses\BookingDetails') {
+			var_dump($args2);
+			exit('lololo');
+		}
+*/
 		return new $className(...$args2);
 	}
 }

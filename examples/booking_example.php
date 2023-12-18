@@ -1,6 +1,6 @@
 <?php
 
-use xmlworld\apiclient\XMLClient;
+use XMLWorld\ApiClient\XMLClient;
 
 $autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'autoload.php']);
 if(!file_exists($autoload)){
@@ -22,5 +22,8 @@ try {
 
 	print_r($result);
 } catch (Throwable $e) {
+	echo "[{$e->getMessage()}]";
 }
+
+exit('Done');
 

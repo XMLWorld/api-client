@@ -1,9 +1,9 @@
 <?php
 
-namespace xmlworld\apiclient\Responses;
+namespace XMLWorld\ApiClient\Responses;
 
-use xmlworld\apiclient\Common\LeadGuest;
-use xmlworld\apiclient\Requests\Request;
+use XMLWorld\ApiClient\Common\LeadGuest;
+use XMLWorld\ApiClient\Requests\Request;
 
 class BookingDetails extends AbstractResponse
 {
@@ -17,7 +17,7 @@ class BookingDetails extends AbstractResponse
 		public ?string $arrivalDate = null,
 		public ?int $duration = null,
 		public ?LeadGuest $leadGuest = null,
-		public ?Request $request = null, //not sure what this is in Busy Rooms
+		public ?string $request = null, //not sure what this is in Busy Rooms
 		public ?string $tradeReference = null,
 		public ?float $totalPrice = null,
 		public ?string $dueDate = null,

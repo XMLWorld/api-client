@@ -1,12 +1,12 @@
 <?php
 
-use xmlworld\apiclient\Common\Guest;
-use xmlworld\apiclient\Common\Guests;
-use xmlworld\apiclient\Common\LeadGuest;
-use xmlworld\apiclient\Requests\BookDetails;
-use xmlworld\apiclient\Requests\RoomBooking;
-use xmlworld\apiclient\Requests\RoomBookings;
-use xmlworld\apiclient\XMLClient;
+use XMLWorld\ApiClient\Common\Guest;
+use XMLWorld\ApiClient\Common\Guests;
+use XMLWorld\ApiClient\Common\LeadGuest;
+use XMLWorld\ApiClient\Requests\BookDetails;
+use XMLWorld\ApiClient\Requests\RoomBooking;
+use XMLWorld\ApiClient\Requests\RoomBookings;
+use XMLWorld\ApiClient\XMLClient;
 
 $autoload = join(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'autoload.php']);
 if(!file_exists($autoload)){
@@ -23,7 +23,7 @@ $env = XMLClient::ENV_DEV;
 $xmlClient = new XMLClient(login: $login, password: $password, env: $env);
 
 $bookingDetails = new BookDetails(
-	arrivalDate: '2023-11-01',
+	arrivalDate: '2024-11-01',
 	duration: 5,
 	tradeReference: 'TEST_REF',
 	totalPrice: 1040,
@@ -58,5 +58,7 @@ try {
 
 	print_r($result);
 } catch (Throwable $e) {
+	echo "[{$e->getMessage()}]";
 }
 
+exit('Done');

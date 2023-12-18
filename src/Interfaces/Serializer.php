@@ -1,6 +1,6 @@
 <?php
 
-namespace xmlworld\apiclient\Interfaces;
+namespace XMLWorld\ApiClient\Interfaces;
 
 interface Serializer
 {

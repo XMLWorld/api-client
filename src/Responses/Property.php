@@ -1,7 +1,7 @@
 <?php
 
 
-namespace xmlworld\apiclient\Responses;
+namespace XMLWorld\ApiClient\Responses;
 
 class Property extends AbstractResponse
 {

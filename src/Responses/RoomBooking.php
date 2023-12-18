@@ -1,8 +1,8 @@
 <?php
 
-namespace xmlworld\apiclient\Responses;
+namespace XMLWorld\ApiClient\Responses;
 
-use xmlworld\apiclient\Common\Guests;
+use XMLWorld\ApiClient\Common\Guests;
 
 class RoomBooking extends AbstractResponse
 {

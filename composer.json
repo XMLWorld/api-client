@@ -13,7 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "xmlworld\\apiclient\\": "src/"
+            "XMLWorld\\ApiClient\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "XMLWorld\\ApiClient\\Test\\": "tests/"
         }
     },
     "minimum-stability": "stable",

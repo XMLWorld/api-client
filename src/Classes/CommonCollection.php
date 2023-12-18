@@ -1,13 +1,13 @@
 <?php
 
 
-namespace xmlworld\apiclient\Classes;
+namespace XMLWorld\ApiClient\Classes;
 
 
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
-use xmlworld\apiclient\Interfaces\Serializable;
+use XMLWorld\ApiClient\Interfaces\Serializable;
 
 /**
  * @template T

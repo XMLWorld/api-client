@@ -1,30 +1,30 @@
 <?php
 declare(strict_types = 1);
 
-namespace xmlworld\apiclient;
+namespace XMLWorld\ApiClient;
 
 use GuzzleHttp\Client;
 use InvalidArgumentException;
 use SimpleXMLElement;
 use Throwable;
-use xmlworld\apiclient\Interfaces\Logger;
-use xmlworld\apiclient\Interfaces\Serializable;
-use xmlworld\apiclient\Interfaces\Serializer;
+use XMLWorld\ApiClient\Interfaces\Logger;
+use XMLWorld\ApiClient\Interfaces\Serializable;
+use XMLWorld\ApiClient\Interfaces\Serializer;
 
-use xmlworld\apiclient\Requests\BookDetails;
-use xmlworld\apiclient\Requests\BookingRequest;
-use xmlworld\apiclient\Requests\BookingUpdateRequest;
-use xmlworld\apiclient\Requests\BookRequest;
-use xmlworld\apiclient\Requests\CancelRequest;
-use xmlworld\apiclient\Requests\LoginDetails;
-use xmlworld\apiclient\Requests\Request;
-use xmlworld\apiclient\Requests\SearchDetails;
-use xmlworld\apiclient\Requests\SearchRequest;
-use xmlworld\apiclient\Responses\BookingResponse;
-use xmlworld\apiclient\Responses\BookingUpdateRequestResponse;
-use xmlworld\apiclient\Responses\BookResponse;
-use xmlworld\apiclient\Responses\CancelResponse;
-use xmlworld\apiclient\Responses\Response;
+use XMLWorld\ApiClient\Requests\BookDetails;
+use XMLWorld\ApiClient\Requests\BookingRequest;
+use XMLWorld\ApiClient\Requests\BookingUpdateRequest;
+use XMLWorld\ApiClient\Requests\BookRequest;
+use XMLWorld\ApiClient\Requests\CancelRequest;
+use XMLWorld\ApiClient\Requests\LoginDetails;
+use XMLWorld\ApiClient\Requests\Request;
+use XMLWorld\ApiClient\Requests\SearchDetails;
+use XMLWorld\ApiClient\Requests\SearchRequest;
+use XMLWorld\ApiClient\Responses\BookingResponse;
+use XMLWorld\ApiClient\Responses\BookingUpdateRequestResponse;
+use XMLWorld\ApiClient\Responses\BookResponse;
+use XMLWorld\ApiClient\Responses\CancelResponse;
+use XMLWorld\ApiClient\Responses\Response;
 
 class XMLClient
 {
@@ -171,7 +171,7 @@ class XMLClient
         } else {
             // Request failed, handle the error
 			/** @var Response $ret */
-			$ret = $this->serializer->unserialize($responseBody);
+			$ret = $this->serializer->unSerialize($responseBody);
         }
 
 		return $ret;
