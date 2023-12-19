@@ -19,7 +19,7 @@ class Property extends AbstractResponse
 		public ?string $area,
 		public ?string $region,
 		public string $strapline,
-		public string $description,
+		public ?string $description,
 		public string $cMSBaseURL,
 		public string $mainImage,
 		public string $mainImageThumbnail,

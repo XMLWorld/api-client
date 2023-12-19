@@ -7,7 +7,7 @@ class LeadGuest extends AbstractCommon
     public function __construct(
     	public string $firstName,
 		public string $lastName,
-		public string $title,
+		public ?string $title,
 		public ?string $address1 = null,
 		public ?string $address2 = null,
 		public ?string $townCity = null,

@@ -2,4 +2,4 @@
 
 namespace XMLWorld\ApiClient\Responses;
 
-class BookingUpdateResponse extends BookResponse {}
+class BookingUpdateResponse extends BookingUpdateRequestResponse {}

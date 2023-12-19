@@ -9,7 +9,7 @@ class BookingDetails extends AbstractResponse
 {
 	public function __construct(
 		public string $bookingReference,
-		public string $supplierReference,
+		public ?string $supplierReference, //This is optional
 		public string $status,
 		public ?string $cancellationReason = null,
 		public string $currency,
