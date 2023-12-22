@@ -43,37 +43,33 @@ class XMLClient
 
     protected Client $client;
 
-    protected Logger $logger;
-
-    protected Serializer $serializer;
-
-	protected string $env;
-
 	/**
 	 * @param string $login
 	 * @param string $password
 	 * @param string $env
 	 * @param Logger|null $logger
 	 */
-    public function __construct(string $login, string $password, string $env = self::ENV_LIV, Logger $logger = null)
+    public function __construct(string $login, string $password, protected string $env = self::ENV_LIV, protected ?Logger $logger = null, protected ?Serializer $serializer = null)
     {
     	if(!isset(self::$envs[$env])){
     		throw new InvalidArgumentException('Invalid environment');
 		}
 
-		$this->env = $env;
-
-    	if(is_null($logger)){
-    		$this->logger = new NullLogger;
-		} else {
-			$this->logger = $logger;
+		//if no logger is guiven...
+    	if(is_null($this->logger)){
+			//null object pattern
+			$this->logger = new NullLogger;
 		}
 
         $this->loginDetails = new LoginDetails($login, $password, self::VERSION);
 
 		$this->client = $this->getClient();
 
-		$this->serializer = new SerializeXML;
+		//if not, serializer is given...
+		if(is_null($this->serializer)) {
+			//we use SerializeXML by default
+			$this->serializer = new SerializeXML;
+		}
     }
 
 	public static function setDevURL(string $url) : void
