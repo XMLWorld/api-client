@@ -11,12 +11,19 @@ use XMLWorld\ApiClient\Classes\CommonCollection;
 class PropertyResults extends CommonCollection
 {
 	public function __construct(
-		int $totalProperties,
+		public int $totalProperties,
 		PropertyResult ...$propertyResult
 	) {
-		$this->data['TotalProperties'] = $totalProperties;
-		$this->data += $propertyResult;
+		//$this->data['TotalProperties'] = $totalProperties;
+        //$this->data = [];
+		$this->data = $propertyResult;
 	}
+
+    /** @return \ArrayIterator<int, T> */
+    public function getIterator() : \ArrayIterator
+    {
+        return new \ArrayIterator(['TotalProperties' => $this->totalProperties] + $this->data);
+    }
 
 	public static function fromPropertyResults(PropertyResult ...$propertyResult) : self
 	{
