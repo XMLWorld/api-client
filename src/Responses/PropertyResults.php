@@ -25,6 +25,11 @@ class PropertyResults extends CommonCollection
         return new \ArrayIterator(['TotalProperties' => $this->totalProperties] + $this->data);
     }
 
+    public function getPropertyResults() : array
+    {
+        return $this->data;
+    }
+
 	public static function fromPropertyResults(PropertyResult ...$propertyResult) : self
 	{
 		return new self(count($propertyResult), ...$propertyResult);
