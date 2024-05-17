@@ -90,6 +90,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($specialOffert, $oneSpecialOffertsOnly[0]);
 
+        $this->assertSame(
+            [$specialOffert],
+            iterator_to_array($oneSpecialOffertsOnly),
+            'we test the behaviour for a foreach'
+        );
+
         return $oneSpecialOffertsOnly;
     }
 
@@ -117,6 +123,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($specialOffert, $twoSpecialOfferts[0]);
         $this->assertSame($specialOffer2, $twoSpecialOfferts[1]);
+
+        $this->assertSame(
+            [$specialOffert, $specialOffer2],
+            iterator_to_array($twoSpecialOfferts),
+            'we test the behaviour for a foreach'
+        );
 
         return $twoSpecialOfferts;
     }
@@ -151,6 +163,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($tax, $oneTaxesOnly[0]);
 
+        $this->assertSame(
+            [$tax],
+            iterator_to_array($oneTaxesOnly),
+            'we test the behaviour for a foreach'
+        );
+
         return $oneTaxesOnly;
     }
 
@@ -172,6 +190,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($tax, $twoTaxes[0]);
         $this->assertSame($taxTwo, $twoTaxes[1]);
+
+        $this->assertSame(
+            [$tax, $taxTwo],
+            iterator_to_array($twoTaxes),
+            'we test the behaviour for a foreach'
+        );
 
         return $twoTaxes;
     }
@@ -211,6 +235,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($suplement, $oneSupplement[0]);
 
+        $this->assertSame(
+            [$suplement],
+            iterator_to_array($oneSupplement),
+            'we test the behaviour for a foreach'
+        );
+
         return $oneSupplement;
     }
 
@@ -221,7 +251,7 @@ class PropertyResultsTest extends TestCase
      */
     public function twoSupplements($suplement)
     {
-        $testSupplement = new Supplement(
+        $secondSupplement = new Supplement(
             'test supplement',
             'Per Night',
             'Per Person',
@@ -231,13 +261,19 @@ class PropertyResultsTest extends TestCase
 
         $twoSupplements = new Supplements(
             $suplement,
-            $testSupplement
+            $secondSupplement
         );
 
         $this->assertCount(2, $twoSupplements, 'it has two elements');
 
         $this->assertSame($suplement, $twoSupplements[0]);
-        $this->assertSame($testSupplement, $twoSupplements[1]);
+        $this->assertSame($secondSupplement, $twoSupplements[1]);
+
+        $this->assertSame(
+            [$suplement, $secondSupplement],
+            iterator_to_array($twoSupplements),
+            'we test the behaviour for a foreach'
+        );
 
         return $twoSupplements;
     }
@@ -270,6 +306,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($cancellationPolicy, $oneCancellationPolicyOnly[0]);
 
+        $this->assertSame(
+            [$cancellationPolicy],
+            iterator_to_array($oneCancellationPolicyOnly),
+            'we test the behaviour for a foreach'
+        );
+
         return $oneCancellationPolicyOnly;
     }
 
@@ -293,6 +335,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($cancellationPolicy, $twoCancellationPolicies[0]);
         $this->assertSame($secondPolicy, $twoCancellationPolicies[1]);
+
+        $this->assertSame(
+            [$cancellationPolicy, $secondPolicy],
+            iterator_to_array($twoCancellationPolicies),
+            'we test the behaviour for a foreach'
+        );
 
         return $twoCancellationPolicies;
     }
@@ -403,6 +451,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($roomType, $oneRoomTypeOnly[0]);
 
+        $this->assertSame(
+            [$roomType],
+            iterator_to_array($oneRoomTypeOnly),
+            'we test the behaviour for a foreach'
+        );
+
         return $oneRoomTypeOnly;
     }
 
@@ -419,6 +473,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($roomType1, $twoRoomTypes[0]);
         $this->assertSame($roomType2, $twoRoomTypes[1]);
+
+        $this->assertSame(
+            [$roomType1, $roomType2],
+            iterator_to_array($twoRoomTypes),
+            'we test the behaviour for a foreach'
+        );
 
         return $twoRoomTypes;
     }
@@ -451,6 +511,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($image, $oneImageOnly[0]);
 
+        $this->assertSame(
+            [$image],
+            iterator_to_array($oneImageOnly),
+            'we test the behaviour for a foreach'
+        );
+
         return $oneImageOnly;
     }
 
@@ -474,6 +540,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($image, $twoImages[0]);
         $this->assertSame($imageTwo, $twoImages[1]);
+
+        $this->assertSame(
+            [$image, $imageTwo],
+            iterator_to_array($twoImages),
+            'we test the behaviour for a foreach'
+        );
 
         return $twoImages;
     }
@@ -508,6 +580,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($erratum, $oneErratumOnly[0]);
 
+        $this->assertSame(
+            [$erratum],
+            iterator_to_array($oneErratumOnly),
+            'we test the behaviour for a foreach'
+        );
+
         return $oneErratumOnly;
     }
 
@@ -532,6 +610,12 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($erratum, $twoErrata[0]);
         $this->assertSame($erratumTwo, $twoErrata[1]);
+
+        $this->assertSame(
+            [$erratum, $erratumTwo],
+            iterator_to_array($twoErrata),
+            'we test the behaviour for a foreach'
+        );
 
         return $twoErrata;
     }
@@ -672,6 +756,13 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($oneRoomProperty, $propertyResults[0]);
 
+        $this->assertSame([
+            'TotalProperties' => 1,
+            $oneRoomProperty
+        ], iterator_to_array($propertyResults), 'we test the behaviour for a foreach');
+
+        $this->assertSame([$oneRoomProperty], $propertyResults->getPropertyResults());
+
         return $propertyResults;
     }
 
@@ -690,6 +781,14 @@ class PropertyResultsTest extends TestCase
 
         $this->assertSame($oneRoomProperty, $propertyResults[0]);
         $this->assertSame($twoRoomProperty, $propertyResults[1]);
+
+        $this->assertSame([
+            'TotalProperties' => 2,
+            $oneRoomProperty,
+            $twoRoomProperty
+        ], iterator_to_array($propertyResults), 'we test the behaviour for a foreach');
+
+        $this->assertSame([$oneRoomProperty, $twoRoomProperty], $propertyResults->getPropertyResults());
 
         return $propertyResults;
     }
