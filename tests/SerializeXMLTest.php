@@ -227,7 +227,6 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequest>
 				<Adults>2</Adults>
 				<Children>0</Children>
-				<Infants>0</Infants>
 			</RoomRequest>',
 			$twoAdults
 		];
@@ -241,7 +240,6 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequest>
 				<Adults>2</Adults>
 				<Children>1</Children>
-				<Infants>0</Infants>
 				<ChildAges>
 					<ChildAge>
 						<Age>10</Age>
@@ -260,15 +258,14 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequest>
 				<Adults>2</Adults>
 				<Children>2</Children>
-				<Infants>0</Infants>
 				<ChildAges>
-				    <ChildAge>
-				        <Age>1</Age>
-                    </ChildAge>
-				    <ChildAge>
-				        <Age>2</Age>
-                    </ChildAge>
-                </ChildAges>
+					<ChildAge>
+						<Age>1</Age>
+					</ChildAge>
+					<ChildAge>
+						<Age>2</Age>
+					</ChildAge>
+				</ChildAges>
 			</RoomRequest>',
 			$twoAdultsTwoInfants
 		];
@@ -281,15 +278,14 @@ class SerializeXMLTest extends TestCase
 		yield [
 			'<RoomRequest>
 				<Adults>0</Adults>
-				<Children>2</Children>
-				<Infants>0</Infants>
+				<Children>3</Children>
 				<ChildAges>
-				    <ChildAge>
-				        <Age>1</Age>
-                    </ChildAge>
-                    <ChildAge>
-				        <Age>2</Age>
-                    </ChildAge>
+					<ChildAge>
+						<Age>1</Age>
+					</ChildAge>
+					<ChildAge>
+						<Age>2</Age>
+					</ChildAge>
 					<ChildAge>
 						<Age>10</Age>
 					</ChildAge>
@@ -306,11 +302,16 @@ class SerializeXMLTest extends TestCase
 		yield [
 			'<RoomRequest>
 				<Adults>2</Adults>
-				<Children>1</Children>
-				<Infants>2</Infants>
+				<Children>3</Children>
 				<ChildAges>
 					<ChildAge>
+						<Age>1</Age>
+					</ChildAge>
+					<ChildAge>
 						<Age>8</Age>
+					</ChildAge>
+					<ChildAge>
+						<Age>2</Age>
 					</ChildAge>
 				</ChildAges>
 			</RoomRequest>',
@@ -325,14 +326,19 @@ class SerializeXMLTest extends TestCase
 		yield [
 			'<RoomRequest>
 				<Adults>2</Adults>
-				<Children>2</Children>
-				<Infants>2</Infants>
+				<Children>4</Children>
 				<ChildAges>
 					<ChildAge>
 						<Age>9</Age>
 					</ChildAge>
 					<ChildAge>
+						<Age>1</Age>
+					</ChildAge>
+					<ChildAge>
 						<Age>8</Age>
+					</ChildAge>
+					<ChildAge>
+						<Age>2</Age>
 					</ChildAge>
 				</ChildAges>
 			</RoomRequest>',
@@ -344,7 +350,6 @@ class SerializeXMLTest extends TestCase
 				<RoomRequest>
 					<Adults>2</Adults>
 					<Children>0</Children>
-					<Infants>0</Infants>
 				</RoomRequest>
 			</RoomRequests>',
 			new RoomRequests(
@@ -356,8 +361,15 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequests>
 				<RoomRequest>
 					<Adults>2</Adults>
-					<Children>0</Children>
-					<Infants>2</Infants>
+					<Children>2</Children>
+					<ChildAges>
+						<ChildAge>
+							<Age>1</Age>
+						</ChildAge>
+						<ChildAge>
+							<Age>2</Age>
+						</ChildAge>
+					</ChildAges>
 				</RoomRequest>
 			</RoomRequests>',
 			new RoomRequests(
@@ -370,7 +382,6 @@ class SerializeXMLTest extends TestCase
 				<RoomRequest>
 					<Adults>2</Adults>
 					<Children>1</Children>
-					<Infants>0</Infants>
 					<ChildAges>
 						<ChildAge>
 							<Age>10</Age>
@@ -387,14 +398,19 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequests>
 				<RoomRequest>
 					<Adults>2</Adults>
-					<Children>2</Children>
-					<Infants>2</Infants>
+					<Children>4</Children>
 					<ChildAges>
 						<ChildAge>
 							<Age>9</Age>
 						</ChildAge>
 						<ChildAge>
+							<Age>1</Age>
+						</ChildAge>
+						<ChildAge>
 							<Age>8</Age>
+						</ChildAge>
+						<ChildAge>
+							<Age>2</Age>
 						</ChildAge>
 					</ChildAges>
 				</RoomRequest>
@@ -408,13 +424,19 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequests>
 				<RoomRequest>
 					<Adults>2</Adults>
-					<Children>0</Children>
-					<Infants>2</Infants>
+					<Children>2</Children>
+					<ChildAges>
+						<ChildAge>
+							<Age>1</Age>
+						</ChildAge>
+						<ChildAge>
+							<Age>2</Age>
+						</ChildAge>
+					</ChildAges>
 				</RoomRequest>
 				<RoomRequest>
 					<Adults>2</Adults>
 					<Children>1</Children>
-					<Infants>0</Infants>
 					<ChildAges>
 						<ChildAge>
 							<Age>10</Age>
@@ -423,14 +445,19 @@ class SerializeXMLTest extends TestCase
 				</RoomRequest>
 				<RoomRequest>
 					<Adults>2</Adults>
-					<Children>2</Children>
-					<Infants>2</Infants>
+					<Children>4</Children>
 					<ChildAges>
 						<ChildAge>
 							<Age>9</Age>
 						</ChildAge>
 						<ChildAge>
+							<Age>1</Age>
+						</ChildAge>
+						<ChildAge>
 							<Age>8</Age>
+						</ChildAge>
+						<ChildAge>
+							<Age>2</Age>
 						</ChildAge>
 					</ChildAges>
 				</RoomRequest>
@@ -468,19 +495,31 @@ class SerializeXMLTest extends TestCase
 					<RoomRequests>
 						<RoomRequest>
 							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>2</Infants>
+							<Children>2</Children>
+							<ChildAges>
+								<ChildAge>
+									<Age>1</Age>
+								</ChildAge>
+								<ChildAge>
+									<Age>2</Age>
+								</ChildAge>
+							</ChildAges>
 						</RoomRequest>
 						<RoomRequest>
 							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>2</Infants>
+							<Children>4</Children>
 							<ChildAges>
 								<ChildAge>
 									<Age>9</Age>
 								</ChildAge>
 								<ChildAge>
+									<Age>1</Age>
+								</ChildAge>
+								<ChildAge>
 									<Age>8</Age>
+								</ChildAge>
+								<ChildAge>
+									<Age>2</Age>
 								</ChildAge>
 							</ChildAges>
 						</RoomRequest>
@@ -530,19 +569,31 @@ class SerializeXMLTest extends TestCase
 					<RoomRequests>
 						<RoomRequest>
 							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>2</Infants>
+							<Children>2</Children>
+							<ChildAges>
+								<ChildAge>
+									<Age>1</Age>
+								</ChildAge>
+								<ChildAge>
+									<Age>2</Age>
+								</ChildAge>
+							</ChildAges>
 						</RoomRequest>
 						<RoomRequest>
 							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>2</Infants>
+							<Children>4</Children>
 							<ChildAges>
 								<ChildAge>
 									<Age>9</Age>
 								</ChildAge>
 								<ChildAge>
+									<Age>1</Age>
+								</ChildAge>
+								<ChildAge>
 									<Age>8</Age>
+								</ChildAge>
+								<ChildAge>
+									<Age>2</Age>
 								</ChildAge>
 							</ChildAges>
 						</RoomRequest>
@@ -4370,9 +4421,15 @@ class SerializeXMLTest extends TestCase
 		yield [
 			'<RoomRequest>
 				<Adults>2</Adults>
-				<Children>0</Children>
-				<Infants>2</Infants>
-				<ChildAges/>
+				<Children>2</Children>
+				<ChildAges>
+					<ChildAge>
+						<Age>1</Age>
+					</ChildAge>
+					<ChildAge>
+						<Age>2</Age>
+					</ChildAge>
+				</ChildAges>
 			</RoomRequest>',
 			$twoAdultsTwoInfants
 		];
@@ -4385,9 +4442,14 @@ class SerializeXMLTest extends TestCase
 		yield [
 			'<RoomRequest>
 				<Adults>0</Adults>
-				<Children>1</Children>
-				<Infants>2</Infants>
+				<Children>3</Children>
 				<ChildAges>
+					<ChildAge>
+						<Age>1</Age>
+					</ChildAge>
+					<ChildAge>
+						<Age>2</Age>
+					</ChildAge>
 					<ChildAge>
 						<Age>10</Age>
 					</ChildAge>
@@ -4404,11 +4466,16 @@ class SerializeXMLTest extends TestCase
 		yield [
 			'<RoomRequest>
 				<Adults>2</Adults>
-				<Children>1</Children>
-				<Infants>2</Infants>
+				<Children>3</Children>
 				<ChildAges>
 					<ChildAge>
+						<Age>1</Age>
+					</ChildAge>
+					<ChildAge>
 						<Age>8</Age>
+					</ChildAge>
+					<ChildAge>
+						<Age>2</Age>
 					</ChildAge>
 				</ChildAges>
 			</RoomRequest>',
@@ -4423,14 +4490,20 @@ class SerializeXMLTest extends TestCase
 		yield [
 			'<RoomRequest>
 				<Adults>2</Adults>
-				<Children>2</Children>
+				<Children>4</Children>
 				<Infants>2</Infants>
 				<ChildAges>
 					<ChildAge>
 						<Age>9</Age>
 					</ChildAge>
 					<ChildAge>
+						<Age>1</Age>
+					</ChildAge>
+					<ChildAge>
 						<Age>8</Age>
+					</ChildAge>
+					<ChildAge>
+						<Age>2</Age>
 					</ChildAge>
 				</ChildAges>
 			</RoomRequest>',
@@ -4454,9 +4527,15 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequests>
 				<RoomRequest>
 					<Adults>2</Adults>
-					<ChildAges/>
-					<Children>0</Children>
-					<Infants>2</Infants>
+					<ChildAges>
+						<ChildAge>
+							<Age>1</Age>
+						</ChildAge>
+						<ChildAge>
+							<Age>2</Age>
+						</ChildAge>
+					</ChildAges>
+					<Children>2</Children>
 				</RoomRequest>
 			</RoomRequests>',
 			new RoomRequests(
@@ -4486,14 +4565,20 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequests>
 				<RoomRequest>
 					<Adults>2</Adults>
-					<Children>2</Children>
+					<Children>4</Children>
 					<Infants>2</Infants>
 					<ChildAges>
 						<ChildAge>
 							<Age>9</Age>
 						</ChildAge>
 						<ChildAge>
+							<Age>1</Age>
+						</ChildAge>
+						<ChildAge>
 							<Age>8</Age>
+						</ChildAge>
+						<ChildAge>
+							<Age>2</Age>
 						</ChildAge>
 					</ChildAges>
 				</RoomRequest>
@@ -4507,13 +4592,19 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequests>
 				<RoomRequest>
 					<Adults>2</Adults>
-					<Children>0</Children>
-					<Infants>2</Infants>
+					<Children>2</Children>
+					<ChildAges>
+						<ChildAge>
+							<Age>1</Age>
+						</ChildAge>
+						<ChildAge>
+							<Age>2</Age>
+						</ChildAge>
+					</ChildAges>
 				</RoomRequest>
 				<RoomRequest>
 					<Adults>2</Adults>
 					<Children>1</Children>
-					<Infants>0</Infants>
 					<ChildAges>
 						<ChildAge>
 							<Age>10</Age>
@@ -4522,14 +4613,19 @@ class SerializeXMLTest extends TestCase
 				</RoomRequest>
 				<RoomRequest>
 					<Adults>2</Adults>
-					<Children>2</Children>
-					<Infants>2</Infants>
+					<Children>4</Children>
 					<ChildAges>
 						<ChildAge>
 							<Age>9</Age>
 						</ChildAge>
 						<ChildAge>
+							<Age>1</Age>
+						</ChildAge>
+						<ChildAge>
 							<Age>8</Age>
+						</ChildAge>
+						<ChildAge>
+							<Age>2</Age>
 						</ChildAge>
 					</ChildAges>
 				</RoomRequest>
@@ -4575,19 +4671,31 @@ class SerializeXMLTest extends TestCase
 					<RoomRequests>
 						<RoomRequest>
 							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>2</Infants>
+							<Children>2</Children>
+							<ChildAges>
+								<ChildAge>
+									<Age>1</Age>
+								</ChildAge>
+								<ChildAge>
+									<Age>2</Age>
+								</ChildAge>
+							</ChildAges>
 						</RoomRequest>
 						<RoomRequest>
 							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>2</Infants>
+							<Children>4</Children>
 							<ChildAges>
 								<ChildAge>
 									<Age>9</Age>
 								</ChildAge>
 								<ChildAge>
+									<Age>1</Age>
+								</ChildAge>
+								<ChildAge>
 									<Age>8</Age>
+								</ChildAge>
+								<ChildAge>
+									<Age>2</Age>
 								</ChildAge>
 							</ChildAges>
 						</RoomRequest>
@@ -4635,20 +4743,31 @@ class SerializeXMLTest extends TestCase
 					<RoomRequests>
 						<RoomRequest>
 							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>2</Infants>
-							<ChildAges/>
+							<Children>2</Children>
+							<ChildAges>
+								<ChildAge>
+									<Age>1</Age>
+								</ChildAge>
+								<ChildAge>
+									<Age>2</Age>
+								</ChildAge>
+							</ChildAges>
 						</RoomRequest>
 						<RoomRequest>
 							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>2</Infants>
+							<Children>4</Children>
 							<ChildAges>
 								<ChildAge>
 									<Age>9</Age>
 								</ChildAge>
 								<ChildAge>
+									<Age>1</Age>
+								</ChildAge>
+								<ChildAge>
 									<Age>8</Age>
+								</ChildAge>
+								<ChildAge>
+									<Age>2</Age>
 								</ChildAge>
 							</ChildAges>
 						</RoomRequest>
