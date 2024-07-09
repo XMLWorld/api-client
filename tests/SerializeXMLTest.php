@@ -259,8 +259,16 @@ class SerializeXMLTest extends TestCase
 		yield [
 			'<RoomRequest>
 				<Adults>2</Adults>
-				<Children>0</Children>
-				<Infants>2</Infants>
+				<Children>2</Children>
+				<Infants>0</Infants>
+				<ChildAges>
+				    <ChildAge>
+				        <Age>1</Age>
+                    </ChildAge>
+				    <ChildAge>
+				        <Age>2</Age>
+                    </ChildAge>
+                </ChildAges>
 			</RoomRequest>',
 			$twoAdultsTwoInfants
 		];
@@ -273,9 +281,15 @@ class SerializeXMLTest extends TestCase
 		yield [
 			'<RoomRequest>
 				<Adults>0</Adults>
-				<Children>1</Children>
-				<Infants>2</Infants>
+				<Children>2</Children>
+				<Infants>0</Infants>
 				<ChildAges>
+				    <ChildAge>
+				        <Age>1</Age>
+                    </ChildAge>
+                    <ChildAge>
+				        <Age>2</Age>
+                    </ChildAge>
 					<ChildAge>
 						<Age>10</Age>
 					</ChildAge>

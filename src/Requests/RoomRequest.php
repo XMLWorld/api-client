@@ -19,7 +19,7 @@ class RoomRequest extends AbstractRequest
 		$adults = $adults ?? 0;
 
 		//we take the ages of children only
-		$childrenAges = array_filter($ages, function($item){return $item > 2; });
+		$childrenAges = array_filter($ages, function($item){return $item > 0; });
 
 		//if no children and not adults given...
 		if($adults == 0 && count($childrenAges) == 0) {
