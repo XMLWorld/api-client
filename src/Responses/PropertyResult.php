@@ -29,7 +29,7 @@ class PropertyResult extends AbstractResponse
 		public string $cMSBaseURL,
 		public string $mainImage,
 		public string $mainImageThumbnail,
-		public Images $images,
+		public ?Images $images,
 		public ?Errata $errata = null,
 		public Supplier $supplier
 	){}
