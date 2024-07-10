@@ -23,7 +23,7 @@ class RoomRequest extends AbstractRequest
 		return new self(
 			$adults,
             count($ages),
-            ChildAges::fromAges(...$ages)
+            count($ages) ? ChildAges::fromAges(...$ages) : null
 		);
 	}
 }

@@ -227,6 +227,7 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequest>
 				<Adults>2</Adults>
 				<Children>0</Children>
+				<ChildAges/>
 			</RoomRequest>',
 			$twoAdults
 		];
@@ -350,6 +351,7 @@ class SerializeXMLTest extends TestCase
 				<RoomRequest>
 					<Adults>2</Adults>
 					<Children>0</Children>
+					<ChildAges/>
 				</RoomRequest>
 			</RoomRequests>',
 			new RoomRequests(
@@ -4383,12 +4385,13 @@ class SerializeXMLTest extends TestCase
 			)
 		];
 
-		$twoAdults = RoomRequest::fromAges(2);
+		$twoAdults = RoomRequest::fromAges(
+            2
+        );
 		yield [
 			'<RoomRequest>
 				<Children>0</Children>
 				<Adults>2</Adults>
-				<Infants>0</Infants>
 				<ChildAges/>
 			</RoomRequest>',
 			$twoAdults
@@ -4407,7 +4410,6 @@ class SerializeXMLTest extends TestCase
 					</ChildAge>
 				</ChildAges>
 				<Adults>2</Adults>
-				<Infants>0</Infants>
 				<Children>1</Children>
 			</RoomRequest>',
 			$twoAdultsOneChild
@@ -4491,7 +4493,6 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequest>
 				<Adults>2</Adults>
 				<Children>4</Children>
-				<Infants>2</Infants>
 				<ChildAges>
 					<ChildAge>
 						<Age>9</Age>
@@ -4515,7 +4516,6 @@ class SerializeXMLTest extends TestCase
 				<RoomRequest>
 					<Adults>2</Adults>
 					<Children>0</Children>
-					<Infants>0</Infants>
 				</RoomRequest>
 			</RoomRequests>',
 			new RoomRequests(
@@ -4548,7 +4548,6 @@ class SerializeXMLTest extends TestCase
 				<RoomRequest>
 					<Adults>2</Adults>
 					<Children>1</Children>
-					<Infants>0</Infants>
 					<ChildAges>
 						<ChildAge>
 							<Age>10</Age>
