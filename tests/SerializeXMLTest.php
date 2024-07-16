@@ -72,39 +72,28 @@ use XMLWorld\ApiClient\Responses\BookingUpdateRequestResponse;
 use XMLWorld\ApiClient\SerializeXML;
 use XMLWorld\ApiClient\XMLClient;
 
-class SerializeXMLTest extends TestCase
+class SerializeXMLTest extends BaseSerializeXML
 {
-	protected static Serializer $serializer;
+    /**
+     * @dataProvider dataProviderSerializePrimitives
+     * @param string $expected
+     * @param AbstractRequest $obj
+     */
+    public function testSerialize(string $expected, Serializable $obj)
+    {
+        $this->serialize($expected, $obj);
+    }
 
-	public static function setUpBeforeClass(): void
-	{
-		self::$serializer = new SerializeXML;
-	}
-
-	/**
-	 * @dataProvider dataProviderSerializePrimitives
-	 * @param string $expected
-	 * @param AbstractRequest $obj
-	 */
-	public function testSerialize(string $expected, Serializable $obj)
-	{
-		$this->assertEquals(
-			str_replace(["\r\n", "\n", "\t"], '', $expected),
-			self::$serializer->serialize($obj)
-		);
-	}
-
-	/**
-	 * @dataProvider dataProviderUnserializePrimitives
-	 * @param AbstractRequest $expected
-	 * @param string $xml
-	 * @throws \Exception
-	 */
-	public function testUnserialize(string $xml, Serializable $expected)
-	{
-		$namespace = (new ReflectionClass($expected))->getNamespaceName();
-		$this->assertEquals($expected, self::$serializer->unserialize($xml, $namespace));
-	}
+    /**
+     * @dataProvider dataProviderUnserializePrimitives
+     * @param AbstractRequest $expected
+     * @param string $xml
+     * @throws \Exception
+     */
+    public function testUnserialize(string $xml, Serializable $expected)
+    {
+        $this->unserialize($xml, $expected);
+    }
 
 	/**
 	 * @param string $expected
@@ -227,7 +216,6 @@ class SerializeXMLTest extends TestCase
 			'<RoomRequest>
 				<Adults>2</Adults>
 				<Children>0</Children>
-				<ChildAges/>
 			</RoomRequest>',
 			$twoAdults
 		];
@@ -351,7 +339,6 @@ class SerializeXMLTest extends TestCase
 				<RoomRequest>
 					<Adults>2</Adults>
 					<Children>0</Children>
-					<ChildAges/>
 				</RoomRequest>
 			</RoomRequests>',
 			new RoomRequests(

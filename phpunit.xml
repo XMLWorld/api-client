@@ -10,6 +10,13 @@
     <testsuites>
         <testsuite name="default">
             <directory>tests</directory>
+
+            <!-- <file>tests\BaseSerializeXML.php</file> -->
+            <!--
+            <file>tests\Requests\LoginDetailsTest.php</file>
+            <file>tests\Requests\SearchRequestTest.php</file>
+            -->
+
         </testsuite>
     </testsuites>
 

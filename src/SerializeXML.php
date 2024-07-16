@@ -181,7 +181,7 @@ class SerializeXML implements Serializer
 						}
 					}
 
-					//if the param is variadic and it's the only one...
+					//if the param is variadic, and it's the only one...
 					if($item->isVariadic()
 						&& count($item->getDeclaringFunction()->getParameters()) == 1
 						&& is_array($param) //and the value is an array
