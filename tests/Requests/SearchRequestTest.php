@@ -10,10 +10,10 @@ use XMLWorld\ApiClient\Test\BaseSerializeXML;
 class SearchRequestTest extends BaseSerializeXML
 {
     /**
-     * @depends \XMLWorld\ApiClient\Requests\LoginDetailsTest::testLoginDetails
-     * @depends \XMLWorld\ApiClient\Requests\RoomRequestsTest::testTwoAdultsTwoInfants
-     * @depends \XMLWorld\ApiClient\Requests\RoomRequestsTest::testTwoAdultsTwoChildrenTwoInfants
-     * @depends \XMLWorld\ApiClient\Requests\PropertiesTest::testTwoProperties
+     * @depends \XMLWorld\ApiClient\Test\Requests\LoginDetailsTest::testLoginDetails
+     * @depends \XMLWorld\ApiClient\Test\Requests\RoomRequestsTest::testTwoAdultsTwoInfants
+     * @depends \XMLWorld\ApiClient\Test\Requests\RoomRequestsTest::testTwoAdultsTwoChildrenTwoInfants
+     * @depends \XMLWorld\ApiClient\Test\Requests\PropertiesTest::testTwoProperties
      */
     public function testTwoRoomSearchRequest(
         $loginDetails,
