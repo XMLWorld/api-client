@@ -8,9 +8,38 @@ use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class RoomRequestsTest extends BaseSerializeXML
 {
+    public static function getTwoAdults()
+    {
+        return RoomRequest::fromAges(2);
+    }
+
+    public static function getTwoAdultsOneChild()
+    {
+        return RoomRequest::fromAges(
+            2,
+            10
+        );
+    }
+
+    public static function geTtwoAdultsTwoInfants()
+    {
+        return RoomRequest::fromAges(
+            2,
+            1, 2
+        );
+    }
+
+    public static function getTwoAdultsTwoChildrenTwoInfants()
+    {
+        return RoomRequest::fromAges(
+            2,
+            9, 1, 8, 2
+        );
+    }
+
     public function testTwoAdults()
     {
-        $twoAdults = RoomRequest::fromAges(2);
+        $twoAdults = self::getTwoAdults();
 
         $this->serialize(
             '<RoomRequest>
@@ -34,10 +63,7 @@ class RoomRequestsTest extends BaseSerializeXML
 
     public function testTwoAdultsOneChild()
     {
-        $twoAdultsOneChild = RoomRequest::fromAges(
-            2,
-            10
-        );
+        $twoAdultsOneChild = self::getTwoAdultsOneChild();
 
         $this->serialize(
             '<RoomRequest>
@@ -70,10 +96,7 @@ class RoomRequestsTest extends BaseSerializeXML
 
     public function testTwoAdultsTwoInfants()
     {
-        $twoAdultsTwoInfants = RoomRequest::fromAges(
-            2,
-            1, 2
-        );
+        $twoAdultsTwoInfants = self::geTtwoAdultsTwoInfants();
 
         $this->serialize(
             '<RoomRequest>
@@ -208,10 +231,7 @@ class RoomRequestsTest extends BaseSerializeXML
 
     public function testTwoAdultsTwoChildrenTwoInfants()
     {
-        $twoAdultsTwoChildrenTwoInfants = RoomRequest::fromAges(
-            2,
-            9, 1, 8, 2
-        );
+        $twoAdultsTwoChildrenTwoInfants = self::getTwoAdultsTwoChildrenTwoInfants();
 
         $this->serialize(
             '<RoomRequest>

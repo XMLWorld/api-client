@@ -8,9 +8,21 @@ use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class ChildAgesTest extends BaseSerializeXML
 {
+    public static function getChildAge()
+    {
+        return new ChildAge(15);
+    }
+
+    public static function getTwoChildAges()
+    {
+        return ChildAges::fromAges(
+            8, 15
+        );
+    }
+
     public function testChildAge()
     {
-        $childAge = new ChildAge(15);
+        $childAge = self::getChildAge();
 
         $expected = '<ChildAge>
 				<Age>15</Age>
@@ -62,9 +74,7 @@ class ChildAgesTest extends BaseSerializeXML
      */
     public function testTwoChildAges()
     {
-        $twoChildAges = ChildAges::fromAges(
-            8, 15
-        );
+        $twoChildAges = self::getTwoChildAges();
 
         $expected = '<ChildAges>
 				<ChildAge>

@@ -7,9 +7,20 @@ use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class PropertiesTest extends BaseSerializeXML
 {
+    public static function getPropertyID()
+    {
+        return new Properties(2007);
+    }
+
+    public static function getTwoPropertyIDs()
+    {
+        return new Properties(2007, 3008);
+    }
+
+
     public function testOneProperty()
     {
-        $proeprtyID = new Properties(2007);
+        $proeprtyID = self::getPropertyID();
 
         $expected = '<Properties>
 				<PropertyID>2007</PropertyID>
@@ -30,7 +41,8 @@ class PropertiesTest extends BaseSerializeXML
 
     public function testTwoProperties()
     {
-        $twoPropertyIDs = new Properties(2007, 3008);
+        $twoPropertyIDs = self::getTwoPropertyIDs();
+
         $expected = '<Properties>
 				<PropertyID>2007</PropertyID>
 				<PropertyID>3008</PropertyID>
