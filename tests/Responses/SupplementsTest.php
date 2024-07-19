@@ -81,7 +81,7 @@ class SupplementsTest extends BaseSerializeXML
     }
 
     /**
-     * @depends testTostSupplement
+     * @depends testTestSupplement
      */
     public function testOneSupplements($testSupplement)
     {

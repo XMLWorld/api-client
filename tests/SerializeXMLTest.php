@@ -2569,6 +2569,7 @@ class SerializeXMLTest extends BaseSerializeXML
 				'TEST_REF',
 				1040,
 				$simpleLeadGuestBook,
+                null,
 				new RoomBookings($roomBookingTwoAdults)
 			)
 		];
@@ -2579,6 +2580,7 @@ class SerializeXMLTest extends BaseSerializeXML
 			'TEST_REF',
 			1040,
 			$simpleLeadGuestBook,
+            null,
 			$twoRoomBookings
 		);
 
@@ -6751,6 +6753,7 @@ class SerializeXMLTest extends BaseSerializeXML
 				'TEST_REF',
 				1040,
 				$simpleLeadGuestBook,
+                null,
 				new RoomBookings($roomBookingOneAdultOnly)
 			)
 		];
@@ -6791,6 +6794,7 @@ class SerializeXMLTest extends BaseSerializeXML
 				'TEST_REF',
 				1040,
 				$simpleLeadGuestBook,
+                null,
 				new RoomBookings($roomBookingTwoAdults)
 			)
 		];
@@ -6802,6 +6806,7 @@ class SerializeXMLTest extends BaseSerializeXML
 			'TEST_REF',
 			1040,
 			$simpleLeadGuestBook,
+            null,
 			$twoRoomBookings
 		);
 

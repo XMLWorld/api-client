@@ -12,6 +12,7 @@ class BookDetails extends AbstractRequest
 		public string $tradeReference,
 		public ?float $totalPrice = null,
 		public LeadGuest $leadGuest,
+        public ?string $request = null,     //Comment
 		public RoomBookings $roomBookings,
 	){}
 }

@@ -4,8 +4,6 @@ namespace XMLWorld\ApiClient\Test\Common;
 
 use XMLWorld\ApiClient\Common\Guest;
 use XMLWorld\ApiClient\Common\Guests;
-use XMLWorld\ApiClient\Responses\Errata;
-use XMLWorld\ApiClient\Responses\Erratum;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class GuestsTests extends BaseSerializeXML

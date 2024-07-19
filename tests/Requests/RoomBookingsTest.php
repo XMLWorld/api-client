@@ -5,35 +5,73 @@ namespace XMLWorld\ApiClient\Test\Requests;
 use XMLWorld\ApiClient\Common\Guest;
 use XMLWorld\ApiClient\Common\Guests;
 use XMLWorld\ApiClient\Requests\RoomBooking;
-use XMLWorld\ApiClient\Responses\Errata;
-use XMLWorld\ApiClient\Responses\Erratum;
+use XMLWorld\ApiClient\Requests\RoomBookings;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class RoomBookingsTest extends BaseSerializeXML
+class RoomBookingsTest extends LoginDetailsTest
 {
-    public function testRoomBooking()
+    public function testRoomBookingOneAdultOnly()
     {
-        $roomBookingOneAdult = new RoomBooking(
+        $roomBookingOneAdultOnly = new RoomBooking(
             155558,
             1,
             1,
             0,
+            0
+        );              //the adult is the Leadguest so no adults here
+
+        $this->serialize(
+            '<RoomBooking>
+				<RoomID>155558</RoomID>
+				<MealBasisID>1</MealBasisID>
+				<Adults>1</Adults>
+				<Children>0</Children>
+				<Infants>0</Infants>
+				<Guests/>
+			</RoomBooking>',
+            $roomBookingOneAdultOnly
+        );
+
+        $this->unserialize(
+            '<RoomBooking>
+				<RoomID>155558</RoomID>
+				<MealBasisID>1</MealBasisID>
+				<Adults>1</Adults>
+				<Children>0</Children>
+				<Infants>0</Infants>
+				<Guests/>
+			</RoomBooking>',
+            $roomBookingOneAdultOnly
+        );
+
+        return $roomBookingOneAdultOnly;
+    }
+
+    public function testRoomBookingTwoAdults()
+    {
+        $oneGuest = new Guest(   //this is the second adult.
+            'Adult',
+            'Sally',
+            'Smith',
+            'Mrs',
+            null,
+            'French'
+        );
+
+        $roomBookingTwoAdults = new RoomBooking(
+            155558,
+            1,
+            2,
             0,
-            new Guests(new Guest(
-                'Adult',
-                'Sally',
-                'Smith',
-                'Mrs',
-                null,
-                'French'
-            ))
+            0,
+            new Guests($oneGuest)
         );
 
         $this->serialize(
             '<RoomBooking>
 				<RoomID>155558</RoomID>
 				<MealBasisID>1</MealBasisID>
-				<Adults>1</Adults>
+				<Adults>2</Adults>
 				<Children>0</Children>
 				<Infants>0</Infants>
 				<Guests>
@@ -46,14 +84,14 @@ class RoomBookingsTest extends BaseSerializeXML
 					</Guest>
 				</Guests>
 			</RoomBooking>',
-            $roomBookingOneAdult
+            $roomBookingTwoAdults
         );
 
         $this->unserialize(
             '<RoomBooking>
 				<RoomID>155558</RoomID>
 				<MealBasisID>1</MealBasisID>
-				<Adults>1</Adults>
+				<Adults>2</Adults>
 				<Children>0</Children>
 				<Infants>0</Infants>
 				<Guests>
@@ -66,92 +104,272 @@ class RoomBookingsTest extends BaseSerializeXML
 					</Guest>
 				</Guests>
 			</RoomBooking>',
-            $roomBookingOneAdult
+            $roomBookingTwoAdults
         );
 
-        return $roomBookingOneAdult;
+        return $roomBookingTwoAdults;
     }
 
-
-    /**
-     * @depends testErratum
-     */
-    public function testOneErrata($erratum)
+    public function testRoomBookingAdultAndChild()
     {
-        $oneErratum = new Errata($erratum);
-
-        $this->serialize(
-            '<Errata>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>Small pool will be closed for maintenance</Description>
-				</Erratum>
-			</Errata>',
-            $oneErratum
+        $adultGuestBook = new Guest(
+            'Adult',
+            'Sally',
+            'Smith',
+            'Mrs',
+            null,
+            'French'
         );
 
-        $this->unserialize(
-            '<Errata>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>Small pool will be closed for maintenance</Description>
-				</Erratum>
-			</Errata>',
-            $oneErratum
+        $childGuestBook = new Guest(
+            'Child',
+            'Jimmy',
+            'Smith',
+            null,
+            5,
+            'French'
         );
 
-        return $oneErratum;
-    }
-
-    /**
-     * @depends testErratum
-     */
-    public function testTwoErrata($erratum)
-    {
-        $twoErrata = new Errata(
-            $erratum,
-            new Erratum(
-                '2020-08-04',
-                '2020-08-11',
-                'There won\'t be mayonese at the restaurant'
+        $roomBookingAdultAndChild = new RoomBooking(
+            155448,
+            1,
+            1,
+            1,
+            0,
+            new Guests(
+                $adultGuestBook,
+                $childGuestBook
             )
         );
 
         $this->serialize(
-            '<Errata>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>Small pool will be closed for maintenance</Description>
-				</Erratum>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>There won\'t be mayonese at the restaurant</Description>
-				</Erratum>
-			</Errata>',
-            $twoErrata
+            '<RoomBooking>
+				<RoomID>155448</RoomID>
+				<MealBasisID>1</MealBasisID>
+				<Adults>1</Adults>
+				<Children>1</Children>
+				<Infants>0</Infants>
+				<Guests>
+					<Guest>
+						<Type>Adult</Type>
+						<FirstName>Sally</FirstName>
+						<LastName>Smith</LastName>
+						<Title>Mrs</Title>
+						<Nationality>French</Nationality>
+					</Guest>
+					<Guest>
+						<Type>Child</Type>
+						<FirstName>Jimmy</FirstName>
+						<LastName>Smith</LastName>
+						<Age>5</Age>
+						<Nationality>French</Nationality>
+					</Guest>
+				</Guests>
+			</RoomBooking>',
+            $roomBookingAdultAndChild
         );
 
         $this->unserialize(
-            '<Errata>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>Small pool will be closed for maintenance</Description>
-				</Erratum>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>There won\'t be mayonese at the restaurant</Description>
-				</Erratum>
-			</Errata>',
-            $twoErrata
+            '<RoomBooking>
+				<RoomID>155448</RoomID>
+				<MealBasisID>1</MealBasisID>
+				<Adults>1</Adults>
+				<Children>1</Children>
+				<Infants>0</Infants>
+				<Guests>
+					<Guest>
+						<Type>Adult</Type>
+						<FirstName>Sally</FirstName>
+						<LastName>Smith</LastName>
+						<Title>Mrs</Title>
+						<Nationality>French</Nationality>
+					</Guest>
+					<Guest>
+						<Type>Child</Type>
+						<FirstName>Jimmy</FirstName>
+						<LastName>Smith</LastName>
+						<Age>5</Age>
+						<Nationality>French</Nationality>
+					</Guest>
+				</Guests>
+			</RoomBooking>',
+            $roomBookingAdultAndChild
         );
 
-        return $twoErrata;
+        return $roomBookingAdultAndChild;
     }
 
+    /**
+     * @depends testRoomBookingAdultAndChild
+     */
+    public function testOneRoomBookings($roomBookingAdultAndChild)
+    {
+        $oneRoomBookings = new RoomBookings(
+            $roomBookingAdultAndChild
+        );
+
+        $this->serialize(
+            '<RoomBookings>
+				<RoomBooking>
+					<RoomID>155448</RoomID>
+					<MealBasisID>1</MealBasisID>
+					<Adults>1</Adults>
+					<Children>1</Children>
+					<Infants>0</Infants>
+					<Guests>
+						<Guest>
+							<Type>Adult</Type>
+							<FirstName>Sally</FirstName>
+							<LastName>Smith</LastName>
+							<Title>Mrs</Title>
+							<Nationality>French</Nationality>
+						</Guest>
+						<Guest>
+							<Type>Child</Type>
+							<FirstName>Jimmy</FirstName>
+							<LastName>Smith</LastName>
+							<Age>5</Age>
+							<Nationality>French</Nationality>
+						</Guest>
+					</Guests>
+				</RoomBooking>
+			</RoomBookings>',
+            $oneRoomBookings
+        );
+
+        $this->unserialize(
+            '<RoomBookings>
+				<RoomBooking>
+					<RoomID>155448</RoomID>
+					<MealBasisID>1</MealBasisID>
+					<Adults>1</Adults>
+					<Children>1</Children>
+					<Infants>0</Infants>
+					<Guests>
+						<Guest>
+							<Type>Adult</Type>
+							<FirstName>Sally</FirstName>
+							<LastName>Smith</LastName>
+							<Title>Mrs</Title>
+							<Nationality>French</Nationality>
+						</Guest>
+						<Guest>
+							<Type>Child</Type>
+							<FirstName>Jimmy</FirstName>
+							<LastName>Smith</LastName>
+							<Age>5</Age>
+							<Nationality>French</Nationality>
+						</Guest>
+					</Guests>
+				</RoomBooking>
+			</RoomBookings>',
+            $oneRoomBookings
+        );
+
+        return $oneRoomBookings;
+    }
+
+    /**
+     * @depends testRoomBookingTwoAdults
+     * @depends testRoomBookingAdultAndChild
+     */
+    public function testTwoRoomBookings($roomBookingTwoAdult, $roomBookingAdultAndChild)
+    {
+        $twoRoomBookings = new RoomBookings(
+            $roomBookingTwoAdult,
+            $roomBookingAdultAndChild
+        );
+
+        $this->serialize(
+            '<RoomBookings>
+				<RoomBooking>
+					<RoomID>155558</RoomID>
+					<MealBasisID>1</MealBasisID>
+					<Adults>2</Adults>
+					<Children>0</Children>
+					<Infants>0</Infants>
+					<Guests>
+						<Guest>
+							<Type>Adult</Type>
+							<FirstName>Sally</FirstName>
+							<LastName>Smith</LastName>
+							<Title>Mrs</Title>
+							<Nationality>French</Nationality>
+						</Guest>
+					</Guests>
+				</RoomBooking>
+				<RoomBooking>
+					<RoomID>155448</RoomID>
+					<MealBasisID>1</MealBasisID>
+					<Adults>1</Adults>
+					<Children>1</Children>
+					<Infants>0</Infants>
+					<Guests>
+						<Guest>
+							<Type>Adult</Type>
+							<FirstName>Sally</FirstName>
+							<LastName>Smith</LastName>
+							<Title>Mrs</Title>
+							<Nationality>French</Nationality>
+						</Guest>
+						<Guest>
+							<Type>Child</Type>
+							<FirstName>Jimmy</FirstName>
+							<LastName>Smith</LastName>
+							<Age>5</Age>
+							<Nationality>French</Nationality>
+						</Guest>
+					</Guests>
+				</RoomBooking>
+			</RoomBookings>',
+            $twoRoomBookings
+        );
+
+        $this->unserialize(
+            '<RoomBookings>
+				<RoomBooking>
+					<RoomID>155558</RoomID>
+					<MealBasisID>1</MealBasisID>
+					<Adults>2</Adults>
+					<Children>0</Children>
+					<Infants>0</Infants>
+					<Guests>
+						<Guest>
+							<Type>Adult</Type>
+							<FirstName>Sally</FirstName>
+							<LastName>Smith</LastName>
+							<Title>Mrs</Title>
+							<Nationality>French</Nationality>
+						</Guest>
+					</Guests>
+				</RoomBooking>
+				<RoomBooking>
+					<RoomID>155448</RoomID>
+					<MealBasisID>1</MealBasisID>
+					<Adults>1</Adults>
+					<Children>1</Children>
+					<Infants>0</Infants>
+					<Guests>
+						<Guest>
+							<Type>Adult</Type>
+							<FirstName>Sally</FirstName>
+							<LastName>Smith</LastName>
+							<Title>Mrs</Title>
+							<Nationality>French</Nationality>
+						</Guest>
+						<Guest>
+							<Type>Child</Type>
+							<FirstName>Jimmy</FirstName>
+							<LastName>Smith</LastName>
+							<Age>5</Age>
+							<Nationality>French</Nationality>
+						</Guest>
+					</Guests>
+				</RoomBooking>
+			</RoomBookings>',
+            $twoRoomBookings
+        );
+
+        return $twoRoomBookings;
+    }
 }
