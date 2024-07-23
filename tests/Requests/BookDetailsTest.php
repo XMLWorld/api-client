@@ -2,13 +2,9 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use XMLWorld\ApiClient\Common\Guest;
-use XMLWorld\ApiClient\Common\Guests;
 use XMLWorld\ApiClient\Common\LeadGuest;
 use XMLWorld\ApiClient\Requests\BookDetails;
-use XMLWorld\ApiClient\Requests\RoomBooking;
 use XMLWorld\ApiClient\Requests\RoomBookings;
-use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class BookDetailsTest extends RoomBookingsTest
 {

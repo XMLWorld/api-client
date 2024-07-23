@@ -3,9 +3,6 @@
 namespace XMLWorld\ApiClient\Test\Requests;
 
 use XMLWorld\ApiClient\Requests\BookRequest;
-use XMLWorld\ApiClient\Requests\RoomRequests;
-use XMLWorld\ApiClient\Requests\SearchDetails;
-use XMLWorld\ApiClient\Requests\SearchRequest;
 
 class BookRequestTest extends BookDetailsTest
 {
