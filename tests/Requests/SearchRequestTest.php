@@ -8,273 +8,70 @@ use XMLWorld\ApiClient\Requests\SearchRequest;
 
 class SearchRequestTest extends LoginDetailsTest
 {
-    /**
-     * @depends testLoginDetails
-     */
-    public function testSearchRequestOneProperty($loginDetails)
+    use LoginDetailsTrait;
+
+    use RoomRequestsTrait {
+        testTwoAdultsTwoInfants as traitTwoAdultsTwoInfants;
+        testTwoAdultsOneChild as traitTwoAdultsOneChild;
+        testThreeRoomRequests as traitThreeRoomRequests;
+        testTwoAdultsTwoChildrenTwoInfants as traitTwoAdultsTwoChildrenTwoInfants;
+    }
+
+    public function testTwoAdultsTwoInfants()
     {
-        $searchRequestOneProperty = new SearchRequest(
-            $loginDetails,
-            new SearchDetails(
-                '2023-08-01',
-                7,
-                new RoomRequests(
-                    RoomRequestsTest::geTtwoAdultsTwoInfants(),
-                    RoomRequestsTest::getTwoAdultsTwoChildrenTwoInfants()
-                ),
-                null,
-                2007,
-                0,
-                0,
-                0,
-                0
-            ),
-            true
-        );
+        return $this->traitTwoAdultsTwoInfants();
+    }
 
-        $this->serialize('<SearchRequest>
-				<LoginDetails>
-					<Login>login</Login>
-					<Password>pass</Password>
-					<Version>version</Version>
-				</LoginDetails>
-				<Mock>True</Mock>
-				<SearchDetails>
-					<ArrivalDate>2023-08-01</ArrivalDate>
-					<Duration>7</Duration>
-					<RoomRequests>
-						<RoomRequest>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<ChildAges>
-								<ChildAge>
-									<Age>1</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>2</Age>
-								</ChildAge>
-							</ChildAges>
-						</RoomRequest>
-						<RoomRequest>
-							<Adults>2</Adults>
-							<Children>4</Children>
-							<ChildAges>
-								<ChildAge>
-									<Age>9</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>1</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>8</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>2</Age>
-								</ChildAge>
-							</ChildAges>
-						</RoomRequest>
-					</RoomRequests>
-					<PropertyID>2007</PropertyID>
-					<MealBasisID>0</MealBasisID>
-					<MinStarRating>0</MinStarRating>
-					<MinimumPrice>0</MinimumPrice>
-					<MaximumPrice>0</MaximumPrice>
-				</SearchDetails>
-			</SearchRequest>',
-            $searchRequestOneProperty
-        );
+    public function testTwoAdultsOneChild()
+    {
+        return $this->traitTwoAdultsOneChild();
+    }
 
-        $this->unserialize('<SearchRequest>
-				<LoginDetails>
-					<Login>login</Login>
-					<Password>pass</Password>
-					<Version>version</Version>
-				</LoginDetails>
-				<Mock>True</Mock>
-				<SearchDetails>
-					<ArrivalDate>2023-08-01</ArrivalDate>
-					<Duration>7</Duration>
-					<!-- a comment -->
-					<PropertyID>2007</PropertyID>
-					<MealBasisID>0</MealBasisID>
-					<MinStarRating>0</MinStarRating>
-					<MinimumPrice>0</MinimumPrice>
-					<MaximumPrice>0</MaximumPrice>
-					<RoomRequests>
-						<RoomRequest>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<ChildAges>
-								<ChildAge>
-									<Age>1</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>2</Age>
-								</ChildAge>
-							</ChildAges>
-						</RoomRequest>
-						<RoomRequest>
-							<Adults>2</Adults>
-							<Children>4</Children>
-							<ChildAges>
-								<ChildAge>
-									<Age>9</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>1</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>8</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>2</Age>
-								</ChildAge>
-							</ChildAges>
-						</RoomRequest>
-					</RoomRequests>
-				</SearchDetails>
-			</SearchRequest>',
-            $searchRequestOneProperty
-        );
+    public function testTwoAdultsTwoChildrenTwoInfants()
+    {
+        return $this->traitTwoAdultsTwoChildrenTwoInfants();
+    }
 
-        return $searchRequestOneProperty;
+    /**
+     * @depends testTwoAdultsTwoInfants
+     * @depends testTwoAdultsOneChild
+     * @depends testTwoAdultsTwoChildrenTwoInfants
+     */
+    public function testThreeRoomRequests($twoAdultsTwoInfants, $twoAdultsOneChild, $twoAdultsTwoChildrenTwoInfants)
+    {
+        return $this->traitThreeRoomRequests(...func_get_args());
+    }
+
+    use PropertiesTrait {
+        testTwoProperties as traitTwoProperties;
+    }
+
+    public function testTwoProperties()
+    {
+        return $this->traitTwoProperties();
+    }
+
+    use SearchRequestTrait {
+        testSearchRequestOneProperty as traitSearchRequestOneProperty;
+        testSearchRequestTwoProprties as traitSearchRequestTwoProprties;
     }
 
     /**
      * @depends testLoginDetails
+     * @depends testThreeRoomRequests
      */
-    public function testSearchRequestTwoProprties($loginDetails){
-        $twoRoomSearchRequest = new SearchRequest(
-            $loginDetails,
-            new SearchDetails(
-                '2023-08-01',
-                7,
-                new RoomRequests(
-                    RoomRequestsTest::geTtwoAdultsTwoInfants(),
-                    RoomRequestsTest::getTwoAdultsTwoChildrenTwoInfants()
-                ),
-                PropertiesTest::getTwoPropertyIDs(),
-                null,
-                0,
-                0,
-                0,
-                0
-            ),
-            true
-        );
+    public function testSearchRequestOneProperty($loginDetails, $testThreeRoomRequests)
+    {
+        return $this->traitSearchRequestOneProperty(...func_get_args());
+    }
 
-        $this->serialize(
-            '<SearchRequest>
-				<LoginDetails>
-					<Login>login</Login>
-					<Password>pass</Password>
-					<Version>version</Version>
-				</LoginDetails>
-				<Mock>True</Mock>
-				<SearchDetails>
-					<ArrivalDate>2023-08-01</ArrivalDate>
-					<Duration>7</Duration>
-					<RoomRequests>
-						<RoomRequest>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<ChildAges>
-								<ChildAge>
-									<Age>1</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>2</Age>
-								</ChildAge>
-							</ChildAges>
-						</RoomRequest>
-						<RoomRequest>
-							<Adults>2</Adults>
-							<Children>4</Children>
-							<ChildAges>
-								<ChildAge>
-									<Age>9</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>1</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>8</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>2</Age>
-								</ChildAge>
-							</ChildAges>
-						</RoomRequest>
-					</RoomRequests>
-					<Properties>
-						<PropertyID>2007</PropertyID>
-						<PropertyID>3008</PropertyID>
-					</Properties>
-					<MealBasisID>0</MealBasisID>
-					<MinStarRating>0</MinStarRating>
-					<MinimumPrice>0</MinimumPrice>
-					<MaximumPrice>0</MaximumPrice>
-				</SearchDetails>
-			</SearchRequest>',
-            $twoRoomSearchRequest
-        );
-
-        $this->unserialize(
-            '<SearchRequest>
-				<LoginDetails>
-					<Login>login</Login>
-					<Password>pass</Password>
-					<Version>version</Version>
-				</LoginDetails>
-				<Mock>True</Mock>
-				<SearchDetails>
-					<ArrivalDate>2023-08-01</ArrivalDate>
-					<Duration>7</Duration>
-					<Properties>
-						<PropertyID>2007</PropertyID>
-						<PropertyID>3008</PropertyID>
-					</Properties>
-					<MealBasisID>0</MealBasisID>
-					<MinStarRating>0</MinStarRating>
-					<MinimumPrice>0</MinimumPrice>
-					<MaximumPrice>0</MaximumPrice>
-					<RoomRequests>
-						<RoomRequest>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<ChildAges>
-								<ChildAge>
-									<Age>1</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>2</Age>
-								</ChildAge>
-							</ChildAges>
-						</RoomRequest>
-						<RoomRequest>
-							<Adults>2</Adults>
-							<Children>4</Children>
-							<ChildAges>
-								<ChildAge>
-									<Age>9</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>1</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>8</Age>
-								</ChildAge>
-								<ChildAge>
-									<Age>2</Age>
-								</ChildAge>
-							</ChildAges>
-						</RoomRequest>
-					</RoomRequests>
-				</SearchDetails>
-			</SearchRequest>',
-            $twoRoomSearchRequest
-        );
-
-        return $twoRoomSearchRequest;
+    /**
+     * @depends testLoginDetails
+     * @depends testThreeRoomRequests
+     * @depends testTwoProperties
+     */
+    public function testSearchRequestTwoProprties($loginDetails, $testThreeRoomRequests, $twoProperties)
+    {
+        return $this->traitSearchRequestTwoProprties(...func_get_args());
     }
 }

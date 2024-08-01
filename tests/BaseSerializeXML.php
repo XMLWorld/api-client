@@ -31,4 +31,34 @@ abstract class BaseSerializeXML extends TestCase
         $namespace = (new ReflectionClass($expected))->getNamespaceName();
         $this->assertEquals($expected, self::$serializer->unserialize($xml, $namespace));
     }
+
+    public function wrap($instance, string $serialize, ?string $userialize = null)
+    {
+        $class_name = substr(strrchr(get_class($instance), '\\'), 1);
+
+        $serialize = "<{$class_name}>
+				{$serialize}
+			</{$class_name}>";
+
+        if(is_null($userialize)){
+            $userialize = $serialize;
+        } else {
+            $userialize = "<{$class_name}>
+				{$userialize}
+			</{$class_name}>";
+        }
+
+        return [
+            $instance,
+            $serialize,
+            $userialize
+        ];
+    }
+
+    public function doTest($instance, $serialized, $unserialized)
+    {
+        $this->serialize($serialized, $instance);
+
+        $this->unserialize($unserialized, $instance);
+    }
 }
