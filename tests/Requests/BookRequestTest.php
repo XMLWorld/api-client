@@ -13,7 +13,7 @@ class BookRequestTest extends BookDetailsTest
     public function testBookRequest($loginDetails, $twoRoomBookingDetails)
     {
         $bookRequest = new BookRequest(
-            $loginDetails,
+            $loginDetails[0],
             $twoRoomBookingDetails,
             true
         );

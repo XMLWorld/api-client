@@ -71,6 +71,9 @@ class SerializeXML implements Serializer
 	public function unSerialize(string | SimpleXMLElement $payload, string $namespace = ''): Serializable
 	{
 		if(is_string($payload)){
+            //#109: not results in certain Hummingbird property
+            $payload = str_replace('&nbsp;',' ', $payload);
+            //$payload = html_entity_decode($payload, ENT_XML1, 'UTF-8');
 			$payload = simplexml_load_string($payload);
 		}
 

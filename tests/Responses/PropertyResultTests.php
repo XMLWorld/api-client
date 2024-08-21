@@ -432,7 +432,7 @@ class PropertyResultTests extends RoomTypesTests
 							</RoomsAppliesTo>
 							<Supplements>
 								<Supplement>
-									<Name>test supplement</Name>
+									<Name>test&nbsp;supplement</Name>
 									<Duration>Per Night</Duration>
 									<Multiplier>Per Person</Multiplier>
 									<Total>220</Total>
@@ -588,7 +588,7 @@ class PropertyResultTests extends RoomTypesTests
 							</RoomsAppliesTo>
 							<Supplements>
 								<Supplement>
-									<Name>test supplement</Name>
+									<Name>test&nbsp;supplement</Name>
 									<Duration>Per Night</Duration>
 									<Multiplier>Per Person</Multiplier>
 									<Total>220</Total>
