@@ -376,7 +376,7 @@ class PropertyResultsTest extends TestCase
         );
 
         $this->assertSame(998, $roomType->roomID);
-        $this->assertNull($roomType->ratecode);
+        $this->assertNull($roomType->rateCode);
         $this->assertNull($roomType->propertyRoomTypeID);
         $this->assertSame(1, $roomType->mealBasisID);
         $this->assertSame('Example Villa', $roomType->name);
@@ -423,7 +423,7 @@ class PropertyResultsTest extends TestCase
         );
 
         $this->assertSame(999, $roomType2->roomID);
-        $this->assertNull($roomType2->ratecode);
+        $this->assertNull($roomType2->rateCode);
         $this->assertSame(1, $roomType2->propertyRoomTypeID);
         $this->assertSame(1, $roomType2->mealBasisID);
         $this->assertSame('Example Villa', $roomType2->name);

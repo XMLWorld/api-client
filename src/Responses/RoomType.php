@@ -6,7 +6,7 @@ class RoomType extends AbstractResponse
 {
 	public function __construct(
 		public int $roomID,
-		public ?string $ratecode = null,
+		public ?string $rateCode = null,
 		public ?int $propertyRoomTypeID = null,
 		public int $mealBasisID,
 		public string $name,
