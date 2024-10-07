@@ -6,7 +6,7 @@ use XMLWorld\ApiClient\Requests\RoomRequests;
 use XMLWorld\ApiClient\Requests\SearchDetails;
 use XMLWorld\ApiClient\Requests\SearchRequest;
 
-Trait SearchRequestTrait
+trait SearchRequestTrait
 {
     /**
      * @depends testLoginDetails
@@ -80,11 +80,11 @@ Trait SearchRequestTrait
      * @depends testThreeRoomRequests
      * @depends testTwoProperties
      */
-    public function testSearchRequestTwoProprties($loginDetails, $testThreeRoomRequests, $twoProperties){
+    public function testSearchRequestTwoProperties($loginDetails, $testThreeRoomRequests, $twoProperties){
 
-        list($loginDetailsInstance, $loginDetailsSerialize, $loginDetailsUnserialize) = $loginDetails;
-        list($testThreeRoomRequestsInstance, $testThreeRoomRequestsSerialize, $testThreeRoomRequestsUnserialize) = $testThreeRoomRequests;
-        list($twoPropertiesInstance, $twoPropertiesSerialize, $twoPropertiesUnserialize) = $twoProperties;
+        list($loginDetailsInstance,             $loginDetailsSerialize,             $loginDetailsUnserialize)           = $loginDetails;
+        list($testThreeRoomRequestsInstance,    $testThreeRoomRequestsSerialize,    $testThreeRoomRequestsUnserialize)  = $testThreeRoomRequests;
+        list($twoPropertiesInstance,            $twoPropertiesSerialize,            $twoPropertiesUnserialize)          = $twoProperties;
 
         $instance = new SearchRequest(
             $loginDetailsInstance,
