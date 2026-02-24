@@ -2,20 +2,19 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
+use PHPUnit\Framework\Attributes\Depends;
 use XMLWorld\ApiClient\Requests\RoomRequests;
 use XMLWorld\ApiClient\Requests\SearchDetails;
 use XMLWorld\ApiClient\Requests\SearchRequest;
 
 trait SearchRequestTrait
 {
-    /**
-     * @depends testLoginDetails
-     * @depends testThreeRoomRequests
-     */
+	#[Depends('testLoginDetails')]
+	#[Depends('testThreeRoomRequests')]
     public function testSearchRequestOneProperty($loginDetails, $testThreeRoomRequests)
     {
-        list($loginDetailsInstance, $loginDetailsSerialize, $loginDetailsUnserialize) = $loginDetails;
-        list($testThreeRoomRequestsInstance, $testThreeRoomRequestsSerialize, $testThreeRoomRequestsUnserialize) = $testThreeRoomRequests;
+        list($loginDetailsInstance, 			$loginDetailsSerialize,				$loginDetailsUnserialize) 			= $loginDetails;
+        list($testThreeRoomRequestsInstance,	$testThreeRoomRequestsSerialize,	$testThreeRoomRequestsUnserialize)	= $testThreeRoomRequests;
 
         $instance = new SearchRequest(
             $loginDetailsInstance,
@@ -33,36 +32,40 @@ trait SearchRequestTrait
             true
         );
 
-        $serialize = "<SearchRequest>
-				{$loginDetailsSerialize}
-				<Mock>True</Mock>
-				<SearchDetails>
-					<ArrivalDate>2023-08-01</ArrivalDate>
-					<Duration>7</Duration>
-					{$testThreeRoomRequestsSerialize}
-					<PropertyID>2007</PropertyID>
-					<MealBasisID>0</MealBasisID>
-					<MinStarRating>0</MinStarRating>
-					<MinimumPrice>0</MinimumPrice>
-					<MaximumPrice>0</MaximumPrice>
-				</SearchDetails>
-			</SearchRequest>";
+        $serialize = <<<XML
+<SearchRequest>
+	$loginDetailsSerialize
+	<Mock>True</Mock>
+	<SearchDetails>
+		<ArrivalDate>2023-08-01</ArrivalDate>
+		<Duration>7</Duration>
+		$testThreeRoomRequestsSerialize
+		<PropertyID>2007</PropertyID>
+		<MealBasisID>0</MealBasisID>
+		<MinStarRating>0</MinStarRating>
+		<MinimumPrice>0</MinimumPrice>
+		<MaximumPrice>0</MaximumPrice>
+	</SearchDetails>
+</SearchRequest>
+XML;
 
-        $unserialize = "<SearchRequest>
-				{$loginDetailsUnserialize}
-				<Mock>True</Mock>
-				<SearchDetails>
-					<ArrivalDate>2023-08-01</ArrivalDate>
-					<Duration>7</Duration>
-					<!-- a comment -->
-					<PropertyID>2007</PropertyID>
-					<MealBasisID>0</MealBasisID>
-					<MinStarRating>0</MinStarRating>
-					<MinimumPrice>0</MinimumPrice>
-					<MaximumPrice>0</MaximumPrice>
-					{$testThreeRoomRequestsUnserialize}
-				</SearchDetails>
-			</SearchRequest>";
+        $unserialize = <<<XML
+<SearchRequest>
+	$loginDetailsUnserialize
+	<Mock>True</Mock>
+	<SearchDetails>
+		<ArrivalDate>2023-08-01</ArrivalDate>
+		<Duration>7</Duration>
+		<!-- a comment -->
+		<PropertyID>2007</PropertyID>
+		<MealBasisID>0</MealBasisID>
+		<MinStarRating>0</MinStarRating>
+		<MinimumPrice>0</MinimumPrice>
+		<MaximumPrice>0</MaximumPrice>
+		$testThreeRoomRequestsUnserialize
+	</SearchDetails>
+</SearchRequest>
+XML;
 
         $searchRequestOneProperty = [
             $instance,
@@ -75,11 +78,9 @@ trait SearchRequestTrait
         return $searchRequestOneProperty;
     }
 
-    /**
-     * @depends testLoginDetails
-     * @depends testThreeRoomRequests
-     * @depends testTwoProperties
-     */
+	#[Depends('testLoginDetails')]
+	#[Depends('testThreeRoomRequests')]
+	#[Depends('testTwoProperties')]
     public function testSearchRequestTwoProperties($loginDetails, $testThreeRoomRequests, $twoProperties){
 
         list($loginDetailsInstance,             $loginDetailsSerialize,             $loginDetailsUnserialize)           = $loginDetails;
@@ -102,35 +103,39 @@ trait SearchRequestTrait
             true
         );
 
-        $serialize = "<SearchRequest>
-				{$loginDetailsSerialize}
-				<Mock>True</Mock>
-				<SearchDetails>
-					<ArrivalDate>2023-08-01</ArrivalDate>
-					<Duration>7</Duration>
-					{$testThreeRoomRequestsSerialize}
-					{$twoPropertiesSerialize}
-					<MealBasisID>0</MealBasisID>
-					<MinStarRating>0</MinStarRating>
-					<MinimumPrice>0</MinimumPrice>
-					<MaximumPrice>0</MaximumPrice>
-				</SearchDetails>
-			</SearchRequest>";
+        $serialize = <<<XML
+<SearchRequest>
+	$loginDetailsSerialize
+	<Mock>True</Mock>
+	<SearchDetails>
+		<ArrivalDate>2023-08-01</ArrivalDate>
+		<Duration>7</Duration>
+		$testThreeRoomRequestsSerialize
+		$twoPropertiesSerialize
+		<MealBasisID>0</MealBasisID>
+		<MinStarRating>0</MinStarRating>
+		<MinimumPrice>0</MinimumPrice>
+		<MaximumPrice>0</MaximumPrice>
+	</SearchDetails>
+</SearchRequest>
+XML;
 
-        $unserialize = "<SearchRequest>
-				{$loginDetailsUnserialize}
-				<Mock>True</Mock>
-				<SearchDetails>
-					<ArrivalDate>2023-08-01</ArrivalDate>
-					<Duration>7</Duration>
-					{$twoPropertiesUnserialize}
-					<MealBasisID>0</MealBasisID>
-					<MinStarRating>0</MinStarRating>
-					<MinimumPrice>0</MinimumPrice>
-					<MaximumPrice>0</MaximumPrice>
-					{$testThreeRoomRequestsUnserialize}
-				</SearchDetails>
-			</SearchRequest>";
+        $unserialize = <<<XML
+<SearchRequest>
+	$loginDetailsUnserialize
+	<Mock>True</Mock>
+	<SearchDetails>
+		<ArrivalDate>2023-08-01</ArrivalDate>
+		<Duration>7</Duration>
+		$twoPropertiesUnserialize
+		<MealBasisID>0</MealBasisID>
+		<MinStarRating>0</MinStarRating>
+		<MinimumPrice>0</MinimumPrice>
+		<MaximumPrice>0</MaximumPrice>
+		$testThreeRoomRequestsUnserialize
+	</SearchDetails>
+</SearchRequest>
+XML;
 
         $twoRoomSearchRequest = [
             $instance,

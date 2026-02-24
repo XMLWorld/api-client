@@ -12,15 +12,5 @@ use XMLWorld\ApiClient\Test\BaseSerializeXML;
  */
 class ChildAgesTest extends BaseSerializeXML
 {
-    use ChildAgesTrait {
-        testOneChildAges as traitOneChildAges;
-    }
-
-    /**
-     * @depends testChildAge
-     */
-    public function testOneChildAges($childAge)
-    {
-        return $this->traitOneChildAges($childAge);
-    }
+    use ChildAgesTrait;
 }

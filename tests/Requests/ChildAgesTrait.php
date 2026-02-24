@@ -2,6 +2,7 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
+use PHPUnit\Framework\Attributes\Depends;
 use XMLWorld\ApiClient\Requests\ChildAge;
 use XMLWorld\ApiClient\Requests\ChildAges;
 
@@ -11,9 +12,11 @@ trait ChildAgesTrait
     {
         $instance = new ChildAge(15);
 
-        $expected = '<ChildAge>
-				<Age>15</Age>
-			</ChildAge>';
+        $expected = <<<'XML'
+<ChildAge>
+	<Age>15</Age>
+</ChildAge>
+XML;
 
         $childAge = [
             $instance,
@@ -26,20 +29,34 @@ trait ChildAgesTrait
         return $childAge;
     }
 
-    /**
-     * @depends testChildAge
-     */
+	#[Depends('testChildAge')]
     public function testOneChildAges($childAge)
     {
-        list($instance, $serialize, ) = $childAge;
+        list($childAgeInstance, $childAgeSerialize, $childAgeUnserialize) = $childAge;
 
-        $instance = new ChildAges($instance);
+        $instance = new ChildAges($childAgeInstance);
 
-        $oneChildAges = $this->wrap($instance, $serialize);
+		$serialize = <<<XML
+<ChildAges>
+	$childAgeSerialize
+</ChildAges>
+XML;
 
-        $this->doTest(...$oneChildAges);
+		$unserialize = <<<XML
+<ChildAges>
+	$childAgeUnserialize
+</ChildAges>
+XML;
 
-        return $oneChildAges;
+		$details = [
+			$instance,
+			$serialize,
+			$unserialize
+		];
+
+		$this->doTest(...$details);
+
+		return $details;
     }
 
     public function testTwoChildAges()

@@ -2,148 +2,49 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Requests\BookRequest;
 
 class BookRequestTest extends BookDetailsTest
 {
-    /**
-     * @depends testLoginDetails
-     * @depends testTwoRoomBookingDetails
-     */
+	#[Depends('testLoginDetails')]
+	#[Depends('testTwoRoomBookingDetails')]
     public function testBookRequest($loginDetails, $twoRoomBookingDetails)
     {
-        $bookRequest = new BookRequest(
-            $loginDetails[0],
-            $twoRoomBookingDetails,
+		list($loginDetailsInstance, 			$loginDetailsSerialize, 			$loginDetailsUnserialize) 			= $loginDetails;
+		list($twoRoomBookingDetailsInstance,	$twoRoomBookingDetailsSerialize,	$twoRoomBookingDetailsUnserialize)	= $twoRoomBookingDetails;
+
+        $instance = new BookRequest(
+			$loginDetailsInstance,
+			$twoRoomBookingDetailsInstance,
             true
         );
 
-        $this->serialize('<BookRequest>
-				<LoginDetails>
-					<Login>login</Login>
-					<Password>pass</Password>
-					<Version>version</Version>
-				</LoginDetails>
-				<Mock>True</Mock>
-				<BookDetails>
-					<ArrivalDate>2023-11-01</ArrivalDate>
-					<Duration>5</Duration>
-					<TradeReference>TEST_REF</TradeReference>
-					<TotalPrice>1040</TotalPrice>
-					<LeadGuest>
-						<FirstName>Jim</FirstName>
-						<LastName>Watsworth</LastName>
-						<Title>Mr</Title>
-					</LeadGuest>
-					<RoomBookings>
-						<RoomBooking>
-							<RoomID>155558</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<Guests>
-								<Guest>
-									<Type>Adult</Type>
-									<FirstName>Sally</FirstName>
-									<LastName>Smith</LastName>
-									<Title>Mrs</Title>
-									<Nationality>French</Nationality>
-								</Guest>
-							</Guests>
-						</RoomBooking>
-						<RoomBooking>
-							<RoomID>155448</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Adults>1</Adults>
-							<Children>1</Children>
-							<Infants>0</Infants>
-							<Guests>
-								<Guest>
-									<Type>Adult</Type>
-									<FirstName>Sally</FirstName>
-									<LastName>Smith</LastName>
-									<Title>Mrs</Title>
-									<Nationality>French</Nationality>
-								</Guest>
-								<Guest>
-									<Type>Child</Type>
-									<FirstName>Jimmy</FirstName>
-									<LastName>Smith</LastName>
-									<Age>5</Age>
-									<Nationality>French</Nationality>
-								</Guest>
-							</Guests>
-						</RoomBooking>
-					</RoomBookings>
-				</BookDetails>
-			</BookRequest>',
-            $bookRequest
-        );
+		$serialize = <<<XML
+<BookRequest>
+	$loginDetailsSerialize
+	<Mock>True</Mock>
+	$twoRoomBookingDetailsSerialize
+</BookRequest>
+XML;
 
-        $this->unserialize('<BookRequest>
-				<LoginDetails>
-					<Login>login</Login>
-					<Password>pass</Password>
-					<Version>version</Version>
-				</LoginDetails>
-				<Mock>True</Mock>
-				<BookDetails>
-					<ArrivalDate>2023-11-01</ArrivalDate>
-					<Duration>5</Duration>
-					<TradeReference>TEST_REF</TradeReference>
-					<TotalPrice>1040</TotalPrice>
-					<LeadGuest>
-						<FirstName>Jim</FirstName>
-						<LastName>Watsworth</LastName>
-						<Title>Mr</Title>
-					</LeadGuest>
-					<RoomBookings>
-						<RoomBooking>
-							<RoomID>155558</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<Guests>
-								<Guest>
-									<Type>Adult</Type>
-									<FirstName>Sally</FirstName>
-									<LastName>Smith</LastName>
-									<Title>Mrs</Title>
-									<Nationality>French</Nationality>
-								</Guest>
-							</Guests>
-						</RoomBooking>
-						<RoomBooking>
-							<RoomID>155448</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Adults>1</Adults>
-							<Children>1</Children>
-							<Infants>0</Infants>
-							<Guests>
-								<Guest>
-									<Type>Adult</Type>
-									<FirstName>Sally</FirstName>
-									<LastName>Smith</LastName>
-									<Title>Mrs</Title>
-									<Nationality>French</Nationality>
-								</Guest>
-								<Guest>
-									<Type>Child</Type>
-									<FirstName>Jimmy</FirstName>
-									<LastName>Smith</LastName>
-									<Age>5</Age>
-									<Nationality>French</Nationality>
-								</Guest>
-							</Guests>
-						</RoomBooking>
-					</RoomBookings>
-				</BookDetails>
-			</BookRequest>',
-            $bookRequest
-        );
+		$unserialize = <<<XML
+<BookRequest>
+	$loginDetailsUnserialize
+	<Mock>True</Mock>
+	$twoRoomBookingDetailsUnserialize
+</BookRequest>
+XML;
 
-        return $bookRequest;
+		$bookDetails = [
+			$instance,
+			$serialize,
+			$unserialize
+		];
+
+		$this->doTest(...$bookDetails);
+
+        return $bookDetails;
     }
 }
