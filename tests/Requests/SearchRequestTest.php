@@ -53,7 +53,7 @@ class SearchRequestTest extends LoginDetailsTest
 
     use SearchRequestTrait {
         testSearchRequestOneProperty as traitSearchRequestOneProperty;
-        testSearchRequestTwoProprties as traitSearchRequestTwoProprties;
+        testSearchRequestTwoProperties as traitSearchRequestTwoProprties;
     }
 
     /**
