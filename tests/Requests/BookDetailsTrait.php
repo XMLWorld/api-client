@@ -10,24 +10,20 @@ use XMLWorld\ApiClient\Test\Common\LeadGuestsTrait;
 
 trait BookDetailsTrait
 {
+	use LeadGuestsTrait;
 	use RoomBookingsTrait;
 
-    public function getOneRoomBookingDetails()
+    protected function getOneRoomBookingDetails()
     {
+		list($leadGuestInstance, $leadGuestSerialize, $leadGuestUnserialize) = $this->getAdultLeadGuest();
 		list($instance, $serialize, $unserialize) = $this->getRoomBookingTwoAdults();
-
-		$simpleLeadGuestBook = new LeadGuest(
-			'Jim',
-			'Watsworth',
-			'Mr'
-		);
 
         $instance = new BookDetails(
             '2023-11-01',
             5,
             'TEST_REF',
             1040,
-            $simpleLeadGuestBook,
+			$leadGuestInstance,
             null,
             new RoomBookings($instance)
         );
@@ -38,11 +34,7 @@ trait BookDetailsTrait
 	<Duration>5</Duration>
 	<TradeReference>TEST_REF</TradeReference>
 	<TotalPrice>1040</TotalPrice>
-	<LeadGuest>
-		<FirstName>Jim</FirstName>
-		<LastName>Watsworth</LastName>
-		<Title>Mr</Title>
-	</LeadGuest>
+	$leadGuestSerialize
 	<RoomBookings>
 		$serialize
 	</RoomBookings>
@@ -55,11 +47,7 @@ XML;
 	<Duration>5</Duration>
 	<TradeReference>TEST_REF</TradeReference>
 	<TotalPrice>1040</TotalPrice>
-	<LeadGuest>
-		<FirstName>Jim</FirstName>
-		<LastName>Watsworth</LastName>
-		<Title>Mr</Title>
-	</LeadGuest>
+	$leadGuestUnserialize
 	<RoomBookings>
 		$unserialize
 	</RoomBookings>
@@ -72,23 +60,17 @@ XML;
 		];
     }
 
-	#[Depends('testTwoRoomBookings')]
-    public function testTwoRoomBookingDetails($twoRoomBookings)
+    protected function getTwoRoomBookingDetails()
     {
-		list($twoRoomBookingsInstance, $twoRoomBookingsSerialize, $twoRoomBookingsUnserialize) = $twoRoomBookings;
-
-        $simpleLeadGuestBook = new LeadGuest(
-            'Jim',
-            'Watsworth',
-            'Mr'
-        );
+		list($leadGuestInstance, $leadGuestSerialize, $leadGuestUnserialize) = $this->getAdultLeadGuest();
+		list($twoRoomBookingsInstance, $twoRoomBookingsSerialize, $twoRoomBookingsUnserialize) = $this->getTwoRoomBookings();
 
         $instance = new BookDetails(
             '2023-11-01',
             5,
             'TEST_REF',
             1040,
-            $simpleLeadGuestBook,
+			$leadGuestInstance,
             null,
 			$twoRoomBookingsInstance
         );
@@ -99,11 +81,7 @@ XML;
 	<Duration>5</Duration>
 	<TradeReference>TEST_REF</TradeReference>
 	<TotalPrice>1040</TotalPrice>
-	<LeadGuest>
-		<FirstName>Jim</FirstName>
-		<LastName>Watsworth</LastName>
-		<Title>Mr</Title>
-	</LeadGuest>
+	$leadGuestSerialize
 	$twoRoomBookingsSerialize
 </BookDetails>
 XML;
@@ -114,25 +92,15 @@ XML;
 	<Duration>5</Duration>
 	<TradeReference>TEST_REF</TradeReference>
 	<TotalPrice>1040</TotalPrice>
-	<LeadGuest>
-		<FirstName>Jim</FirstName>
-		<LastName>Watsworth</LastName>
-		<Title>Mr</Title>
-	</LeadGuest>
+	$leadGuestUnserialize
 	$twoRoomBookingsUnserialize
 </BookDetails>
 XML;
 
-		$twoRoomBookingDetails = [
+		return [
 			$instance,
 			$serialize,
 			$unserialize
 		];
-
-		$this->doTest(...$twoRoomBookingDetails);
-
-
-        return $twoRoomBookingDetails;
     }
-
 }

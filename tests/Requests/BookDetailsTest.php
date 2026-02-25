@@ -2,139 +2,27 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use PHPUnit\Framework\Attributes\Depends;
-use XMLWorld\ApiClient\Common\LeadGuest;
-use XMLWorld\ApiClient\Requests\BookDetails;
-use XMLWorld\ApiClient\Requests\RoomBookings;
+use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class BookDetailsTest extends RoomBookingsTest
+class BookDetailsTest extends BaseSerializeXML
 {
-	#[Depends('testRoomBookingTwoAdults')]
-    public function testOneRoomBookingDetails($roomBookingTwoAdults)
+	use BookDetailsTrait;
+
+    public function testOneRoomBookingDetails()
     {
-		list($roomBookingTwoAdultsInstance, $roomBookingTwoAdultsSerialize, $roomBookingTwoAdultsUnserialize) = $roomBookingTwoAdults;
-
-        $simpleLeadGuestBook = new LeadGuest(
-            'Jim',
-            'Watsworth',
-            'Mr'
-        );
-
-        $instance = new BookDetails(
-            '2023-11-01',
-            5,
-            'TEST_REF',
-            1040,
-            $simpleLeadGuestBook,
-            null,
-            new RoomBookings($roomBookingTwoAdultsInstance)
-        );
-
-		$serialize = <<<XML
-<BookDetails>
-	<ArrivalDate>2023-11-01</ArrivalDate>
-	<Duration>5</Duration>
-	<TradeReference>TEST_REF</TradeReference>
-	<TotalPrice>1040</TotalPrice>
-	<LeadGuest>
-		<FirstName>Jim</FirstName>
-		<LastName>Watsworth</LastName>
-		<Title>Mr</Title>
-	</LeadGuest>
-	<RoomBookings>
-		$roomBookingTwoAdultsSerialize
-	</RoomBookings>
-</BookDetails>
-XML;
-
-		$unserialize = <<<XML
-<BookDetails>
-	<ArrivalDate>2023-11-01</ArrivalDate>
-	<Duration>5</Duration>
-	<TradeReference>TEST_REF</TradeReference>
-	<TotalPrice>1040</TotalPrice>
-	<LeadGuest>
-		<FirstName>Jim</FirstName>
-		<LastName>Watsworth</LastName>
-		<Title>Mr</Title>
-	</LeadGuest>
-	<RoomBookings>
-		$roomBookingTwoAdultsUnserialize
-	</RoomBookings>
-</BookDetails>
-XML;
-		$details = [
-			$instance,
-			$serialize,
-			$unserialize
-		];
+		$details = $this->getOneRoomBookingDetails();
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-	#[Depends('testTwoRoomBookings')]
-    public function testTwoRoomBookingDetails($twoRoomBookings)
+    public function testTwoRoomBookingDetails()
     {
-		list($twoRoomBookingsInstance, $twoRoomBookingsSerialize, $twoRoomBookingsUnserialize) = $twoRoomBookings;
+		$details = $this->getTwoRoomBookingDetails();
 
-        $simpleLeadGuestBook = new LeadGuest(
-            'Jim',
-            'Watsworth',
-            'Mr'
-        );
+		$this->doTest(...$details);
 
-        $instance = new BookDetails(
-            '2023-11-01',
-            5,
-            'TEST_REF',
-            1040,
-            $simpleLeadGuestBook,
-            null,
-			$twoRoomBookingsInstance
-        );
-
-		$serialize = <<<XML
-<BookDetails>
-	<ArrivalDate>2023-11-01</ArrivalDate>
-	<Duration>5</Duration>
-	<TradeReference>TEST_REF</TradeReference>
-	<TotalPrice>1040</TotalPrice>
-	<LeadGuest>
-		<FirstName>Jim</FirstName>
-		<LastName>Watsworth</LastName>
-		<Title>Mr</Title>
-	</LeadGuest>
-	$twoRoomBookingsSerialize
-</BookDetails>
-XML;
-
-		$unserialize = <<<XML
-<BookDetails>
-	<ArrivalDate>2023-11-01</ArrivalDate>
-	<Duration>5</Duration>
-	<TradeReference>TEST_REF</TradeReference>
-	<TotalPrice>1040</TotalPrice>
-	<LeadGuest>
-		<FirstName>Jim</FirstName>
-		<LastName>Watsworth</LastName>
-		<Title>Mr</Title>
-	</LeadGuest>
-	$twoRoomBookingsUnserialize
-</BookDetails>
-XML;
-
-		$twoRoomBookingDetails = [
-			$instance,
-			$serialize,
-			$unserialize
-		];
-
-		$this->doTest(...$twoRoomBookingDetails);
-
-
-        return $twoRoomBookingDetails;
+		return $details;
     }
-
 }

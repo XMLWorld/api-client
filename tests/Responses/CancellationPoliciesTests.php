@@ -18,103 +18,32 @@ use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class CancellationPoliciesTests extends BaseSerializeXML
 {
+	use CancellationPoliciesTrait;
+
     public function testCancellationPolicy()
     {
-        $cancellationPolicy = new CancellationPolicy(
-            '2020-07-11',
-            574.28
-        );
+		$details = $this->getCancellationPolicy();
 
-        $this->serialize(
-            '<CancellationPolicy>
-				<CancelBy>2020-07-11</CancelBy>
-				<Penalty>574.28</Penalty>
-			</CancellationPolicy>',
-            $cancellationPolicy
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<CancellationPolicy>
-                <Penalty>574.28</Penalty>
-				<CancelBy>2020-07-11</CancelBy>
-			</CancellationPolicy>',
-            $cancellationPolicy
-        );
-
-        return $cancellationPolicy;
+		return $details;
     }
 
-    /**
-     * @depends testCancellationPolicy
-     */
-    public function testOneCancellationPolicies($cancellationPolicy)
+    public function testOneCancellationPolicies()
     {
-        $oneCancellationPolicy = new CancellationPolicies($cancellationPolicy);
+		$details = $this->getOneCancellationPolicies();
 
-        $this->serialize(
-            '<CancellationPolicies>
-				<CancellationPolicy>
-					<CancelBy>2020-07-11</CancelBy>
-					<Penalty>574.28</Penalty>
-				</CancellationPolicy>
-			</CancellationPolicies>',
-            $oneCancellationPolicy
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<CancellationPolicies>
-				<CancellationPolicy>
-					<CancelBy>2020-07-11</CancelBy>
-					<Penalty>574.28</Penalty>
-				</CancellationPolicy>
-			</CancellationPolicies>',
-            $oneCancellationPolicy
-        );
-
-        return $oneCancellationPolicy;
+		return $details;
     }
 
-    /**
-     * @depends testCancellationPolicy
-     */
-    public function testCancellationPolicies($cancellationPolicy)
+    public function testCancellationPolicies()
     {
-        $cancellationPolicies = new CancellationPolicies(
-            $cancellationPolicy,
-            new CancellationPolicy(
-                '2020-07-18',
-                1148.55
-            )
-        );
+		$details = $this->getCancellationPolicies();
 
-        $this->serialize(
-            '<CancellationPolicies>
-				<CancellationPolicy>
-					<CancelBy>2020-07-11</CancelBy>
-					<Penalty>574.28</Penalty>
-				</CancellationPolicy>
-				<CancellationPolicy>
-					<CancelBy>2020-07-18</CancelBy>
-					<Penalty>1148.55</Penalty>
-				</CancellationPolicy>
-			</CancellationPolicies>',
-            $cancellationPolicies
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<CancellationPolicies>
-				<CancellationPolicy>
-					<Penalty>574.28</Penalty>
-					<CancelBy>2020-07-11</CancelBy>
-				</CancellationPolicy>
-				<CancellationPolicy>
-					<CancelBy>2020-07-18</CancelBy>
-					<Penalty>1148.55</Penalty>
-				</CancellationPolicy>
-			</CancellationPolicies>',
-            $cancellationPolicies
-        );
-
-        return $cancellationPolicies;
+		return $details;
     }
 }

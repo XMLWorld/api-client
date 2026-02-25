@@ -8,25 +8,25 @@ use XMLWorld\ApiClient\Responses\ReturnStatus;
 use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class RoomsAppliesToTest extends BaseSerializeXML
+class SupplierTest extends BaseSerializeXML
 {
-	use RoomsAppliesToTrait;
+	use SupplierTrait;
 
-    public function testRoomsAppliesToOneRoom()
-    {
-		$details = $this->getRoomsAppliesTo();
-
-		$this->doTest(...$details);
-
-		return $details;
-    }
-
-    public function testRoomsAppliesToTowRooms()
-    {
-		$details = $this->getRoomsAppliesToFourRooms();
+	public function testRMISupplier()
+	{
+		$details = $this->getRMISupplier();
 
 		$this->doTest(...$details);
 
 		return $details;
-    }
+	}
+
+	public function testSBusyRoomsSupplier()
+	{
+		$details = $this->getBusyRoomsSupplier();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
 }

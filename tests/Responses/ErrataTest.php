@@ -2,129 +2,36 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\Errata;
-use XMLWorld\ApiClient\Responses\Erratum;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
-use XMLWorld\ApiClient\Responses\SpecialOffer;
-use XMLWorld\ApiClient\Responses\SpecialOffers;
-use XMLWorld\ApiClient\Responses\Supplement;
-use XMLWorld\ApiClient\Responses\Supplements;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class ErrataTest extends BaseSerializeXML
 {
+	use ErrataTrait;
+
     public function testErratum()
     {
-        $erratum = new Erratum(
-            '2020-08-04',
-            '2020-08-11',
-            'Small pool will be closed for maintenance'
-        );
+		$details = $this->getErratum();
 
-        $this->serialize(
-            '<Erratum>
-				<StartDate>2020-08-04</StartDate>
-				<EndDate>2020-08-11</EndDate>
-				<Description>Small pool will be closed for maintenance</Description>
-			</Erratum>',
-            $erratum
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Erratum>
-				<StartDate>2020-08-04</StartDate>
-				<EndDate>2020-08-11</EndDate>
-				<Description>Small pool will be closed for maintenance</Description>
-			</Erratum>',
-            $erratum
-        );
-
-        return $erratum;
+		return $details;
     }
 
-
-    /**
-     * @depends testErratum
-     */
-    public function testOneErrata($erratum)
+    public function testOneErrata()
     {
-        $oneErratum = new Errata($erratum);
+		$details = $this->getOneErrata();
 
-        $this->serialize(
-            '<Errata>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>Small pool will be closed for maintenance</Description>
-				</Erratum>
-			</Errata>',
-            $oneErratum
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Errata>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>Small pool will be closed for maintenance</Description>
-				</Erratum>
-			</Errata>',
-            $oneErratum
-        );
-
-        return $oneErratum;
+		return $details;
     }
 
-    /**
-     * @depends testErratum
-     */
-    public function testTwoErrata($erratum)
+    public function testTwoErrata()
     {
-        $twoErrata = new Errata(
-            $erratum,
-            new Erratum(
-                '2020-08-04',
-                '2020-08-11',
-                'There won\'t be mayonese at the restaurant'
-            )
-        );
+		$details = $this->getTwoErrata();
 
-        $this->serialize(
-            '<Errata>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>Small pool will be closed for maintenance</Description>
-				</Erratum>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>There won\'t be mayonese at the restaurant</Description>
-				</Erratum>
-			</Errata>',
-            $twoErrata
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Errata>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>Small pool will be closed for maintenance</Description>
-				</Erratum>
-				<Erratum>
-					<StartDate>2020-08-04</StartDate>
-					<EndDate>2020-08-11</EndDate>
-					<Description>There won\'t be mayonese at the restaurant</Description>
-				</Erratum>
-			</Errata>',
-            $twoErrata
-        );
-
-        return $twoErrata;
+		return $details;
     }
-
 }

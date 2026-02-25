@@ -6,8 +6,6 @@ use XMLWorld\ApiClient\Common\Guest;
 use XMLWorld\ApiClient\Common\Guests;
 use XMLWorld\ApiClient\Responses\CancellationPolicies;
 use XMLWorld\ApiClient\Responses\CancellationPolicy;
-use XMLWorld\ApiClient\Responses\Errata;
-use XMLWorld\ApiClient\Responses\Erratum;
 use XMLWorld\ApiClient\Responses\RoomBooking;
 use XMLWorld\ApiClient\Responses\RoomBookings;
 use XMLWorld\ApiClient\Responses\SpecialOffer;
@@ -16,14 +14,19 @@ use XMLWorld\ApiClient\Responses\Supplement;
 use XMLWorld\ApiClient\Responses\Supplements;
 use XMLWorld\ApiClient\Responses\Tax;
 use XMLWorld\ApiClient\Responses\Taxes;
-use XMLWorld\ApiClient\Test\BaseSerializeXML;
+use XMLWorld\ApiClient\Test\Common\GuestsTrait;
 
-class RoomBookingResponsesTest extends BaseSerializeXML
+trait RoomBookingsTrait
 {
+	use GuestsTrait;
+	use SupplementsTrait;
+	use SpecialOffersTrait;
+	use TaxesTrait;
+	use CancellationPoliciesTrait;
 
-    public function testLeadGuestOnlyBookResponse()
+    protected function getLeadGuestOnlyBookResponse()
     {
-        $leadGuestOnlyBookResponse = new RoomBooking(
+        $instance = new RoomBooking(
             155558,
             'Executive Double',
             null,
@@ -39,44 +42,52 @@ class RoomBookingResponsesTest extends BaseSerializeXML
             1040.23
         );
 
-        $this->serialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<Name>Executive Double</Name>
-				<MealBasisID>6</MealBasisID>
-				<Adults>1</Adults>
-				<Children>0</Children>
-				<Infants>0</Infants>
-				<Guests/>
-				<RoomPrice>1040.23</RoomPrice>
-			</RoomBooking>',
-            $leadGuestOnlyBookResponse
-        );
+        $serialize = <<<'XML'
+<RoomBooking>
+	<RoomID>155558</RoomID>
+	<Name>Executive Double</Name>
+	<MealBasisID>6</MealBasisID>
+	<Adults>1</Adults>
+	<Children>0</Children>
+	<Infants>0</Infants>
+	<Guests/>
+	<RoomPrice>1040.23</RoomPrice>
+</RoomBooking>
+XML;
 
-        $this->unserialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<Name>Executive Double</Name>
-				<MealBasisID>6</MealBasisID>
-				<Adults>1</Adults>
-				<Children>0</Children>
-				<Infants>0</Infants>
-				<Guests/>
-				<Supplements/>
-				<SpecialOffers/>
-				<Taxes/>
-				<CancellationPolicies/>
-				<RoomPrice>1040.23</RoomPrice>
-			</RoomBooking>',
-            $leadGuestOnlyBookResponse
-        );
+        $unserialize = <<<'XML'
+<RoomBooking>
+	<RoomID>155558</RoomID>
+	<Name>Executive Double</Name>
+	<MealBasisID>6</MealBasisID>
+	<Adults>1</Adults>
+	<Children>0</Children>
+	<Infants>0</Infants>
+	<Guests/>
+	<Supplements/>
+	<SpecialOffers/>
+	<Taxes/>
+	<CancellationPolicies/>
+	<RoomPrice>1040.23</RoomPrice>
+</RoomBooking>
+XML;
 
-        return $leadGuestOnlyBookResponse;
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
     }
 
-    public function testLeadGuestAndGuestBookResponse()
+	protected function getLeadGuestAndGuestBookResponse()
     {
-        $leadGuestAndGuestBookResponse = new RoomBooking(
+		list($oneGuestInstance, 		$oneGuestSerialize, 		$oneGuestUnserialize) 			= $this->getOneGuests();
+		list($oneSupplementsInstance,	$oneSupplementsSerialize,	$oneSupplementsUnserialize)		= $this->getOneSupplements();
+		list($oneSpecialOffersInstance,	$oneSpecialOffersSerialize,	$oneSpecialOffersUnserialize)	= $this->getOneSpecialOffers();
+		list($oneTaxesInstance,			$oneTaxesSerialize,			$oneTaxesUnserialize)			= $this->getOneTaxes();
+		list($oneCancellationsInstance,	$oneCancellationsSerialize,	$oneCancellationsUnserialize)	= $this->getOneCancellationPolicies();
+
+        $instance = new RoomBooking(
             155558,
             'Executive Double',
             'Sea View',
@@ -84,151 +95,66 @@ class RoomBookingResponsesTest extends BaseSerializeXML
             2,
             0,
             0,
-            new Guests(new Guest(
-                'Adult',
-                'Sally',
-                'Smith',
-                'Mrs',
-                null,
-                'French'
-            )),
-            new Supplements(new Supplement(
-                'test supplement',
-                'Per Night',
-                'Per Person',
-                220,
-                'Adult Only'
-            )),
-            new SpecialOffers(new SpecialOffer(
-                'Example special offer',
-                'Value Added',
-                null,
-                null,
-                null,
-                'test desc'
-            )),
-            new Taxes(new Tax(
-                'test %',
-                false,
-                1148.55
-            )),
-            new CancellationPolicies(new CancellationPolicy(
-                '2020-07-11',
-                574.28
-            )),
+			$oneGuestInstance,
+			$oneSupplementsInstance,
+			$oneSpecialOffersInstance,
+			$oneTaxesInstance,
+			$oneCancellationsInstance,
             1040.23
         );
 
-        $this->serialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<Name>Executive Double</Name>
-				<View>Sea View</View>
-				<MealBasisID>6</MealBasisID>
-				<Adults>2</Adults>
-				<Children>0</Children>
-				<Infants>0</Infants>
-				<Guests>
-					<Guest>
-						<Type>Adult</Type>
-						<FirstName>Sally</FirstName>
-						<LastName>Smith</LastName>
-						<Title>Mrs</Title>
-						<Nationality>French</Nationality>
-					</Guest>
-				</Guests>
-				<Supplements>
-					<Supplement>
-						<Name>test supplement</Name>
-						<Duration>Per Night</Duration>
-						<Multiplier>Per Person</Multiplier>
-						<Total>220</Total>
-						<PaxType>Adult Only</PaxType>
-					</Supplement>
-				</Supplements>
-				<SpecialOffers>
-					<SpecialOffer>
-						<Name>Example special offer</Name>
-						<Type>Value Added</Type>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-				</SpecialOffers>
-				<Taxes>
-					<Tax>
-						<TaxName>test %</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>1148.55</Total>
-					</Tax>
-				</Taxes>
-				<CancellationPolicies>
-					<CancellationPolicy>
-						<CancelBy>2020-07-11</CancelBy>
-						<Penalty>574.28</Penalty>
-					</CancellationPolicy>
-				</CancellationPolicies>
-				<RoomPrice>1040.23</RoomPrice>
-			</RoomBooking>',
-            $leadGuestAndGuestBookResponse
-        );
+        $serialize = <<<XML
+<RoomBooking>
+	<RoomID>155558</RoomID>
+	<Name>Executive Double</Name>
+	<View>Sea View</View>
+	<MealBasisID>6</MealBasisID>
+	<Adults>2</Adults>
+	<Children>0</Children>
+	<Infants>0</Infants>
+	$oneGuestSerialize
+	$oneSupplementsSerialize
+	$oneSpecialOffersSerialize
+	$oneTaxesSerialize
+	$oneCancellationsSerialize
+	<RoomPrice>1040.23</RoomPrice>
+</RoomBooking>
+XML;
 
-        $this->unserialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<Name>Executive Double</Name>
-				<View>Sea View</View>
-				<MealBasisID>6</MealBasisID>
-				<Adults>2</Adults>
-				<Children>0</Children>
-				<Infants>0</Infants>
-				<Guests>
-					<Guest>
-						<Type>Adult</Type>
-						<FirstName>Sally</FirstName>
-						<LastName>Smith</LastName>
-						<Title>Mrs</Title>
-						<Nationality>French</Nationality>
-					</Guest>
-				</Guests>
-				<Supplements>
-					<Supplement>
-						<Name>test supplement</Name>
-						<Duration>Per Night</Duration>
-						<Multiplier>Per Person</Multiplier>
-						<Total>220</Total>
-						<PaxType>Adult Only</PaxType>
-					</Supplement>
-				</Supplements>
-				<SpecialOffers>
-					<SpecialOffer>
-						<Name>Example special offer</Name>
-						<Type>Value Added</Type>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-				</SpecialOffers>
-				<Taxes>
-					<Tax>
-						<TaxName>test %</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>1148.55</Total>
-					</Tax>
-				</Taxes>
-				<CancellationPolicies>
-					<CancellationPolicy>
-						<CancelBy>2020-07-11</CancelBy>
-						<Penalty>574.28</Penalty>
-					</CancellationPolicy>
-				</CancellationPolicies>
-				<RoomPrice>1040.23</RoomPrice>
-			</RoomBooking>',
-            $leadGuestAndGuestBookResponse
-        );
+        $unserialize = <<<XML
+<RoomBooking>
+	<RoomID>155558</RoomID>
+	<Name>Executive Double</Name>
+	<View>Sea View</View>
+	<MealBasisID>6</MealBasisID>
+	<Adults>2</Adults>
+	<Children>0</Children>
+	<Infants>0</Infants>
+	$oneGuestUnserialize
+	$oneSupplementsUnserialize
+	$oneSpecialOffersUnserialize
+	$oneTaxesUnserialize
+	$oneCancellationsUnserialize
+	<RoomPrice>1040.23</RoomPrice>
+</RoomBooking>
+XML;
 
-        return $leadGuestAndGuestBookResponse;
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
     }
 
-    public function testAdultAndChildBookResponse()
+    protected function getAdultAndChildBookResponse()
     {
-        $adultAndChildBookResponse = new RoomBooking(
+		list($twoGuestInstance, 		$twoGuestSerialize, 		$twoGuestUnserialize) 			= $this->getTwoGuests();
+		list($twoSupplementsInstance,	$twoSupplementsSerialize,	$twoSupplementsUnserialize)		= $this->getTwoSupplements();
+		list($twoSpecialOffersInstance,	$twoSpecialOffersSerialize,	$twoSpecialOffersUnserialize)	= $this->getTwoSpecialOffers();
+		list($taxesInstance,			$taxesSerialize,			$taxesUnserialize)				= $this->getTaxes();
+		list($twoCancellationsInstance,	$twoCancellationsSerialize,	$twoCancellationsUnserialize)	= $this->getCancellationPolicies();
+
+        $instance = new RoomBooking(
             155558,
             'Executive Double',
             'Sea View',
@@ -236,275 +162,55 @@ class RoomBookingResponsesTest extends BaseSerializeXML
             1,
             1,
             0,
-            new Guests(
-                new Guest(
-                    'Adult',
-                    'Sally',
-                    'Smith',
-                    'Mrs',
-                    null,
-                    'French'
-                ),
-                new Guest(
-                    'Child',
-                    'Jimmy',
-                    'Smith',
-                    null,
-                    5,
-                    'French'
-                )
-            ),
-            new Supplements(
-                new Supplement(
-                    'Weekend Stay (Fri - Sun)',
-                    'Per Night',
-                    'Per Room',
-                    60,
-                ),
-                new Supplement(
-                    'test supplement',
-                    'Per Night',
-                    'Per Person',
-                    220,
-                    'Adult Only'
-                ),
-            ),
-            new SpecialOffers(
-                new SpecialOffer(
-                    'Example special offer',
-                    'Value Added',
-                    null,
-                    null,
-                    null,
-                    'test desc'
-                ),
-                new SpecialOffer(
-                    'Example special offer 2',
-                    'Free Kids',
-                    1,
-                    null,
-                    1000,
-                    'test desc'
-                )
-            ),
-            new Taxes(
-                new Tax(
-                    'test %',
-                    false,
-                    1148.55
-                ),
-                new Tax(
-                    'Government Tax',
-                    true,
-                    423.15
-                ),
-                new Tax(
-                    'Service Charge',
-                    true,
-                    604.5
-                ),
-                new Tax(
-                    'test',
-                    false,
-                    300
-                ),
-            ),
-            new CancellationPolicies(
-                new CancellationPolicy(
-                    '2020-07-11',
-                    574.28
-                ),
-                new CancellationPolicy(
-                    '2020-07-18',
-                    1148.55
-                )
-            ),
+			$twoGuestInstance,
+            $twoSupplementsInstance,
+			$twoSpecialOffersInstance,
+			$taxesInstance,
+			$twoCancellationsInstance,
             1040.23
         );
 
-        $this->serialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<Name>Executive Double</Name>
-				<View>Sea View</View>
-				<MealBasisID>6</MealBasisID>
-				<Adults>1</Adults>
-				<Children>1</Children>
-				<Infants>0</Infants>
-				<Guests>
-					<Guest>
-						<Type>Adult</Type>
-						<FirstName>Sally</FirstName>
-						<LastName>Smith</LastName>
-						<Title>Mrs</Title>
-						<Nationality>French</Nationality>
-					</Guest>
-					<Guest>
-						<Type>Child</Type>
-						<FirstName>Jimmy</FirstName>
-						<LastName>Smith</LastName>
-						<Age>5</Age>
-						<Nationality>French</Nationality>
-					</Guest>
-				</Guests>
-				<Supplements>
-					<Supplement>
-						<Name>Weekend Stay (Fri - Sun)</Name>
-						<Duration>Per Night</Duration>
-						<Multiplier>Per Room</Multiplier>
-						<Total>60</Total>
-					</Supplement>
-					<Supplement>
-						<Name>test supplement</Name>
-						<Duration>Per Night</Duration>
-						<Multiplier>Per Person</Multiplier>
-						<Total>220</Total>
-						<PaxType>Adult Only</PaxType>
-					</Supplement>
-				</Supplements>
-				<SpecialOffers>
-					<SpecialOffer>
-						<Name>Example special offer</Name>
-						<Type>Value Added</Type>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-					<SpecialOffer>
-						<Name>Example special offer 2</Name>
-						<Type>Free Kids</Type>
-						<Value>1</Value>
-						<Total>1000</Total>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-				</SpecialOffers>
-				<Taxes>
-					<Tax>
-						<TaxName>test %</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>1148.55</Total>
-					</Tax>
-					<Tax>
-						<TaxName>Government Tax</TaxName>
-						<Inclusive>True</Inclusive>
-						<Total>423.15</Total>
-					</Tax>
-					<Tax>
-						<TaxName>Service Charge</TaxName>
-						<Inclusive>True</Inclusive>
-						<Total>604.5</Total>
-					</Tax>
-					<Tax>
-						<TaxName>test</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>300</Total>
-					</Tax>
-				</Taxes>
-				<CancellationPolicies>
-					<CancellationPolicy>
-						<CancelBy>2020-07-11</CancelBy>
-						<Penalty>574.28</Penalty>
-					</CancellationPolicy>
-					<CancellationPolicy>
-						<CancelBy>2020-07-18</CancelBy>
-						<Penalty>1148.55</Penalty>
-					</CancellationPolicy>
-				</CancellationPolicies>
-				<RoomPrice>1040.23</RoomPrice>
-			</RoomBooking>',
-            $adultAndChildBookResponse
-        );
+        $serialize = <<<XML
+<RoomBooking>
+	<RoomID>155558</RoomID>
+	<Name>Executive Double</Name>
+	<View>Sea View</View>
+	<MealBasisID>6</MealBasisID>
+	<Adults>1</Adults>
+	<Children>1</Children>
+	<Infants>0</Infants>
+	$twoGuestSerialize
+	$twoSupplementsSerialize
+	$twoSpecialOffersSerialize
+	$taxesSerialize
+	$twoCancellationsSerialize
+	<RoomPrice>1040.23</RoomPrice>
+</RoomBooking>
+XML;
 
-        $this->unserialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<Name>Executive Double</Name>
-				<View>Sea View</View>
-				<MealBasisID>6</MealBasisID>
-				<Adults>1</Adults>
-				<Children>1</Children>
-				<Infants>0</Infants>
-				<Guests>
-					<Guest>
-						<Type>Adult</Type>
-						<FirstName>Sally</FirstName>
-						<LastName>Smith</LastName>
-						<Title>Mrs</Title>
-						<Nationality>French</Nationality>
-					</Guest>
-					<Guest>
-						<Type>Child</Type>
-						<FirstName>Jimmy</FirstName>
-						<LastName>Smith</LastName>
-						<Age>5</Age>
-						<Nationality>French</Nationality>
-					</Guest>
-				</Guests>
-				<Supplements>
-					<Supplement>
-						<Name>Weekend Stay (Fri - Sun)</Name>
-						<Duration>Per Night</Duration>
-						<Multiplier>Per Room</Multiplier>
-						<Total>60</Total>
-					</Supplement>
-					<Supplement>
-						<Name>test supplement</Name>
-						<Duration>Per Night</Duration>
-						<Multiplier>Per Person</Multiplier>
-						<Total>220</Total>
-						<PaxType>Adult Only</PaxType>
-					</Supplement>
-				</Supplements>
-				<SpecialOffers>
-					<SpecialOffer>
-						<Name>Example special offer</Name>
-						<Type>Value Added</Type>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-					<SpecialOffer>
-						<Name>Example special offer 2</Name>
-						<Type>Free Kids</Type>
-						<Value>1</Value>
-						<Total>1000</Total>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-				</SpecialOffers>
-				<Taxes>
-					<Tax>
-						<TaxName>test %</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>1148.55</Total>
-					</Tax>
-					<Tax>
-						<TaxName>Government Tax</TaxName>
-						<Inclusive>True</Inclusive>
-						<Total>423.15</Total>
-					</Tax>
-					<Tax>
-						<TaxName>Service Charge</TaxName>
-						<Inclusive>True</Inclusive>
-						<Total>604.5</Total>
-					</Tax>
-					<Tax>
-						<TaxName>test</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>300</Total>
-					</Tax>
-				</Taxes>
-				<CancellationPolicies>
-					<CancellationPolicy>
-						<CancelBy>2020-07-11</CancelBy>
-						<Penalty>574.28</Penalty>
-					</CancellationPolicy>
-					<CancellationPolicy>
-						<CancelBy>2020-07-18</CancelBy>
-						<Penalty>1148.55</Penalty>
-					</CancellationPolicy>
-				</CancellationPolicies>
-				<RoomPrice>1040.23</RoomPrice>
-			</RoomBooking>',
-            $adultAndChildBookResponse
-        );
+        $unserialize = <<<XML
+<RoomBooking>
+	<RoomID>155558</RoomID>
+	<Name>Executive Double</Name>
+	<View>Sea View</View>
+	<MealBasisID>6</MealBasisID>
+	<Adults>1</Adults>
+	<Children>1</Children>
+	<Infants>0</Infants>
+	$twoGuestUnserialize
+	$twoSupplementsUnserialize
+	$twoSpecialOffersUnserialize
+	$taxesUnserialize
+	$twoCancellationsUnserialize
+	<RoomPrice>1040.23</RoomPrice>
+</RoomBooking>
+XML;
 
-        return $adultAndChildBookResponse;
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
     }
 
     public function testNoSupplementsEOTaxesCancellationsBookResponse()

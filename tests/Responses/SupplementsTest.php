@@ -2,170 +2,45 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
-use XMLWorld\ApiClient\Responses\Supplement;
-use XMLWorld\ApiClient\Responses\Supplements;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class SupplementsTest extends BaseSerializeXML
 {
+	use SupplementsTrait;
+
     public function testSupplementWeekend()
     {
-        $supplementWeekend = new Supplement(
-            'Weekend Stay (Fri - Sun)',
-            'Per Night',
-            'Per Room',
-            60
-        );
+		$details = $this->getSupplementWeekend();
 
-        $this->serialize(
-            '<Supplement>
-				<Name>Weekend Stay (Fri - Sun)</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Room</Multiplier>
-				<Total>60</Total>
-			</Supplement>',
-            $supplementWeekend
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Supplement>
-				<Name>Weekend Stay (Fri - Sun)</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Room</Multiplier>
-				<PaxType/>
-				<Total>60</Total>
-			</Supplement>',
-            $supplementWeekend
-        );
-
-        return $supplementWeekend;
+		return $details;
     }
 
     public function testTestSupplement()
     {
-        $testSupplement = new Supplement(
-            'test supplement',
-            'Per Night',
-            'Per Person',
-            220,
-            'Adult Only'
-        );
+		$details = $this->getTestSupplement();
 
-        $this->serialize(
-            '<Supplement>
-				<Name>test supplement</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Person</Multiplier>
-				<Total>220</Total>
-				<PaxType>Adult Only</PaxType>
-			</Supplement>',
-            $testSupplement
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Supplement>
-				<Name>test supplement</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Person</Multiplier>
-				<PaxType>Adult Only</PaxType>
-				<Total>220</Total>
-			</Supplement>',
-            $testSupplement
-        );
-
-        return $testSupplement;
+		return $details;
     }
 
-    /**
-     * @depends testTestSupplement
-     */
-    public function testOneSupplements($testSupplement)
+    public function testOneSupplements()
     {
-        $oneSupplements = new Supplements($testSupplement);
+		$details = $this->getOneSupplements();
 
-        $this->serialize(
-            '<Supplements>
-				<Supplement>
-					<Name>test supplement</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Person</Multiplier>
-					<Total>220</Total>
-					<PaxType>Adult Only</PaxType>
-				</Supplement>
-			</Supplements>',
-            $oneSupplements
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Supplements>
-				<Supplement>
-					<Name>test supplement</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Person</Multiplier>
-					<Total>220</Total>
-					<PaxType>Adult Only</PaxType>
-				</Supplement>
-			</Supplements>',
-            $oneSupplements
-        );
-
-        return $oneSupplements;
+		return $details;
     }
 
-    /**
-     * @depends testSupplementWeekend
-     * @depends testTestSupplement
-     */
-    public function testTwoSupplements($supplementWeekend, $testSupplement)
+    public function testTwoSupplements()
     {
-        $twoSupplements = new Supplements(
-            $supplementWeekend,
-            $testSupplement
-        );
+		$details = $this->getTwoSupplements();
 
-        $this->serialize(
-            '<Supplements>
-				<Supplement>
-					<Name>Weekend Stay (Fri - Sun)</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Room</Multiplier>
-					<Total>60</Total>
-				</Supplement>
-				<Supplement>
-					<Name>test supplement</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Person</Multiplier>
-					<Total>220</Total>
-					<PaxType>Adult Only</PaxType>
-				</Supplement>
-			</Supplements>',
-            $twoSupplements
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Supplements>
-				<Supplement>
-					<Name>Weekend Stay (Fri - Sun)</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Room</Multiplier>
-					<Total>60</Total>
-				</Supplement>
-				<Supplement>
-					<Name>test supplement</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Person</Multiplier>
-					<Total>220</Total>
-					<PaxType>Adult Only</PaxType>
-				</Supplement>
-			</Supplements>',
-            $twoSupplements
-        );
-
-        return $twoSupplements;
+		return $details;
     }
-
 }

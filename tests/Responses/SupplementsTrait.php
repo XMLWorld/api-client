@@ -2,13 +2,12 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\ChildAges;
 use XMLWorld\ApiClient\Responses\Supplement;
 use XMLWorld\ApiClient\Responses\Supplements;
 
 trait SupplementsTrait
 {
-    public function testSupplementWeekend()
+    protected function getSupplementWeekend()
     {
         $instance = new Supplement(
             'Weekend Stay (Fri - Sun)',
@@ -17,33 +16,33 @@ trait SupplementsTrait
             60
         );
 
-        $serialize = '<Supplement>
-				<Name>Weekend Stay (Fri - Sun)</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Room</Multiplier>
-				<Total>60</Total>
-			</Supplement>';
+        $serialize = <<<'XML'
+<Supplement>
+	<Name>Weekend Stay (Fri - Sun)</Name>
+	<Duration>Per Night</Duration>
+	<Multiplier>Per Room</Multiplier>
+	<Total>60</Total>
+</Supplement>
+XML;
 
-        $unSerialize = '<Supplement>
-				<Name>Weekend Stay (Fri - Sun)</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Room</Multiplier>
-				<PaxType/>
-				<Total>60</Total>
-			</Supplement>';
+        $unSerialize = <<<'XML'
+<Supplement>
+	<Name>Weekend Stay (Fri - Sun)</Name>
+	<Duration>Per Night</Duration>
+	<Multiplier>Per Room</Multiplier>
+	<PaxType/>
+	<Total>60</Total>
+</Supplement>
+XML;
 
-        $supplementWeekend = [
+        return [
             $instance,
             $serialize,
             $unSerialize
         ];
-
-        $this->doTest(...$supplementWeekend);
-
-        return $supplementWeekend;
     }
 
-    public function testSupplement()
+    protected function getTestSupplement()
     {
         $instance = new Supplement(
             'test supplement',
@@ -53,70 +52,85 @@ trait SupplementsTrait
             'Adult Only'
         );
 
-        $serialize = '<Supplement>
-				<Name>test supplement</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Person</Multiplier>
-				<Total>220</Total>
-				<PaxType>Adult Only</PaxType>
-			</Supplement>';
+        $serialize = <<<'XML'
+<Supplement>
+	<Name>test supplement</Name>
+	<Duration>Per Night</Duration>
+	<Multiplier>Per Person</Multiplier>
+	<Total>220</Total>
+	<PaxType>Adult Only</PaxType>
+</Supplement>
+XML;
 
-        $unSerialize = '<Supplement>
-				<Name>test supplement</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Person</Multiplier>
-				<PaxType>Adult Only</PaxType>
-				<Total>220</Total>
-			</Supplement>';
+        $unSerialize = <<<'XML'
+<Supplement>
+	<Name>test supplement</Name>
+	<Duration>Per Night</Duration>
+	<Multiplier>Per Person</Multiplier>
+	<PaxType>Adult Only</PaxType>
+	<Total>220</Total>
+</Supplement>
+XML;
 
-        $testSupplement = [
+        return [
             $instance,
             $serialize,
             $unSerialize
         ];
-
-        $this->doTest(...$testSupplement);
-
-        return $testSupplement;
     }
 
-    /**
-     * @depends testSupplement
-     */
-    public function testOneSupplements($testSupplement)
+	protected function getOneSupplements()
     {
-        list($instance, $serialize, $unserialize) = $testSupplement;
+        list($instance, $serialize, $unserialize) = $this->getTestSupplement();
 
         $instance = new Supplements($instance);
 
-        $twoSupplements = $this->wrap($instance, $serialize, $unserialize);
+		$serialize = <<<XML
+<Supplements>
+	$serialize
+</Supplements>
+XML;
 
-        $this->doTest(...$twoSupplements);
+		$unSerialize = <<<XML
+<Supplements>
+	$unserialize
+</Supplements>
+XML;
 
-        return $twoSupplements;
+		return [
+			$instance,
+			$serialize,
+			$unSerialize
+		];
     }
 
-    /**
-     * @depends testSupplementWeekend
-     * @depends testSupplement
-     */
-    public function testTwoSupplements($supplementWeekend, $testSupplement)
+	protected function getTwoSupplements()
     {
         $instances = $serializes = $unserializes = [];
 
-        list($instances[0], $serializes[0], $unserializes[0]) = $supplementWeekend;
-        list($instances[1], $serializes[1], $unserializes[1]) = $testSupplement;
+        list($instances[0], $serializes[0], $unserializes[0]) = $this->getSupplementWeekend();
+        list($instances[1], $serializes[1], $unserializes[1]) = $this->getTestSupplement();
 
         $instance = new Supplements(...$instances);
 
-        $testTwoSupplements = $this->wrap(
-            $instance,
-            implode(PHP_EOL, $serializes),
-            implode(PHP_EOL, $unserializes),
-        );
+		$serialize = <<<XML
+<Supplements>
+	$serializes[0]
+	$serializes[1]
+</Supplements>
+XML;
 
-        $this->doTest(...$testTwoSupplements);
+		$unSerialize = <<<XML
+<Supplements>
+	$unserializes[0]
+	$unserializes[1]
+</Supplements>
+XML;
 
-        return $testTwoSupplements;
+		return [
+			$instance,
+			$serialize,
+			$unSerialize
+		];
     }
 }

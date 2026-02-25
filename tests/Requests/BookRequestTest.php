@@ -2,48 +2,18 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use PHPUnit\Framework\Attributes\Depends;
-use XMLWorld\ApiClient\Requests\BookRequest;
+use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class BookRequestTest extends BookDetailsTest
+class BookRequestTest extends BaseSerializeXML
 {
-	#[Depends('testLoginDetails')]
-	#[Depends('testTwoRoomBookingDetails')]
-    public function testBookRequest($loginDetails, $twoRoomBookingDetails)
+	use BookRequestTrait;
+
+    public function testBookRequest()
     {
-		list($loginDetailsInstance, 			$loginDetailsSerialize, 			$loginDetailsUnserialize) 			= $loginDetails;
-		list($twoRoomBookingDetailsInstance,	$twoRoomBookingDetailsSerialize,	$twoRoomBookingDetailsUnserialize)	= $twoRoomBookingDetails;
+		$details = $this->getBookRequest();
 
-        $instance = new BookRequest(
-			$loginDetailsInstance,
-			$twoRoomBookingDetailsInstance,
-            true
-        );
+		$this->doTest(...$details);
 
-		$serialize = <<<XML
-<BookRequest>
-	$loginDetailsSerialize
-	<Mock>True</Mock>
-	$twoRoomBookingDetailsSerialize
-</BookRequest>
-XML;
-
-		$unserialize = <<<XML
-<BookRequest>
-	$loginDetailsUnserialize
-	<Mock>True</Mock>
-	$twoRoomBookingDetailsUnserialize
-</BookRequest>
-XML;
-
-		$bookDetails = [
-			$instance,
-			$serialize,
-			$unserialize
-		];
-
-		$this->doTest(...$bookDetails);
-
-        return $bookDetails;
+		return $details;
     }
 }

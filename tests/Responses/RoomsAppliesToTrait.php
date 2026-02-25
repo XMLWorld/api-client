@@ -7,44 +7,52 @@ use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
 
 trait RoomsAppliesToTrait
 {
-    public function testRoomsAppliesTo()
+    protected function getRoomsAppliesTo()
     {
         $instance = new RoomsAppliesTo(1);
 
-        $expected = '<RoomsAppliesTo>
-				<RoomRequest>1</RoomRequest>
-			</RoomsAppliesTo>';
+        $serialize = <<<'XML'
+<RoomsAppliesTo>
+	<RoomRequest>1</RoomRequest>
+</RoomsAppliesTo>
+XML;
 
-        $roomsAppliesTo = [
+		$unserialize = <<<'XML'
+<RoomsAppliesTo>
+	<RoomRequest>1</RoomRequest></RoomsAppliesTo>
+XML;
+
+        return [
             $instance,
-            $expected,
-            $expected
+			$serialize,
+			$unserialize
         ];
-
-        $this->doTest(...$roomsAppliesTo);
-
-        return $roomsAppliesTo;
     }
 
-    public function testRoomsAppliesToFourRooms()
+	protected function getRoomsAppliesToFourRooms()
     {
         $instance = new RoomsAppliesTo(1, 2, 3, 4);
 
-        $expected = '<RoomsAppliesTo>
-				<RoomRequest>1</RoomRequest>
-				<RoomRequest>2</RoomRequest>
-				<RoomRequest>3</RoomRequest>
-				<RoomRequest>4</RoomRequest>
-			</RoomsAppliesTo>';
+		$serialize = <<<'XML'
+<RoomsAppliesTo>
+	<RoomRequest>1</RoomRequest>
+	<RoomRequest>2</RoomRequest>
+	<RoomRequest>3</RoomRequest>
+	<RoomRequest>4</RoomRequest>
+</RoomsAppliesTo>
+XML;
+		$unserialize = <<<'XML'
+<RoomsAppliesTo>
+	<RoomRequest>1</RoomRequest>
+	<RoomRequest>2</RoomRequest><RoomRequest>3</RoomRequest>
+	<RoomRequest>4</RoomRequest>
+</RoomsAppliesTo>
+XML;
 
-        $roomsAppliesToFourRooms = [
+        return [
             $instance,
-            $expected,
-            $expected
+			$serialize,
+			$unserialize
         ];
-
-        $this->doTest(...$roomsAppliesToFourRooms);
-
-        return $roomsAppliesToFourRooms;
     }
 }

@@ -3,10 +3,6 @@
 namespace XMLWorld\ApiClient\Test\Responses;
 
 use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\Errata;
-use XMLWorld\ApiClient\Responses\Erratum;
-use XMLWorld\ApiClient\Responses\Image;
-use XMLWorld\ApiClient\Responses\Images;
 use XMLWorld\ApiClient\Responses\RequestInfo;
 use XMLWorld\ApiClient\Responses\ReturnStatus;
 use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
@@ -14,33 +10,35 @@ use XMLWorld\ApiClient\Responses\SpecialOffer;
 use XMLWorld\ApiClient\Responses\SpecialOffers;
 use XMLWorld\ApiClient\Responses\Supplement;
 use XMLWorld\ApiClient\Responses\Supplements;
+use XMLWorld\ApiClient\Responses\Tax;
+use XMLWorld\ApiClient\Responses\Taxes;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class ImagesTest extends BaseSerializeXML
+class TaxesTest extends BaseSerializeXML
 {
-	use ImagesTrait;
+	use TaxesTrait;
 
-    public function testImage()
+    public function testTax()
     {
-		$details = $this->getImage();
+		$details = $this->getTax();
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testOneImage()
+    public function testOneTaxes()
     {
-		$details = $this->getOneImage();
+		$details = $this->getOneTaxes();
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testTwoImages()
+    public function testTaxes()
     {
-		$details = $this->getTwoImages();
+		$details = $this->getTaxes();
 
 		$this->doTest(...$details);
 

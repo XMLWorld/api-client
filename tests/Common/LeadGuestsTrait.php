@@ -6,7 +6,7 @@ use XMLWorld\ApiClient\Common\LeadGuest;
 
 trait LeadGuestsTrait
 {
-    protected function getAdultGuest()
+    protected function getAdultLeadGuest()
     {
         $instance = new LeadGuest(
             'Jim',

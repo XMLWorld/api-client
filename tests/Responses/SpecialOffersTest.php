@@ -2,166 +2,46 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
-use XMLWorld\ApiClient\Responses\SpecialOffer;
-use XMLWorld\ApiClient\Responses\SpecialOffers;
-use XMLWorld\ApiClient\Responses\Supplement;
-use XMLWorld\ApiClient\Responses\Supplements;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class SpecialOffersTest extends BaseSerializeXML
 {
+	use SpecialOffersTrait;
+
     public function testSpecialOffer1()
     {
-        $specialOffer1 = new SpecialOffer(
-            'Example special offer',
-            'Value Added',
-            null,
-            null,
-            null,
-            'test desc'
-        );
+		$details = $this->getSpecialOffer1();
 
-        $this->serialize(
-            '<SpecialOffer>
-				<Name>Example special offer</Name>
-				<Type>Value Added</Type>
-				<Desc>test desc</Desc>
-			</SpecialOffer>',
-            $specialOffer1
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<SpecialOffer>
-				<Name>Example special offer</Name>
-				<Type>Value Added</Type>
-				<Desc>test desc</Desc>
-			</SpecialOffer>',
-            $specialOffer1
-        );
-
-        return $specialOffer1;
+		return $details;
     }
 
     public function testSpecialOffer2()
     {
-        $specialOffer2 = new SpecialOffer(
-            'Example special offer 2',
-            'Free Kids',
-            1,
-            null,
-            1000,
-            'test desc'
-        );
+		$details = $this->getSpecialOffer2();
 
-        $this->serialize(
-            '<SpecialOffer>
-				<Name>Example special offer 2</Name>
-				<Type>Free Kids</Type>
-				<Value>1</Value>
-				<Total>1000</Total>
-				<Desc>test desc</Desc>
-			</SpecialOffer>',
-            $specialOffer2
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<SpecialOffer>
-				<Name>Example special offer 2</Name>
-				<Value>1</Value>
-				<Type>Free Kids</Type>
-				<Total>1000</Total>
-				<Desc>test desc</Desc>
-			</SpecialOffer>',
-            $specialOffer2
-        );
-
-        return $specialOffer2;
+		return $details;
     }
 
-    /**
-     * @depends testSpecialOffer1
-     */
-    public function testOneSpecialOffer($specialOffer1)
+    public function testOneSpecialOffer()
     {
-        $oneSpecialOffer = new SpecialOffers($specialOffer1);
+		$details = $this->getOneSpecialOffers();
 
-        $this->serialize(
-            '<SpecialOffers>
-				<SpecialOffer>
-					<Name>Example special offer</Name>
-					<Type>Value Added</Type>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-			</SpecialOffers>',
-            $oneSpecialOffer
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<SpecialOffers>
-				<SpecialOffer>
-					<Name>Example special offer</Name>
-					<Type>Value Added</Type>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-			</SpecialOffers>',
-            $oneSpecialOffer
-        );
-
-        return $oneSpecialOffer;
+		return $details;
     }
 
-    /**
-     * @depends testSpecialOffer1
-     * @depends testSpecialOffer2
-     */
-    public function testTwoSpecialOffers($specialOffer1, $specialOffer2)
+    public function testTwoSpecialOffers()
     {
-        $twoSpecialOffers = new SpecialOffers(
-            $specialOffer1,
-            $specialOffer2
-        );
+		$details = $this->getTwoSpecialOffers();
 
-        $this->serialize(
-            '<SpecialOffers>
-				<SpecialOffer>
-					<Name>Example special offer</Name>
-					<Type>Value Added</Type>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-				<SpecialOffer>
-					<Name>Example special offer 2</Name>
-					<Type>Free Kids</Type>
-					<Value>1</Value>
-					<Total>1000</Total>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-			</SpecialOffers>',
-            $twoSpecialOffers
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<SpecialOffers>
-				<SpecialOffer>
-					<Name>Example special offer</Name>
-					<Type>Value Added</Type>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-				<SpecialOffer>
-					<Name>Example special offer 2</Name>
-					<Type>Free Kids</Type>
-					<Value>1</Value>
-					<Total>1000</Total>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-			</SpecialOffers>',
-            $twoSpecialOffers
-        );
-
-        return $twoSpecialOffers;
+		return $details;
     }
 
 }
