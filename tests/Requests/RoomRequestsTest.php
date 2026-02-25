@@ -6,63 +6,106 @@ use XMLWorld\ApiClient\Requests\RoomRequest;
 use XMLWorld\ApiClient\Requests\RoomRequests;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-/**
- * @method testTwoAdults
- * @method testTwoAdultsOneChild
- * @method testTwoAdultsTwoInfants
- * @method testTwoAdultsTwoChildrenTwoInfants
- * @method testOneChildTwoInfants
- * @method testTwoAdultsOneChildrenTwoInfants
- */
 class RoomRequestsTest extends BaseSerializeXML
 {
-    use RoomRequestsTrait{
-        testRoomRequestsTwoAdults as traitRoomRequestsTwoAdults;
-        testRoomRequestsTwoAdultsTwoInfants as traitRoomRequestsTwoAdultsTwoInfants;
-        testRoomRequestsTwoAdultsOneChild as traitRoomRequestsTwoAdultsOneChild;
-        testRoomRequestsTwoAdultsTwoChildrenTwoInfants as traitRoomRequestsTwoAdultsTwoChildrenTwoInfants;
-        testThreeRoomRequests as traitThreeRoomRequests;
-    }
+    use RoomRequestsTrait;
 
-    /**
-     * @depends testTwoAdults
-     */
-    public function testRoomRequestsTwoAdults($twoAdults)
-    {
-        return $this->traitRoomRequestsTwoAdults($twoAdults);
-    }
+	public function testTwoAdults()
+	{
+		$details = $this->getTwoAdults();
 
-    /**
-     * @depends testTwoAdultsTwoInfants
-     */
-    public function testRoomRequestsTwoAdultsTwoInfants($twoAdultsTwoInfants)
-    {
-        return $this->traitRoomRequestsTwoAdultsTwoInfants($twoAdultsTwoInfants);
-    }
+		$this->doTest(...$details);
 
-    /**
-     * @depends testTwoAdultsOneChild
-     */
-    public function testRoomRequestsTwoAdultsOneChild($twoAdultsOneChild)
-    {
-        return $this->traitRoomRequestsTwoAdultsOneChild($twoAdultsOneChild);
-    }
+		return $details;
+	}
 
-    /**
-     * @depends testTwoAdultsTwoChildrenTwoInfants
-     */
-    public function testRoomRequestsTwoAdultsTwoChildrenTwoInfants($twoAdultsTwoChildrenTwoInfants)
-    {
-        return $this->traitRoomRequestsTwoAdultsTwoChildrenTwoInfants($twoAdultsTwoChildrenTwoInfants);
-    }
+	public function testTwoAdultsOneChild()
+	{
+		$details = $this->getTwoAdultsOneChild();
 
-    /**
-     * @depends testTwoAdultsTwoInfants
-     * @depends testTwoAdultsOneChild
-     * @depends testTwoAdultsTwoChildrenTwoInfants
-     */
-    public function testThreeRoomRequests($twoAdultsTwoInfants, $twoAdultsOneChild, $twoAdultsTwoChildrenTwoInfants)
-    {
-        return $this->traitThreeRoomRequests(...func_get_args());
-    }
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testTwoAdultsTwoInfants()
+	{
+		$details = $this->getTwoAdultsTwoInfants();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testTwoAdultsTwoChildrenTwoInfants()
+	{
+		$details = $this->getTwoAdultsTwoChildrenTwoInfants();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testOneChildTwoInfants()
+	{
+		$details = $this->getOneChildTwoInfants();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testTwoAdultsOneChildrenTwoInfants()
+	{
+		$details = $this->getTwoAdultsOneChildrenTwoInfants();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testRoomRequestsTwoAdults()
+	{
+		$details = $this->getRoomRequestsTwoAdults();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testRoomRequestsTwoAdultsTwoInfants()
+	{
+		$details = $this->getRoomRequestsTwoAdultsTwoInfants();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testRoomRequestsTwoAdultsOneChild()
+	{
+		$details = $this->getRoomRequestsTwoAdultsOneChild();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testRoomRequestsTwoAdultsTwoChildrenTwoInfants()
+	{
+		$details = $this->getRoomRequestsTwoAdultsTwoChildrenTwoInfants();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testThreeRoomRequests()
+	{
+		$details = $this->getThreeRoomRequests();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
 }

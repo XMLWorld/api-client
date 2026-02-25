@@ -7,32 +7,14 @@ use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class LeadGuestsTests extends BaseSerializeXML
 {
+	use LeadGuestsTrait;
+
     public function testAdultGuest()
     {
-        $simpleLeadGuestBook = new LeadGuest(
-            'Jim',
-            'Watsworth',
-            'Mr'
-        );
+		$details = $this->getAdultGuest();
 
-        $this->serialize(
-            '<LeadGuest>
-				<FirstName>Jim</FirstName>
-				<LastName>Watsworth</LastName>
-				<Title>Mr</Title>
-			</LeadGuest>',
-            $simpleLeadGuestBook
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<LeadGuest>
-				<FirstName>Jim</FirstName>
-				<LastName>Watsworth</LastName>
-				<Title>Mr</Title>
-			</LeadGuest>',
-            $simpleLeadGuestBook
-        );
-
-        return $simpleLeadGuestBook;
+		return $details;
     }
 }

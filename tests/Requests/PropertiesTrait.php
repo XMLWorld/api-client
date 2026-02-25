@@ -6,38 +6,48 @@ use XMLWorld\ApiClient\Requests\Properties;
 
 trait PropertiesTrait
 {
-    public function testOneProperty()
+    protected function getOneProperty()
     {
         $instance = new Properties(2007);
 
-        $expected = '<Properties>
-				<PropertyID>2007</PropertyID>
-			</Properties>';
+        $serialize = <<<'XML'
+<Properties>
+	<PropertyID>2007</PropertyID>
+</Properties>
+XML;
+		$unserialize = <<<'XML'
+<Properties> <PropertyID>2007</PropertyID>
+</Properties>
+XML;
 
-        $this->doTest($instance, $expected, $expected);
 
         return [
             $instance,
-            $expected,
-            $expected
+			$serialize,
+			$unserialize
         ];
     }
 
-    public function testTwoProperties()
+	protected function getTwoProperties()
     {
         $instance = new Properties(2007, 3008);
 
-        $expected = '<Properties>
-				<PropertyID>2007</PropertyID>
-				<PropertyID>3008</PropertyID>
-			</Properties>';
-
-        $this->doTest($instance, $expected, $expected);
-
+		$serialize = <<<'XML'
+<Properties>
+	<PropertyID>2007</PropertyID>
+	<PropertyID>3008</PropertyID>
+</Properties>
+XML;
+		$unserialize = <<<'XML'
+<Properties>
+	<PropertyID>2007</PropertyID>
+	<PropertyID>3008</PropertyID>
+</Properties>
+XML;
         return [
             $instance,
-            $expected,
-            $expected
+			$serialize,
+			$unserialize
         ];
     }
 }

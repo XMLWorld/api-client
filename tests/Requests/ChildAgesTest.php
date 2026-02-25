@@ -6,11 +6,34 @@ use XMLWorld\ApiClient\Requests\ChildAge;
 use XMLWorld\ApiClient\Requests\ChildAges;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-/**
- * @method testChildAge
- * @method testTwoChildAges
- */
 class ChildAgesTest extends BaseSerializeXML
 {
     use ChildAgesTrait;
+
+	public function testChildAge()
+	{
+		$details = $this->getChildAge();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testOneChildAges()
+	{
+		$details = $this->getOneChildAges();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	public function testTwoChildAges()
+	{
+		$details = $this->getTwoChildAges();
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
 }

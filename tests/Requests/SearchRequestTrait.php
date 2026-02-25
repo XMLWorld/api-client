@@ -2,19 +2,19 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use PHPUnit\Framework\Attributes\Depends;
-use XMLWorld\ApiClient\Requests\RoomRequests;
 use XMLWorld\ApiClient\Requests\SearchDetails;
 use XMLWorld\ApiClient\Requests\SearchRequest;
 
 trait SearchRequestTrait
 {
-	#[Depends('testLoginDetails')]
-	#[Depends('testThreeRoomRequests')]
-    public function testSearchRequestOneProperty($loginDetails, $testThreeRoomRequests)
+	use LoginDetailsTrait;
+	use RoomRequestsTrait;
+	use PropertiesTrait;
+
+    protected function getSearchRequestOneProperty()
     {
-        list($loginDetailsInstance, 			$loginDetailsSerialize,				$loginDetailsUnserialize) 			= $loginDetails;
-        list($testThreeRoomRequestsInstance,	$testThreeRoomRequestsSerialize,	$testThreeRoomRequestsUnserialize)	= $testThreeRoomRequests;
+        list($loginDetailsInstance, 			$loginDetailsSerialize,				$loginDetailsUnserialize) 			= $this->getLoginDetails();
+        list($testThreeRoomRequestsInstance,	$testThreeRoomRequestsSerialize,	$testThreeRoomRequestsUnserialize)	= $this->getThreeRoomRequests();
 
         $instance = new SearchRequest(
             $loginDetailsInstance,
@@ -67,25 +67,18 @@ XML;
 </SearchRequest>
 XML;
 
-        $searchRequestOneProperty = [
+        return [
             $instance,
             $serialize,
             $unserialize
         ];
-
-        $this->doTest(...$searchRequestOneProperty);
-
-        return $searchRequestOneProperty;
     }
 
-	#[Depends('testLoginDetails')]
-	#[Depends('testThreeRoomRequests')]
-	#[Depends('testTwoProperties')]
-    public function testSearchRequestTwoProperties($loginDetails, $testThreeRoomRequests, $twoProperties){
-
-        list($loginDetailsInstance,             $loginDetailsSerialize,             $loginDetailsUnserialize)           = $loginDetails;
-        list($testThreeRoomRequestsInstance,    $testThreeRoomRequestsSerialize,    $testThreeRoomRequestsUnserialize)  = $testThreeRoomRequests;
-        list($twoPropertiesInstance,            $twoPropertiesSerialize,            $twoPropertiesUnserialize)          = $twoProperties;
+    protected function getSearchRequestTwoProperties()
+	{
+        list($loginDetailsInstance,             $loginDetailsSerialize,             $loginDetailsUnserialize)           = $this->getLoginDetails();
+        list($testThreeRoomRequestsInstance,    $testThreeRoomRequestsSerialize,    $testThreeRoomRequestsUnserialize)  = $this->getThreeRoomRequests();
+        list($twoPropertiesInstance,            $twoPropertiesSerialize,            $twoPropertiesUnserialize)          = $this->getTwoProperties();
 
         $instance = new SearchRequest(
             $loginDetailsInstance,
@@ -137,14 +130,10 @@ XML;
 </SearchRequest>
 XML;
 
-        $twoRoomSearchRequest = [
+        return [
             $instance,
             $serialize,
             $unserialize
         ];
-
-        $this->doTest(...$twoRoomSearchRequest);
-
-        return $twoRoomSearchRequest;
     }
 }

@@ -8,167 +8,41 @@ use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class GuestsTests extends BaseSerializeXML
 {
+	use GuestsTrait;
+
     public function testAdultGuest()
     {
-        $adultGuestBook = new Guest(
-            'Adult',
-            'Sally',
-            'Smith',
-            'Mrs',
-            null,
-            'French'
-        );
+        $details = $this->getAdultGuest();
 
-        $this->serialize(
-            '<Guest>
-				<Type>Adult</Type>
-				<FirstName>Sally</FirstName>
-				<LastName>Smith</LastName>
-				<Title>Mrs</Title>
-				<Nationality>French</Nationality>
-			</Guest>',
-            $adultGuestBook
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Guest>
-				<Type>Adult</Type>
-				<FirstName>Sally</FirstName>
-				<LastName>Smith</LastName>
-				<Title>Mrs</Title>
-				<Nationality>French</Nationality>
-			</Guest>',
-            $adultGuestBook
-        );
-
-        return $adultGuestBook;
+		return $details;
     }
 
     public function testChildGuest()
     {
-        $childGuestBook = new Guest(
-            'Child',
-            'Jimmy',
-            'Smith',
-            null,
-            5,
-            'French'
-        );
+		$details = $this->getChildGuest();
 
-        $this->serialize(
-            '<Guest>
-				<Type>Child</Type>
-				<FirstName>Jimmy</FirstName>
-				<LastName>Smith</LastName>
-				<Age>5</Age>
-				<Nationality>French</Nationality>
-			</Guest>',
-            $childGuestBook
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Guest>
-				<Type>Child</Type>
-				<FirstName>Jimmy</FirstName>
-				<LastName>Smith</LastName>
-				<Age>5</Age>
-				<Nationality>French</Nationality>
-			</Guest>',
-            $childGuestBook
-        );
-
-        return $childGuestBook;
+		return $details;
     }
 
-
-    /**
-     * @depends testAdultGuest
-     */
-    public function testOneGuests($adultGuestBook)
+    public function testOneGuests()
     {
-        $oneGuests = new Guests($adultGuestBook);
+		$details = $this->getOneGuests();
 
-        $this->serialize(
-            '<Guests>
-				<Guest>
-					<Type>Adult</Type>
-					<FirstName>Sally</FirstName>
-					<LastName>Smith</LastName>
-					<Title>Mrs</Title>
-					<Nationality>French</Nationality>
-				</Guest>
-			</Guests>',
-            $oneGuests
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Guests>
-				<Guest>
-					<Type>Adult</Type>
-					<FirstName>Sally</FirstName>
-					<LastName>Smith</LastName>
-					<Title>Mrs</Title>
-					<Nationality>French</Nationality>
-				</Guest>
-			</Guests>',
-            $oneGuests
-        );
-
-        return $oneGuests;
+		return $details;
     }
 
-    /**
-     * @depends testAdultGuest
-     * @depends testChildGuest
-     */
-    public function testTwoGuests($adultGuestBook, $childGuestBook)
+    public function testTwoGuests()
     {
-        $twoGuests = new Guests(
-            $adultGuestBook,
-            $childGuestBook
-        );
+        $details = $this->getTwoGuests();
 
-        $this->serialize(
-            '<Guests>
-				<Guest>
-					<Type>Adult</Type>
-					<FirstName>Sally</FirstName>
-					<LastName>Smith</LastName>
-					<Title>Mrs</Title>
-					<Nationality>French</Nationality>
-				</Guest>
-				<Guest>
-					<Type>Child</Type>
-					<FirstName>Jimmy</FirstName>
-					<LastName>Smith</LastName>
-					<Age>5</Age>
-					<Nationality>French</Nationality>
-				</Guest>
-			</Guests>',
-            $twoGuests
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<Guests>
-				<Guest>
-					<Type>Adult</Type>
-					<FirstName>Sally</FirstName>
-					<LastName>Smith</LastName>
-					<Title>Mrs</Title>
-					<Nationality>French</Nationality>
-				</Guest>
-				<Guest>
-					<Type>Child</Type>
-					<FirstName>Jimmy</FirstName>
-					<LastName>Smith</LastName>
-					<Age>5</Age>
-					<Nationality>French</Nationality>
-				</Guest>
-			</Guests>',
-            $twoGuests
-        );
-
-        return $twoGuests;
+		return $details;
     }
-
 }

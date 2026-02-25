@@ -3,7 +3,6 @@
 namespace XMLWorld\ApiClient\Test\Requests;
 
 use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Requests\BookRequest;
 
 class BookRequestTest extends BookDetailsTest
