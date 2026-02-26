@@ -2,16 +2,15 @@
 
 namespace XMLWorld\ApiClient\Test\Common;
 
-use XMLWorld\ApiClient\Common\LeadGuest;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class LeadGuestsTests extends BaseSerializeXML
 {
 	use LeadGuestsTrait;
 
-    public function testAdultGuest()
+    public function testAdultLeadGuest()
     {
-		$details = $this->getAdultGuest();
+		$details = $this->getAdultLeadGuest();
 
 		$this->doTest(...$details);
 

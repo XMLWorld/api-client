@@ -2,7 +2,6 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use PHPUnit\Framework\Attributes\Depends;
 use XMLWorld\ApiClient\Requests\BookRequest;
 
 trait BookRequestTrait

@@ -2,7 +2,6 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-
 use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
 
 trait RoomsAppliesToTrait

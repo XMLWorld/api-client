@@ -2,9 +2,6 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class ResponseTest extends BaseSerializeXML

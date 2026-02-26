@@ -2,6 +2,7 @@
 
 namespace XMLWorld\ApiClient\Test;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use XMLWorld\ApiClient\Responses\CancellationPolicies;
 use XMLWorld\ApiClient\Responses\CancellationPolicy;
@@ -24,9 +25,7 @@ use XMLWorld\ApiClient\Responses\Taxes;
 
 class PropertyResultsTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function roomsAppliesTo1Room()
     {
         $roomsAppliesTo1Room = new RoomsAppliesTo(1);
@@ -40,9 +39,7 @@ class PropertyResultsTest extends TestCase
         return $roomsAppliesTo1Room;
     }
 
-    /**
-     * @test
-     */
+	#[Test]
     public function roomsAppliesTo2Room2()
     {
         $roomsAppliesTo2Room2 = new RoomsAppliesTo(1,2);
@@ -56,9 +53,7 @@ class PropertyResultsTest extends TestCase
         return $roomsAppliesTo2Room2;
     }
 
-    /**
-     * @test
-     */
+	#[Test]
     public function specialOffert()
     {
         $specialOffert = new SpecialOffer(
@@ -78,8 +73,8 @@ class PropertyResultsTest extends TestCase
         return $specialOffert;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends specialOffert
      */
     public function oneSpecialOffertsOnly($specialOffert)
@@ -99,8 +94,8 @@ class PropertyResultsTest extends TestCase
         return $oneSpecialOffertsOnly;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends specialOffert
      */
     public function twoSpecialOfferts($specialOffert)
@@ -133,9 +128,7 @@ class PropertyResultsTest extends TestCase
         return $twoSpecialOfferts;
     }
 
-    /**
-     * @test
-     */
+	#[Test]
     public function tax()
     {
         $tax = new Tax(
@@ -151,8 +144,8 @@ class PropertyResultsTest extends TestCase
         return $tax;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends tax
      */
     public function oneTaxesOnly($tax)
@@ -172,8 +165,8 @@ class PropertyResultsTest extends TestCase
         return $oneTaxesOnly;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends tax
      */
     public function twoTaxes($tax)
@@ -200,9 +193,7 @@ class PropertyResultsTest extends TestCase
         return $twoTaxes;
     }
 
-    /**
-     * @test
-     */
+	#[Test]
     public function supplement()
     {
         $supplement = new Supplement(
@@ -222,8 +213,8 @@ class PropertyResultsTest extends TestCase
         return $supplement;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends supplement
      * @return Supplements
      */
@@ -244,8 +235,8 @@ class PropertyResultsTest extends TestCase
         return $oneSupplement;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends supplement
      * @return Supplements
      */
@@ -278,9 +269,7 @@ class PropertyResultsTest extends TestCase
         return $twoSupplements;
     }
 
-    /**
-     * @test
-     */
+	#[Test]
     public function cancellationPolicy()
     {
         $cancellationPolicy = new CancellationPolicy(
@@ -294,8 +283,8 @@ class PropertyResultsTest extends TestCase
         return $cancellationPolicy;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends cancellationPolicy
      */
     public function oneCancellationPolicyOnly($cancellationPolicy)
@@ -315,8 +304,8 @@ class PropertyResultsTest extends TestCase
         return $oneCancellationPolicyOnly;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends cancellationPolicy
      */
     public function twoCancellationPolicies($cancellationPolicy)
@@ -345,8 +334,8 @@ class PropertyResultsTest extends TestCase
         return $twoCancellationPolicies;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends roomsAppliesTo1Room
      * @depends oneSpecialOffertsOnly
      * @depends oneTaxesOnly
@@ -392,8 +381,8 @@ class PropertyResultsTest extends TestCase
         return $roomType;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends roomsAppliesTo2Room2
      * @depends twoSpecialOfferts
      * @depends twoTaxes
@@ -439,8 +428,8 @@ class PropertyResultsTest extends TestCase
         return $roomType2;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends roomType1
      */
     public function oneRoonTypeOnly($roomType)
@@ -460,8 +449,8 @@ class PropertyResultsTest extends TestCase
         return $oneRoomTypeOnly;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends roomType1
      * @depends roomType2
      */
@@ -483,9 +472,7 @@ class PropertyResultsTest extends TestCase
         return $twoRoomTypes;
     }
 
-    /**
-     * @test
-     */
+	#[Test]
     public function image()
     {
         $image1000 = new Image(
@@ -499,8 +486,8 @@ class PropertyResultsTest extends TestCase
         return $image1000;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends image
      */
     public function oneImageOnly($image)
@@ -520,8 +507,8 @@ class PropertyResultsTest extends TestCase
         return $oneImageOnly;
     }
 
+	#[Test]
     /**
-     * @test
      * @depends image
      */
     public function twoImages($image)

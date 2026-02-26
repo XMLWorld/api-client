@@ -2,8 +2,6 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use XMLWorld\ApiClient\Requests\ChildAge;
-use XMLWorld\ApiClient\Requests\ChildAges;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class ChildAgesTest extends BaseSerializeXML

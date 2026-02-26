@@ -2,8 +2,6 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use XMLWorld\ApiClient\Requests\RoomRequest;
-use XMLWorld\ApiClient\Requests\RoomRequests;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class RoomRequestsTest extends BaseSerializeXML

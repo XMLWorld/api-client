@@ -4,6 +4,7 @@ namespace XMLWorld\ApiClient\Test\Responses;
 
 use XMLWorld\ApiClient\Responses\SpecialOffer;
 use XMLWorld\ApiClient\Responses\SpecialOffers;
+
 trait SpecialOffersTrait
 {
     protected function getSpecialOffer1()

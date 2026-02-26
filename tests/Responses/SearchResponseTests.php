@@ -2,9 +2,9 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Responses\SearchResponse;
+use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class SearchResponseTests extends PropertyResultTests
+class SearchResponseTests extends BaseSerializeXML
 {
 	use SearchResponseTrait;
 

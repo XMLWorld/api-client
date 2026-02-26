@@ -2,8 +2,6 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use PHPUnit\Framework\Attributes\Depends;
-use XMLWorld\ApiClient\Common\LeadGuest;
 use XMLWorld\ApiClient\Requests\BookDetails;
 use XMLWorld\ApiClient\Requests\RoomBookings;
 use XMLWorld\ApiClient\Test\Common\LeadGuestsTrait;

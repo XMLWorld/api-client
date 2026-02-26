@@ -2,31 +2,34 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class RoomsAppliesToTest extends BaseSerializeXML
 {
 	use RoomsAppliesToTrait;
 
-    public function testRoomsAppliesToOneRoom()
+	#[Test]
+    public function roomsAppliesToOneRoom()
     {
-		$details = $this->getRoomsAppliesTo();
+		list($instance, $serialize, $unserialize) = $this->getRoomsAppliesTo();
 
-		$this->doTest(...$details);
+		$this->assertCount(1, $instance->roomRequest, 'it only contains one element');
+		$this->assertIsArray($instance->roomRequest, 'the container roomRequest is an array');
+		$this->assertSame([1], $instance->roomRequest, 'the content is correct');
 
-		return $details;
+		$this->doTest($instance, $serialize, $unserialize);
     }
 
-    public function testRoomsAppliesToTowRooms()
+	#[Test]
+    public function roomsAppliesToTowRooms()
     {
-		$details = $this->getRoomsAppliesToFourRooms();
+		list($instance, $serialize, $unserialize) =  $this->getRoomsAppliesToFourRooms();
 
-		$this->doTest(...$details);
+		$this->assertCount(4, $instance->roomRequest, 'it contains two elements');
+		$this->assertIsArray($instance->roomRequest, 'the container roomRequest is an array');
+		$this->assertSame([1, 2, 3, 4], $instance->roomRequest, 'the content is correct');
 
-		return $details;
+		$this->doTest($instance, $serialize, $unserialize);
     }
 }

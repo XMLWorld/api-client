@@ -10,11 +10,9 @@ class SpecialOffersTest extends BaseSerializeXML
 
     public function testSpecialOffer1()
     {
-		$details = $this->getSpecialOffer1();
+		list($instance, $serialize, $unserialize) = $this->getSpecialOffer1();
 
-		$this->doTest(...$details);
-
-		return $details;
+		$this->doTest($instance, $serialize, $unserialize);
     }
 
     public function testSpecialOffer2()
