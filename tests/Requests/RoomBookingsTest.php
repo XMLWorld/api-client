@@ -51,7 +51,7 @@ class RoomBookingsTest extends BaseSerializeXML
     public function oneRoomBookings(array $roomBooking) : array
     {
 		list($roomBookingInstance, , ) = $roomBooking;
-		list($instance, , ) = $details = $this->oneRoomBookings($roomBooking);
+		list($instance, , ) = $details = $this->getOneRoomBookings($roomBooking);
 
 		/** @todo do assertions */
 

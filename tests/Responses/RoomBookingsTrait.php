@@ -71,7 +71,7 @@ XML;
 
 	protected function getLeadGuestAndGuestBookResponse() : array
     {
-		list($oneGuestInstance, 		$oneGuestSerialize, 		$oneGuestUnserialize) 			= $this->getOneGuests();
+		list($oneGuestInstance, 		$oneGuestSerialize, 		$oneGuestUnserialize) 			= $this->getOneGuests($this->getGuest1());
 		list($oneSupplementsInstance,	$oneSupplementsSerialize,	$oneSupplementsUnserialize)		= $this->getOneSupplements($this->getSupplement1());
 		list($oneSpecialOffersInstance,	$oneSpecialOffersSerialize,	$oneSpecialOffersUnserialize)	= $this->getOneSpecialOffers($this->getSpecialOffer1());
 		list($oneTaxesInstance,			$oneTaxesSerialize,			$oneTaxesUnserialize)			= $this->getOneTaxes($this->getTax1());
@@ -138,7 +138,7 @@ XML;
 
     protected function getAdultAndChildBookResponse() : array
     {
-		list($twoGuestInstance, 		$twoGuestSerialize, 		$twoGuestUnserialize) 			= $this->getTwoGuests();
+		list($twoGuestInstance, 		$twoGuestSerialize, 		$twoGuestUnserialize) 			= $this->getTwoGuests($this->getGuest1(), $this->getGuest2());
 		list($twoSupplementsInstance,	$twoSupplementsSerialize,	$twoSupplementsUnserialize)		= $this->getTwoSupplements($this->getSupplement1(), $this->getSupplement2());
 		list($twoSpecialOffersInstance,	$twoSpecialOffersSerialize,	$twoSpecialOffersUnserialize)	= $this->getTwoSpecialOffers($this->getSpecialOffer1(), $this->getSpecialOffer2());
 		list($taxesInstance,			$taxesSerialize,			$taxesUnserialize)				= $this->getFourTaxes($this->getTax1(), $this->getTax2());
@@ -205,7 +205,7 @@ XML;
 
     protected function getNoSupplementsEOTaxesCancellationsBookResponse() : array
     {
-		list($oneGuestInstance, 		$oneGuestSerialize, 		$oneGuestUnserialize) 			= $this->getOneGuests();
+		list($oneGuestInstance, $oneGuestSerialize, $oneGuestUnserialize) = $this->getOneGuests($this->getGuest1());
 
 		$instance = new RoomBooking(
             155558,

@@ -61,7 +61,7 @@ XML;
     protected function getTwoRoomBookingDetails()
     {
 		list($leadGuestInstance, $leadGuestSerialize, $leadGuestUnserialize) = $this->getLeadGuest();
-		list($twoRoomBookingsInstance, $twoRoomBookingsSerialize, $twoRoomBookingsUnserialize) = $this->getTwoRoomBookings();
+		list($twoRoomBookingsInstance, $twoRoomBookingsSerialize, $twoRoomBookingsUnserialize) = $this->getTwoRoomBookings($this->getRoomBookingTwoAdults(), $this->getRoomBookingOneAdultOnly());
 
         $instance = new BookDetails(
             '2023-11-01',
