@@ -10,26 +10,30 @@ class RoomsAppliesToTest extends BaseSerializeXML
 	use RoomsAppliesToTrait;
 
 	#[Test]
-    public function roomsAppliesToOneRoom()
+    public function roomsAppliesToOneRoom() : array
     {
-		list($instance, $serialize, $unserialize) = $this->getRoomsAppliesTo();
+		list($instance, , ) = $details = $this->getRoomsAppliesTo();
 
 		$this->assertCount(1, $instance->roomRequest, 'it only contains one element');
 		$this->assertIsArray($instance->roomRequest, 'the container roomRequest is an array');
 		$this->assertSame([1], $instance->roomRequest, 'the content is correct');
 
-		$this->doTest($instance, $serialize, $unserialize);
+		$this->doTest(...$details);
+
+		return $details;
     }
 
 	#[Test]
-    public function roomsAppliesToTowRooms()
+    public function roomsAppliesToTowRooms() : array
     {
-		list($instance, $serialize, $unserialize) =  $this->getRoomsAppliesToFourRooms();
+		list($instance, , ) = $details = $this->getRoomsAppliesToFourRooms();
 
 		$this->assertCount(4, $instance->roomRequest, 'it contains two elements');
 		$this->assertIsArray($instance->roomRequest, 'the container roomRequest is an array');
 		$this->assertSame([1, 2, 3, 4], $instance->roomRequest, 'the content is correct');
 
-		$this->doTest($instance, $serialize, $unserialize);
+		$this->doTest(...$details);
+
+		return $details;
     }
 }

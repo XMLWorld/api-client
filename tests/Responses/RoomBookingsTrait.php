@@ -14,7 +14,7 @@ trait RoomBookingsTrait
 	use TaxesTrait;
 	use CancellationPoliciesTrait;
 
-    protected function getLeadGuestOnlyBookResponse()
+    protected function getLeadGuestOnlyBookResponse() : array
     {
         $instance = new RoomBooking(
             155558,
@@ -69,13 +69,13 @@ XML;
 		];
     }
 
-	protected function getLeadGuestAndGuestBookResponse()
+	protected function getLeadGuestAndGuestBookResponse() : array
     {
 		list($oneGuestInstance, 		$oneGuestSerialize, 		$oneGuestUnserialize) 			= $this->getOneGuests();
-		list($oneSupplementsInstance,	$oneSupplementsSerialize,	$oneSupplementsUnserialize)		= $this->getOneSupplements();
-		list($oneSpecialOffersInstance,	$oneSpecialOffersSerialize,	$oneSpecialOffersUnserialize)	= $this->getOneSpecialOffers();
-		list($oneTaxesInstance,			$oneTaxesSerialize,			$oneTaxesUnserialize)			= $this->getOneTaxes();
-		list($oneCancellationsInstance,	$oneCancellationsSerialize,	$oneCancellationsUnserialize)	= $this->getOneCancellationPolicies();
+		list($oneSupplementsInstance,	$oneSupplementsSerialize,	$oneSupplementsUnserialize)		= $this->getOneSupplements($this->getSupplement1());
+		list($oneSpecialOffersInstance,	$oneSpecialOffersSerialize,	$oneSpecialOffersUnserialize)	= $this->getOneSpecialOffers($this->getSpecialOffer1());
+		list($oneTaxesInstance,			$oneTaxesSerialize,			$oneTaxesUnserialize)			= $this->getOneTaxes($this->getTax1());
+		list($oneCancellationsInstance,	$oneCancellationsSerialize,	$oneCancellationsUnserialize)	= $this->getOneCancellationPolicies($this->getCancellationPolicy1());
 
         $instance = new RoomBooking(
             155558,
@@ -136,13 +136,13 @@ XML;
 		];
     }
 
-    protected function getAdultAndChildBookResponse()
+    protected function getAdultAndChildBookResponse() : array
     {
 		list($twoGuestInstance, 		$twoGuestSerialize, 		$twoGuestUnserialize) 			= $this->getTwoGuests();
-		list($twoSupplementsInstance,	$twoSupplementsSerialize,	$twoSupplementsUnserialize)		= $this->getTwoSupplements();
-		list($twoSpecialOffersInstance,	$twoSpecialOffersSerialize,	$twoSpecialOffersUnserialize)	= $this->getTwoSpecialOffers();
-		list($taxesInstance,			$taxesSerialize,			$taxesUnserialize)				= $this->getTaxes();
-		list($twoCancellationsInstance,	$twoCancellationsSerialize,	$twoCancellationsUnserialize)	= $this->getCancellationPolicies();
+		list($twoSupplementsInstance,	$twoSupplementsSerialize,	$twoSupplementsUnserialize)		= $this->getTwoSupplements($this->getSupplement1(), $this->getSupplement2());
+		list($twoSpecialOffersInstance,	$twoSpecialOffersSerialize,	$twoSpecialOffersUnserialize)	= $this->getTwoSpecialOffers($this->getSpecialOffer1(), $this->getSpecialOffer2());
+		list($taxesInstance,			$taxesSerialize,			$taxesUnserialize)				= $this->getFourTaxes($this->getTax1(), $this->getTax2());
+		list($twoCancellationsInstance,	$twoCancellationsSerialize,	$twoCancellationsUnserialize)	= $this->getTwoCancellationPolicies($this->getCancellationPolicy1(), $this->getCancellationPolicy2());
 
         $instance = new RoomBooking(
             155558,
@@ -203,7 +203,7 @@ XML;
 		];
     }
 
-    protected function getNoSupplementsEOTaxesCancellationsBookResponse()
+    protected function getNoSupplementsEOTaxesCancellationsBookResponse() : array
     {
 		list($oneGuestInstance, 		$oneGuestSerialize, 		$oneGuestUnserialize) 			= $this->getOneGuests();
 
@@ -262,9 +262,9 @@ XML;
 		];
     }
 
-    protected function getOneRoomBooking()
+    protected function getOneRoomBooking(array $roomBooking) : array
     {
-		list($instance, $serialize, $unserialize) = $this->getLeadGuestOnlyBookResponse();
+		list($instance, $serialize, $unserialize) = $roomBooking;
 
 		$instance = new RoomBookings($instance);
 
@@ -287,10 +287,10 @@ XML;
 		];
     }
 
-    protected function getTwoRoomBooking()
+    protected function getTwoRoomBooking(array $roomBooking1, array $roomBooking2) : array
     {
-		list($leadGuestAndGestBookInstance,	$leadGuestAndGestBookSerialize,	$leadGuestAndGestBookUnserialize)	= $this->getLeadGuestAndGuestBookResponse();
-		list($adultAndGildBookInstance,		$adultAndGildBookSerialize,		$adultAndGildBookUnserialize) 		= $this->getAdultAndChildBookResponse();
+		list($leadGuestAndGestBookInstance,	$leadGuestAndGestBookSerialize,	$leadGuestAndGestBookUnserialize)	= $roomBooking1;
+		list($adultAndGildBookInstance,		$adultAndGildBookSerialize,		$adultAndGildBookUnserialize) 		= $roomBooking2;
 
 		$instance = new RoomBookings(
 			$leadGuestAndGestBookInstance,

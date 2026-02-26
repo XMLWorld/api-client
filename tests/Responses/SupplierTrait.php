@@ -6,7 +6,7 @@ use XMLWorld\ApiClient\Responses\Supplier;
 
 trait SupplierTrait
 {
-	protected function getRMISupplier()
+	protected function getRMISupplier() : array
 	{
 		$instance = new Supplier(
 			6,
@@ -33,7 +33,7 @@ XML;
 		];
 	}
 
-	protected function getBusyRoomsSupplier()
+	protected function getBusyRoomsSupplier() : array
 	{
 		$instance = new Supplier(
 			11,

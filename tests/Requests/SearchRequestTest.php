@@ -2,23 +2,31 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class SearchRequestTest extends BaseSerializeXML
 {
 	use SearchRequestTrait;
 
-	public function testSearchRequestOneProperty()
+	#[Test]
+	public function searchRequestOneProperty() : array
 	{
-		$details = $this->getSearchRequestOneProperty();
+		list($instance, , ) = $details = $this->getSearchRequestOneProperty();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
-	public function testSearchRequestTwoProperties()
+
+	#[Test]
+	public function searchRequestTwoProperties() : array
 	{
-		$details = $this->getSearchRequestTwoProperties();
+		list($instance, , ) = $details = $this->getSearchRequestTwoProperties();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 

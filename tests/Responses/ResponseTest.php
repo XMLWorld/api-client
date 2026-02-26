@@ -2,33 +2,43 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class ResponseTest extends BaseSerializeXML
 {
 	use ResponseTrait;
 
-    public function testResponseInfo()
+	#[Test]
+    public function responseInfo() : array
     {
 		$details = $this->getResponseInfo();
 
+		/** @todo do assertions */
+
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testReturnStatusTrue()
+	#[Test]
+    public function returnStatusTrue() : array
     {
 		$details = $this->getReturnStatusTrue();
 
+		/** @todo do assertions */
+
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testReturnStatusFalse()
+	#[Test]
+    public function returnStatusFalse() : array
     {
-		$details = $this->getReturnStatusFalse();
+		list($instance, , ) = $details = $this->getReturnStatusFalse();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 

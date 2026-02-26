@@ -2,15 +2,19 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class BookRequestTest extends BaseSerializeXML
 {
 	use BookRequestTrait;
 
-    public function testBookRequest()
+	#[Test]
+    public function bookRequest() : array
     {
-		$details = $this->getBookRequest();
+		list($instance, , ) = $details = $this->getBookRequest();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 

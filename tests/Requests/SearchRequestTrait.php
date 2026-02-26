@@ -11,10 +11,10 @@ trait SearchRequestTrait
 	use RoomRequestsTrait;
 	use PropertiesTrait;
 
-    protected function getSearchRequestOneProperty()
+    protected function getSearchRequestOneProperty() : array
     {
         list($loginDetailsInstance, 			$loginDetailsSerialize,				$loginDetailsUnserialize) 			= $this->getLoginDetails();
-        list($testThreeRoomRequestsInstance,	$testThreeRoomRequestsSerialize,	$testThreeRoomRequestsUnserialize)	= $this->getThreeRoomRequests();
+        list($testThreeRoomRequestsInstance,	$testThreeRoomRequestsSerialize,	$testThreeRoomRequestsUnserialize)	= $this->getThreeRoomRequests($this->getRoomRequest3(), $this->getRoomRequest4(), $this->getRoomRequest5());
 
         $instance = new SearchRequest(
             $loginDetailsInstance,
@@ -74,10 +74,10 @@ XML;
         ];
     }
 
-    protected function getSearchRequestTwoProperties()
+    protected function getSearchRequestTwoProperties() : array
 	{
         list($loginDetailsInstance,             $loginDetailsSerialize,             $loginDetailsUnserialize)           = $this->getLoginDetails();
-        list($testThreeRoomRequestsInstance,    $testThreeRoomRequestsSerialize,    $testThreeRoomRequestsUnserialize)  = $this->getThreeRoomRequests();
+        list($testThreeRoomRequestsInstance,    $testThreeRoomRequestsSerialize,    $testThreeRoomRequestsUnserialize)  = $this->getThreeRoomRequests($this->getRoomRequest3(), $this->getRoomRequest4(), $this->getRoomRequest5());
         list($twoPropertiesInstance,            $twoPropertiesSerialize,            $twoPropertiesUnserialize)          = $this->getTwoProperties();
 
         $instance = new SearchRequest(

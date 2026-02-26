@@ -2,105 +2,154 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class RoomRequestsTest extends BaseSerializeXML
 {
     use RoomRequestsTrait;
 
-	public function testTwoAdults()
+	#[Test]
+	public function roomRequest1() : array
 	{
-		$details = $this->getTwoAdults();
+		list($instance, , ) = $details = $this->getRoomRequest1();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testTwoAdultsOneChild()
+	#[Test]
+	public function roomRequest2() : array
 	{
-		$details = $this->getTwoAdultsOneChild();
+		list($instance, , ) = $details = $this->getRoomRequest2();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testTwoAdultsTwoInfants()
+	#[Test]
+	public function roomRequest3() : array
 	{
-		$details = $this->getTwoAdultsTwoInfants();
+		list($instance, , ) = $details = $this->getRoomRequest3();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testTwoAdultsTwoChildrenTwoInfants()
+	#[Test]
+	public function roomRequest4() : array
 	{
-		$details = $this->getTwoAdultsTwoChildrenTwoInfants();
+		list($instance, , ) = $details = $this->getRoomRequest4();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testOneChildTwoInfants()
+	#[Test]
+	public function roomRequest5() : array
 	{
-		$details = $this->getOneChildTwoInfants();
+		list($instance, , ) = $details = $this->getRoomRequest5();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testTwoAdultsOneChildrenTwoInfants()
+	#[Test]
+	public function roomRequest6() : array
 	{
-		$details = $this->getTwoAdultsOneChildrenTwoInfants();
+		list($instance, , ) = $details = $this->getRoomRequest6();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testRoomRequestsTwoAdults()
+	#[Test]
+	#[Depends('roomRequest1')]
+	public function roomRequestsTwoAdults(array $roomRquest) : array
 	{
-		$details = $this->getRoomRequestsTwoAdults();
+		list($roomRquestInstance, , ) = $roomRquest;
+		list($instance, , ) = $details = $this->getOneRoomRequests($roomRquest);
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testRoomRequestsTwoAdultsTwoInfants()
+	#[Test]
+	#[Depends('roomRequest2')]
+	public function roomRequestsTwoAdultsTwoInfants(array $roomRquest) : array
 	{
-		$details = $this->getRoomRequestsTwoAdultsTwoInfants();
+		list($roomRquestInstance, , ) = $roomRquest;
+		list($instance, , ) = $details = $this->getOneRoomRequests($roomRquest);
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testRoomRequestsTwoAdultsOneChild()
+	#[Test]
+	#[Depends('roomRequest3')]
+	public function roomRequestsTwoAdultsOneChild(array $roomRquest) : array
 	{
-		$details = $this->getRoomRequestsTwoAdultsOneChild();
+		list($roomRquestInstance, , ) = $roomRquest;
+		list($instance, , ) = $details = $this->getOneRoomRequests($roomRquest);
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testRoomRequestsTwoAdultsTwoChildrenTwoInfants()
+	#[Test]
+	#[Depends('roomRequest4')]
+	public function roomRequestsTwoAdultsTwoChildrenTwoInfants(array $roomRquest) : array
 	{
-		$details = $this->getRoomRequestsTwoAdultsTwoChildrenTwoInfants();
+		list($roomRquestInstance, , ) = $roomRquest;
+		list($instance, , ) = $details = $this->getOneRoomRequests($roomRquest);
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testThreeRoomRequests()
+	#[Test]
+	#[Depends('roomRequest2')]
+	#[Depends('roomRequest3')]
+	#[Depends('roomRequest4')]
+	public function threeRoomRequests(array $roomRquest1, array $roomRquest2, array $roomRquest3) : array
 	{
-		$details = $this->getThreeRoomRequests();
+		list($roomRquest1Instance, , ) = $roomRquest1;
+		list($roomRquest2Instance, , ) = $roomRquest2;
+		list($roomRquest3Instance, , ) = $roomRquest3;
+		list($instance, , ) = $details = $this->getThreeRoomRequests($roomRquest1, $roomRquest2, $roomRquest3);
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 

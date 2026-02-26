@@ -7,7 +7,7 @@ use XMLWorld\ApiClient\Responses\Images;
 
 trait ImagesTrait
 {
-    protected function getImage()
+    protected function getImage1() : array
     {
         $instance = new Image(
             'CMSImage_1000.jpg',
@@ -35,9 +35,37 @@ XML;
 		];
     }
 
-    protected function getOneImage()
+	protected function getImage2() : array
+	{
+		$instance = new Image(
+			'CMSImage_1001.jpg',
+			'CMSImageThumb_1001.jpg'
+		);
+
+		$serialize = <<<'XML'
+<Image>
+	<FullSize>CMSImage_1001.jpg</FullSize>
+	<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
+</Image>
+XML;
+
+		$unserialize = <<<'XML'
+<Image>
+<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
+	<FullSize>CMSImage_1001.jpg</FullSize>
+</Image>
+XML;
+
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
+	}
+
+    protected function getOneImages(array $image) : array
     {
-		list($instance, $serialize, $unserialize) = $this->getImage();
+		list($instance, $serialize, $unserialize) = $image;
 
 		$instance = new Images($instance);
 
@@ -60,35 +88,27 @@ XML;
 		];
     }
 
-    protected function getTwoImages()
+    protected function getTwoImages(array $image1, array $image2) : array
     {
-		list($instance, $serialize, $unserialize) = $this->getImage();
+		list($image1Instance, $image1Serialize, $image1Unserialize) = $image1;
+		list($image2Instance, $image2Serialize, $image2Unserialize) = $image2;
 
 		$instance = new Images(
-			$instance,
-            new Image(
-                'CMSImage_1001.jpg',
-                'CMSImageThumb_1001.jpg'
-            )
+			$image1Instance,
+			$image2Instance
         );
 
         $serialize = <<<XML
 <Images>
-	$serialize
-	<Image>
-		<FullSize>CMSImage_1001.jpg</FullSize>
-		<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-	</Image>
+	$image1Serialize
+	$image2Serialize
 </Images>
 XML;
 
         $unserialize = <<<XML
 <Images>
-	$unserialize
-	<Image>
-		<FullSize>CMSImage_1001.jpg</FullSize>
-		<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-	</Image>
+	$image1Unserialize
+	$image2Unserialize
 </Images>
 XML;
 

@@ -7,7 +7,7 @@ use XMLWorld\ApiClient\Responses\CancellationPolicy;
 
 trait CancellationPoliciesTrait
 {
-    protected function getCancellationPolicy()
+    protected function getCancellationPolicy1() : array
     {
         $instance = new CancellationPolicy(
             '2020-07-11',
@@ -35,9 +35,37 @@ XML;
 		];
     }
 
-	protected function getOneCancellationPolicies()
+	protected function getCancellationPolicy2() : array
+	{
+		$instance = new CancellationPolicy(
+			'2020-07-18',
+			1148.55
+		);
+
+		$serialize = <<<'XML'
+<CancellationPolicy>
+	<CancelBy>2020-07-18</CancelBy>
+	<Penalty>1148.55</Penalty>
+</CancellationPolicy>
+XML;
+
+		$unserialize = <<<'XML'
+<CancellationPolicy>
+	<Penalty>1148.55</Penalty>
+	<CancelBy>2020-07-18</CancelBy>
+</CancellationPolicy>
+XML;
+
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
+	}
+
+	protected function getOneCancellationPolicies(array $cancellationPolicy) : array
     {
-		list($instance, $serialize, $unserialize) = $this->getCancellationPolicy();
+		list($instance, $serialize, $unserialize) = $cancellationPolicy;
 
 		$instance = new CancellationPolicies($instance);
 
@@ -60,38 +88,27 @@ XML;
 		];
     }
 
-    /**
-     * @depends testCancellationPolicy
-     */
-	protected function getCancellationPolicies()
+	protected function getTwoCancellationPolicies(array $cancellationPolicy1, array $cancellationPolicy2) : array
     {
-		list($instance, $serialize, $unserialize) = $this->getCancellationPolicy();
+		list($cancellationPolicy1instance, $cancellationPolicy1Serialize, $cancellationPolicy1Unserialize) = $cancellationPolicy1;
+		list($cancellationPolicy2instance, $cancellationPolicy2Serialize, $cancellationPolicy2Unserialize) = $cancellationPolicy2;
 
 		$instance = new CancellationPolicies(
-			$instance,
-            new CancellationPolicy(
-                '2020-07-18',
-                1148.55
-            )
+			$cancellationPolicy1instance,
+			$cancellationPolicy2instance
         );
 
         $serialize = <<<XML
 <CancellationPolicies>
-	$serialize
-	<CancellationPolicy>
-		<CancelBy>2020-07-18</CancelBy>
-		<Penalty>1148.55</Penalty>
-	</CancellationPolicy>
+	$cancellationPolicy1Serialize
+	$cancellationPolicy2Serialize
 </CancellationPolicies>
 XML;
 
         $unserialize = <<<XML
 <CancellationPolicies>
-	$unserialize
-	<CancellationPolicy>
-		<CancelBy>2020-07-18</CancelBy>
-		<Penalty>1148.55</Penalty>
-	</CancellationPolicy>
+	$cancellationPolicy1Unserialize
+	$cancellationPolicy2Unserialize
 </CancellationPolicies>
 XML;
 

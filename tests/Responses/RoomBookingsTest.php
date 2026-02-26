@@ -2,60 +2,83 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class RoomBookingsTest extends BaseSerializeXML
 {
 	use RoomBookingsTrait;
 
-    public function testLeadGuestOnlyBookResponse()
+	#[Test]
+    public function leadGuestOnlyBookResponse() : array
     {
-		$details = $this->getLeadGuestOnlyBookResponse();
+		list($instance, , ) = $details = $this->getLeadGuestOnlyBookResponse();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testLeadGuestAndGuestBookResponse()
+	#[Test]
+    public function leadGuestAndGuestBookResponse() : array
     {
-		$details = $this->getLeadGuestAndGuestBookResponse();
+		list($instance, , ) = $details = $this->getLeadGuestAndGuestBookResponse();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testAdultAndChildBookResponse()
+	#[Test]
+    public function adultAndChildBookResponse() : array
     {
-		$details = $this->getAdultAndChildBookResponse();
+		list($instance, , ) = $details = $this->getAdultAndChildBookResponse();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testNoSupplementsEOTaxesCancellationsBookResponse()
+	#[Test]
+    public function noSupplementsEOTaxesCancellationsBookResponse() : array
     {
-		$details = $this->getNoSupplementsEOTaxesCancellationsBookResponse();
+		list($instance, , ) = $details = $this->getNoSupplementsEOTaxesCancellationsBookResponse();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testOneRoomBooking()
+	#[Test]
+	#[Depends('leadGuestOnlyBookResponse')]
+    public function oneRoomBooking(array $leadGuestOnlyBookResponse) : array
     {
-		$details = $this->getOneRoomBooking();
+		list($instance, , ) = $details = $this->getOneRoomBooking($leadGuestOnlyBookResponse);
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testTwoRoomBooking()
+	#[Test]
+	#[Depends('leadGuestOnlyBookResponse')]
+	#[Depends('leadGuestAndGuestBookResponse')]
+    public function twoRoomBooking(array $leadGuestOnlyBookResponse, array $leadGuestAndGuestBookResponse) : array
     {
-		$details = $this->getTwoRoomBooking();
+		list($instance, , ) = $details = $this->getTwoRoomBooking($leadGuestOnlyBookResponse, $leadGuestAndGuestBookResponse);
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 

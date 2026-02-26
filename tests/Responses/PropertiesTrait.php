@@ -85,8 +85,8 @@ XML;
     protected function getSympleProperty()
     {
 		list($supplierInstance,		$supplierSerialize, 	$supplierUnserialize) 	= $this->getBusyRoomsSupplier();
-		list($oneErrataInstance,	$oneErrataSerialize,	$oneErrataUnserialize)	= $this->getOneErrata();
-		list($oneImageInstance, 	$oneImageSerialize, 	$oneImageUnserialize) 	= $this->getOneImage();
+		list($oneErrataInstance,	$oneErrataSerialize,	$oneErrataUnserialize)	= $this->getOneErrata($this->getErratum1());
+		list($oneImageInstance, 	$oneImageSerialize, 	$oneImageUnserialize) 	= $this->getOneImages($this->getImage1());
 
         $instance = new Property(
             70011,
@@ -165,8 +165,8 @@ XML;
     protected function getComplexProperty()
     {
 		list($supplierInstance,		$supplierSerialize, 	$supplierUnserialize) 	= $this->getBusyRoomsSupplier();
-		list($twoErrataInstance,	$twoErrataSerialize,	$twoErrataUnserialize)	= $this->getTwoErrata();
-		list($twoImageInstance, 	$twoImageSerialize, 	$twoImageUnserialize) 	= $this->getTwoImages();
+		list($twoErrataInstance,	$twoErrataSerialize,	$twoErrataUnserialize)	= $this->getTwoErrata($this->getErratum1(), $this->getErratum2());
+		list($twoImageInstance, 	$twoImageSerialize, 	$twoImageUnserialize) 	= $this->getTwoImages($this->getImage1(), $this->getImage2());
 
 
 		$instance = new Property(

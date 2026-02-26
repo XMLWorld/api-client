@@ -7,7 +7,7 @@ use XMLWorld\ApiClient\Responses\SpecialOffers;
 
 trait SpecialOffersTrait
 {
-    protected function getSpecialOffer1()
+    protected function getSpecialOffer1() : array
     {
         $instance = new SpecialOffer(
             'Example special offer',
@@ -41,7 +41,7 @@ XML;
         ];
     }
 
-	protected function getSpecialOffer2()
+	protected function getSpecialOffer2() : array
     {
         $instance = new SpecialOffer(
             'Example special offer 2',
@@ -79,9 +79,46 @@ XML;
         ];
     }
 
-    public function getOneSpecialOffers()
+	public function getSpecialOffer3() : array
+	{
+		$instance = new SpecialOffer(
+			'Early Bird Booking',
+			'Adult Only',
+			10,
+			'All',
+			440
+		);
+
+		$serialize = <<<'XML'
+<SpecialOffer>
+	<Name>Early Bird Booking</Name>
+	<Type>Adult Only</Type>
+	<Value>10</Value>
+	<PaxType>All</PaxType>
+	<Total>440</Total>
+</SpecialOffer>
+XML;
+
+		$unSerialize = <<<'XML'
+<SpecialOffer>
+	<Name>Early Bird Booking</Name>
+	<Type>Adult Only</Type>
+	<Value>10</Value>
+	<PaxType>All</PaxType>
+	<Total>440</Total>
+</SpecialOffer>
+XML;
+
+		return [
+			$instance,
+			$serialize,
+			$unSerialize
+		];
+	}
+
+    public function getOneSpecialOffers(array $specialOffer1) : array
     {
-        list($instance, $serialize, $unserialize) = $this->getSpecialOffer1();
+        list($instance, $serialize, $unserialize) = $specialOffer1;
 
         $instance = new SpecialOffers($instance);
 
@@ -104,11 +141,11 @@ XML;
 		];
     }
 
-    protected function getTwoSpecialOffers()
+    protected function getTwoSpecialOffers(array $specialOffer1, array $specialOffer2) : array
     {
         $instances = $serializes = $unserializes = [];
-        list($instances[], $serializes[0], $unserializes[0]) = $this->getSpecialOffer1();
-        list($instances[], $serializes[1], $unserializes[1]) = $this->getSpecialOffer2();
+        list($instances[], $serializes[0], $unserializes[0]) = $specialOffer1;
+        list($instances[], $serializes[1], $unserializes[1]) = $specialOffer2;
 
         $instance = new SpecialOffers(...$instances);
 

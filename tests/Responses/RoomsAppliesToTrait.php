@@ -6,7 +6,7 @@ use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
 
 trait RoomsAppliesToTrait
 {
-    protected function getRoomsAppliesTo()
+    protected function getRoomsAppliesTo() : array
     {
         $instance = new RoomsAppliesTo(1);
 
@@ -28,7 +28,7 @@ XML;
         ];
     }
 
-	protected function getRoomsAppliesToFourRooms()
+	protected function getRoomsAppliesToFourRooms() : array
     {
         $instance = new RoomsAppliesTo(1, 2, 3, 4);
 

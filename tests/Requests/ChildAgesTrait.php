@@ -7,7 +7,7 @@ use XMLWorld\ApiClient\Requests\ChildAges;
 
 trait ChildAgesTrait
 {
-    protected function getChildAge()
+    protected function getChildAge() : array
     {
         $instance = new ChildAge(15);
 
@@ -24,7 +24,7 @@ XML;
         ];
     }
 
-	protected function getOneChildAges()
+	protected function getOneChildAges() : array
     {
         list($childAgeInstance, $childAgeSerialize, $childAgeUnserialize) = $this->getChildAge();
 
@@ -49,7 +49,7 @@ XML;
 		];
     }
 
-	protected function getTwoChildAges()
+	protected function getTwoChildAges() : array
     {
         $instance = ChildAges::fromAges(
             8, 15

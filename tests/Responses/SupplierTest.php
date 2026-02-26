@@ -2,24 +2,33 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class SupplierTest extends BaseSerializeXML
 {
 	use SupplierTrait;
 
-	public function testRMISupplier()
+	#[Test]
+	public function rMISupplier() : array
 	{
-		$details = $this->getRMISupplier();
+		list($instance, , ) = $details = $this->getRMISupplier();
+
+		$this->assertSame(6, $instance->supplierID);
+		$this->assertSame('RMI', $instance->supplierName);
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testSBusyRoomsSupplier()
+	#[Test]
+	public function busyRoomsSupplier() : array
 	{
-		$details = $this->getBusyRoomsSupplier();
+		list($instance, , ) = $details = $this->getBusyRoomsSupplier();
+
+		$this->assertSame(11, $instance->supplierID);
+		$this->assertSame('BusyRooms', $instance->supplierName);
 
 		$this->doTest(...$details);
 

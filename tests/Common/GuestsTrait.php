@@ -7,7 +7,7 @@ use XMLWorld\ApiClient\Common\Guests;
 
 trait GuestsTrait
 {
-    protected function getAdultGuest()
+    protected function getGuest1() : array
     {
         $instance = new Guest(
             'Adult',
@@ -45,7 +45,7 @@ XML;
 		];
     }
 
-	protected function getChildGuest()
+	protected function getGuest2() : array
     {
         $instance = new Guest(
             'Child',
@@ -83,9 +83,9 @@ XML;
 		];
     }
 
-	protected function getOneGuests()
+	protected function getOneGuests(array $guest) : array
     {
-		list($instance, $serialize, $unserialize) = $this->getAdultGuest();
+		list($instance, $serialize, $unserialize) = $guest;
 
 		$instance = new Guests($instance);
 
@@ -109,27 +109,27 @@ XML;
 		];
     }
 
-	protected function getTwoGuests()
+	protected function getTwoGuests(array $guest1, array $guest2) : array
     {
-		list($adultGuestBookInstance, $adultGuestBookSerialize, $adultGuestBookUnserialize) = $this->getAdultGuest();
-		list($childGuestBookInstance, $childGuestBookSerialize, $childGuestBookUnserialize) = $this->getChildGuest();
+		list($guest1Instance, $guest1Serialize, $guest1Unserialize) = $guest1;
+		list($guest2Instance, $guest2Serialize, $guest2Unserialize) = $guest2;
 
         $instance = new Guests(
-			$adultGuestBookInstance,
-			$childGuestBookInstance
+			$guest1Instance,
+			$guest2Instance
         );
 
         $serialize = <<<XML
 <Guests>
-	$adultGuestBookSerialize
-	$childGuestBookSerialize
+	$guest1Serialize
+	$guest2Serialize
 </Guests>
 XML;
 
         $unserialize = <<<XML
 <Guests>
-	$adultGuestBookUnserialize
-	$childGuestBookUnserialize
+	$guest1Unserialize
+	$guest2Unserialize
 </Guests>
 XML;
 

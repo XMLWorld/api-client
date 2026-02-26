@@ -7,7 +7,7 @@ use XMLWorld\ApiClient\Responses\Supplements;
 
 trait SupplementsTrait
 {
-    protected function getSupplementWeekend()
+    protected function getSupplement1() : array
     {
         $instance = new Supplement(
             'Weekend Stay (Fri - Sun)',
@@ -42,7 +42,7 @@ XML;
         ];
     }
 
-    protected function getTestSupplement()
+    protected function getSupplement2() : array
     {
         $instance = new Supplement(
             'test supplement',
@@ -79,9 +79,9 @@ XML;
         ];
     }
 
-	protected function getOneSupplements()
+	protected function getOneSupplements(array $supplement) : array
     {
-        list($instance, $serialize, $unserialize) = $this->getTestSupplement();
+        list($instance, $serialize, $unserialize) = $supplement;
 
         $instance = new Supplements($instance);
 
@@ -104,12 +104,12 @@ XML;
 		];
     }
 
-	protected function getTwoSupplements()
+	protected function getTwoSupplements(array $supplement1, array $supplement2) : array
     {
         $instances = $serializes = $unserializes = [];
 
-        list($instances[0], $serializes[0], $unserializes[0]) = $this->getSupplementWeekend();
-        list($instances[1], $serializes[1], $unserializes[1]) = $this->getTestSupplement();
+        list($instances[0], $serializes[0], $unserializes[0]) = $supplement1; //SupplementWeekend
+        list($instances[1], $serializes[1], $unserializes[1]) = $supplement2; //TestSupplement
 
         $instance = new Supplements(...$instances);
 

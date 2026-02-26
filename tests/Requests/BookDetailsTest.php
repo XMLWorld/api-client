@@ -2,24 +2,31 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class BookDetailsTest extends BaseSerializeXML
 {
 	use BookDetailsTrait;
 
-    public function testOneRoomBookingDetails()
+	#[Test]
+    public function oneRoomBookingDetails() : array
     {
-		$details = $this->getOneRoomBookingDetails();
+		list($instance, , ) = $details = $this->getOneRoomBookingDetails();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testTwoRoomBookingDetails()
+	#[Test]
+    public function twoRoomBookingDetails() : array
     {
-		$details = $this->getTwoRoomBookingDetails();
+		list($instance, , ) = $details = $this->getTwoRoomBookingDetails();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 

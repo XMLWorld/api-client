@@ -2,24 +2,31 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class PropertiesTest extends BaseSerializeXML
 {
     use PropertiesTrait;
 
-	public function testOneProperty()
+	#[Test]
+	public function oneProperty() : array
 	{
-		$details = $this->getOneProperty();
+		list($instance, , ) = $details = $this->getOneProperty();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
 	}
 
-	public function testTwoProperties()
+	#[Test]
+	public function twoProperties() : array
 	{
-		$details = $this->getTwoProperties();
+		list($instance, , ) = $details = $this->getTwoProperties();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 

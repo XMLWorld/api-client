@@ -10,7 +10,7 @@ trait RoomBookingsTrait
 {
 	use GuestsTrait;
 
-    protected function getRoomBookingOneAdultOnly()
+    protected function getRoomBookingOneAdultOnly() : array
     {
         $instance = new RoomBooking(
             155558,
@@ -49,9 +49,9 @@ XML;
 		];
     }
 
-    protected function getRoomBookingTwoAdults()
+    protected function getRoomBookingTwoAdults() : array
     {
-		list($oneGuestsInstance, $oneGuestsSerialize, $oneGuestsUnserialize) = $this->getOneGuests();
+		list($oneGuestsInstance, $oneGuestsSerialize, $oneGuestsUnserialize) = $this->getOneGuests($this->getGuest1());
 
         $instance = new RoomBooking(
             155558,
@@ -91,10 +91,9 @@ XML;
 		];
     }
 
-    protected function getRoomBookingAdultAndChild()
+    protected function getRoomBookingAdultAndChild() : array
     {
-		list($instance, $serialize, $unserialize) = $this->getTwoGuests();
-
+		list($instance, $serialize, $unserialize) = $this->getTwoGuests($this->getGuest1(), $this->getGuest2());
 
         $instance = new RoomBooking(
             155448,
@@ -134,23 +133,23 @@ XML;
 		];
     }
 
-    protected function getOneRoomBookings()
+    protected function getOneRoomBookings(array $roomBooking) : array
     {
-		list($instance, $serialize, $unserialize) = $this->getRoomBookingAdultAndChild();
+		list($roomBookingInstance, $roomBookingSerialize, $roomBookingUnserialize) = $roomBooking;
 
         $instance = new RoomBookings(
-			$instance
+			$roomBookingInstance
         );
 
 		$serialize = <<<XML
 <RoomBookings>
-	$serialize
+	$roomBookingSerialize
 </RoomBookings>
 XML;
 
 		$unserialize = <<<XML
 <RoomBookings>
-	$unserialize
+	$roomBookingUnserialize
 </RoomBookings>
 XML;
 
@@ -161,27 +160,27 @@ XML;
 		];
     }
 
-    protected function getTwoRoomBookings()
+    protected function getTwoRoomBookings(array $roomBooking1, array $roomBooking2) : array
     {
-		list($roomBookingTwoAdultInstance, 		$roomBookingTwoAdultSerialize, 		$roomBookingTwoAdultUnserialize) 		= $this->getRoomBookingTwoAdults();
-		list($roomBookingAdultAndChildInstance, $roomBookingAdultAndChildSerialize, $roomBookingAdultAndChildUnserialize)	= $this->getRoomBookingAdultAndChild();
+		list($roomBooking1Instance, 		$roomBooking1Serialize, 		$roomBooking1Unserialize) 		= $roomBooking1;
+		list($roomBooking2Instance, 		$roomBooking2Serialize, 		$roomBooking2Unserialize) 		= $roomBooking2;
 
 		$instance = new RoomBookings(
-			$roomBookingTwoAdultInstance,
-			$roomBookingAdultAndChildInstance
+			$roomBooking1Instance,
+			$roomBooking2Instance
         );
 
 		$serialize = <<<XML
 <RoomBookings>
-	$roomBookingTwoAdultSerialize
-	$roomBookingAdultAndChildSerialize
+	$roomBooking1Serialize
+	$roomBooking2Serialize
 </RoomBookings>
 XML;
 
 		$unserialize = <<<XML
 <RoomBookings>
-	$roomBookingTwoAdultUnserialize
-	$roomBookingAdultAndChildUnserialize
+	$roomBooking1Unserialize
+	$roomBooking2Unserialize
 </RoomBookings>
 XML;
 		return [

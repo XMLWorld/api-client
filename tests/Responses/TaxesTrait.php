@@ -7,7 +7,7 @@ use XMLWorld\ApiClient\Responses\Taxes;
 
 trait TaxesTrait
 {
-    protected function getTax()
+    protected function getTax1() : array
     {
         $instance = new Tax(
             'test %',
@@ -38,9 +38,40 @@ XML;
         ];
     }
 
-	protected function getOneTaxes()
+	protected function getTax2() : array
+	{
+		$instance = new Tax(
+			'Government Tax',
+			true,
+			423.15
+		);
+
+		$serialize = <<<'XML'
+<Tax>
+	<TaxName>Government Tax</TaxName>
+	<Inclusive>True</Inclusive>
+	<Total>423.15</Total>
+</Tax>
+XML;
+
+		$unSerialize = <<<'XML'
+<Tax>
+	<Inclusive>True</Inclusive>
+	<Total>423.15</Total>
+	<TaxName>Government Tax</TaxName>
+</Tax>
+XML;
+
+		return [
+			$instance,
+			$serialize,
+			$unSerialize
+		];
+	}
+
+	protected function getOneTaxes(array $tax1) : array
     {
-        list($instance, $serialize, $unserialize) = $this->getTax();
+        list($instance, $serialize, $unserialize) = $tax1;
 
         $instance = new Taxes($instance);
 
@@ -63,17 +94,14 @@ XML;
 		];
     }
 
-	protected function getTaxes()
+	protected function getFourTaxes(array $tax1, array $tax2) : array
     {
-        list($instance, $serialize, $unserialize) = $this->getTax();
+        list($tax1Instance, $tax1Serialize, $tax1Unserialize) = $tax1;
+		list($tax2Instance, $tax2Serialize, $tax2Unserialize) = $tax2;
 
         $instance = new Taxes(
-            $instance,
-            new Tax(
-                'Government Tax',
-                true,
-                423.15
-            ),
+			$tax1Instance,
+			$tax2Instance,
             new Tax(
                 'Service Charge',
                 true,
@@ -88,12 +116,8 @@ XML;
 
         $serialize = <<<XML
 <Taxes>
-	$serialize
-	<Tax>
-		<TaxName>Government Tax</TaxName>
-		<Inclusive>True</Inclusive>
-		<Total>423.15</Total>
-	</Tax>
+	$tax1Serialize
+	$tax2Serialize
 	<Tax>
 		<TaxName>Service Charge</TaxName>
 		<Inclusive>True</Inclusive>
@@ -109,12 +133,8 @@ XML;
 
         $unSerialize = <<<XML
 <Taxes>
-	$unserialize
-	<Tax>
-		<TaxName>Government Tax</TaxName>
-		<Inclusive>True</Inclusive>
-		<Total>423.15</Total>
-	</Tax>
+	$tax1Unserialize
+	$tax2Unserialize
 	<Tax>
 		<Total>604.5</Total>
 		<TaxName>Service Charge</TaxName>

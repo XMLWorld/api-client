@@ -2,51 +2,74 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class RoomBookingsTest extends BaseSerializeXML
 {
 	use RoomBookingsTrait;
 
-    public function testRoomBookingOneAdultOnly()
+	#[Test]
+    public function roomBookingOneAdultOnly() : array
     {
-		$details = $this->getRoomBookingOneAdultOnly();
+		list($instance, , ) = $details = $this->getRoomBookingOneAdultOnly();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testRoomBookingTwoAdults()
+	#[Test]
+    public function roomBookingTwoAdults() : array
     {
-		$details = $this->getRoomBookingTwoAdults();
+		list($instance, , ) = $details = $this->getRoomBookingTwoAdults();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testRoomBookingAdultAndChild()
+	#[Test]
+    public function roomBookingAdultAndChild() : array
     {
-		$details = $this->getRoomBookingAdultAndChild();
+		list($instance, , ) = $details = $this->getRoomBookingAdultAndChild();
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testOneRoomBookings()
+	#[Test]
+	#[Depends('roomBookingOneAdultOnly')]
+    public function oneRoomBookings(array $roomBooking) : array
     {
-		$details = $this->getOneRoomBookings();
+		list($roomBookingInstance, , ) = $roomBooking;
+		list($instance, , ) = $details = $this->oneRoomBookings($roomBooking);
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 
 		return $details;
     }
 
-    public function testTwoRoomBookings()
+	#[Test]
+	#[Depends('roomBookingOneAdultOnly')]
+	#[Depends('roomBookingTwoAdults')]
+    public function twoRoomBookings(array $roomBooking1, array $roomBooking2) : array
     {
-		$details = $this->getTwoRoomBookings();
+		list($roomBooking1Instance, , ) = $roomBooking1;
+		list($roomBooking2Instance, , ) = $roomBooking2;
+		list($instance, , ) = $details = $this->getTwoRoomBookings($roomBooking1, $roomBooking2);
+
+		/** @todo do assertions */
 
 		$this->doTest(...$details);
 

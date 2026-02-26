@@ -6,7 +6,7 @@ use XMLWorld\ApiClient\Requests\LoginDetails;
 
 trait LoginDetailsTrait
 {
-    protected function getLoginDetails()
+    protected function getLoginDetails() : array
     {
         $instance = new LoginDetails('login', 'pass', 'version');
 

@@ -9,7 +9,7 @@ trait BookRequestTrait
 	use LoginDetailsTrait;
 	use BookDetailsTrait;
 
-    protected function getBookRequest()
+    protected function getBookRequest() : array
     {
 		list($loginDetailsInstance, 			$loginDetailsSerialize, 			$loginDetailsUnserialize) 			= $this->getLoginDetails();
 		list($twoRoomBookingDetailsInstance,	$twoRoomBookingDetailsSerialize,	$twoRoomBookingDetailsUnserialize)	= $this->getTwoRoomBookingDetails();

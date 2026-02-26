@@ -6,7 +6,7 @@ use XMLWorld\ApiClient\Requests\Properties;
 
 trait PropertiesTrait
 {
-    protected function getOneProperty()
+    protected function getOneProperty() : array
     {
         $instance = new Properties(2007);
 
@@ -28,7 +28,7 @@ XML;
         ];
     }
 
-	protected function getTwoProperties()
+	protected function getTwoProperties() : array
     {
         $instance = new Properties(2007, 3008);
 

@@ -7,7 +7,7 @@ use XMLWorld\ApiClient\Requests\RoomRequests;
 
 trait RoomRequestsTrait
 {
-    protected function getTwoAdults()
+    protected function getRoomRequest1() : array
     {
         $instance = RoomRequest::fromAges(2);
 
@@ -33,7 +33,7 @@ XML;
         ];
     }
 
-	protected function getTwoAdultsOneChild()
+	protected function getRoomRequest2() : array
     {
         $instance = RoomRequest::fromAges(
             2,
@@ -71,7 +71,7 @@ XML;
         ];
     }
 
-	protected function getTwoAdultsTwoInfants()
+	protected function getRoomRequest3() : array
     {
         $instance = RoomRequest::fromAges(
             2,
@@ -115,7 +115,7 @@ XML;
         ];
     }
 
-	protected function getTwoAdultsTwoChildrenTwoInfants()
+	protected function getRoomRequest4() : array
     {
         $instance = RoomRequest::fromAges(
             2,
@@ -171,7 +171,7 @@ XML;
         ];
     }
 
-	protected function getOneChildTwoInfants()
+	protected function getRoomRequest5() : array
     {
         $instance = RoomRequest::fromAges(
             null,
@@ -221,7 +221,7 @@ XML;
         ];
     }
 
-	protected function getTwoAdultsOneChildrenTwoInfants()
+	protected function getRoomRequest6() : array
     {
         $instance = RoomRequest::fromAges(
             2,
@@ -271,9 +271,9 @@ XML;
         ];
     }
 
-	protected function getRoomRequestsTwoAdults()
+	protected function getOneRoomRequests(array $roomRequest) : array
     {
-        list($instance, $serialize, $unserialize) = $this->getTwoAdults();
+        list($instance, $serialize, $unserialize) = $roomRequest;
 
         $instance = new RoomRequests($instance);
 
@@ -294,81 +294,12 @@ XML;
 		];
     }
 
-	protected function getRoomRequestsTwoAdultsTwoInfants()
-    {
-        list($instance, $serialize, $unserialize) = $this->getTwoAdultsTwoInfants();
-
-		$instance = new RoomRequests($instance);
-
-		$serialize = <<<XML
-<RoomRequests>
-	$serialize
-</RoomRequests>
-XML;
-		$unserialize = <<<XML
-<RoomRequests>
-	$unserialize
-</RoomRequests>
-XML;
-		return [
-			$instance,
-			$serialize,
-			$unserialize,
-		];
-    }
-
-    protected function getRoomRequestsTwoAdultsOneChild()
-    {
-        list($instance, $serialize, $unserialize) = $this->getTwoAdultsOneChild();
-
-        $instance = new RoomRequests($instance);
-
-		$serialize = <<<XML
-<RoomRequests>
-	$serialize
-</RoomRequests>
-XML;
-		$unserialize = <<<XML
-<RoomRequests>
-	$unserialize
-</RoomRequests>
-XML;
-		return [
-			$instance,
-			$serialize,
-			$unserialize,
-		];
-    }
-
-    protected function getRoomRequestsTwoAdultsTwoChildrenTwoInfants()
-    {
-        list($instance, $serialize, $unserialize) = $this->getTwoAdultsTwoChildrenTwoInfants();
-
-		$instance = new RoomRequests($instance);
-
-		$serialize = <<<XML
-<RoomRequests>
-	$serialize
-</RoomRequests>
-XML;
-		$unserialize = <<<XML
-<RoomRequests>
-	$unserialize
-</RoomRequests>
-XML;
-		return [
-			$instance,
-			$serialize,
-			$unserialize,
-		];
-    }
-
-    public function getThreeRoomRequests()
+    public function getThreeRoomRequests(array $roomRquest1, array $roomRquest2, array $roomRquest3) : array
     {
         $instances = $serializes = $unserializes = [];
-        list($instances[0], $serializes[0], $unserializes[0]) = $this->getTwoAdultsTwoInfants();
-        list($instances[1], $serializes[1], $unserializes[1]) = $this->getTwoAdultsOneChild();
-        list($instances[2], $serializes[2], $unserializes[2]) = $this->getTwoAdultsTwoChildrenTwoInfants();
+        list($instances[0], $serializes[0], $unserializes[0]) = $roomRquest1;
+        list($instances[1], $serializes[1], $unserializes[1]) = $roomRquest2;
+        list($instances[2], $serializes[2], $unserializes[2]) = $roomRquest3;
 
         $instance = new RoomRequests(...$instances);
 
