@@ -2,119 +2,84 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\CancellationPolicies;
-use XMLWorld\ApiClient\Responses\CancellationPolicy;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
-use XMLWorld\ApiClient\Responses\SpecialOffer;
-use XMLWorld\ApiClient\Responses\SpecialOffers;
-use XMLWorld\ApiClient\Responses\Supplement;
-use XMLWorld\ApiClient\Responses\Supplements;
-use XMLWorld\ApiClient\Responses\Tax;
-use XMLWorld\ApiClient\Responses\Taxes;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class CancellationPoliciesTests extends BaseSerializeXML
 {
-    public function testCancellationPolicy()
+	use CancellationPoliciesTrait;
+
+	#[Test]
+    public function cancellationPolicy1() : array
     {
-        $cancellationPolicy = new CancellationPolicy(
-            '2020-07-11',
-            574.28
-        );
+		list($instance, , ) = $details = $this->getCancellationPolicy1();
 
-        $this->serialize(
-            '<CancellationPolicy>
-				<CancelBy>2020-07-11</CancelBy>
-				<Penalty>574.28</Penalty>
-			</CancellationPolicy>',
-            $cancellationPolicy
-        );
+		$this->assertSame('2020-07-11', $instance->cancelBy, 'cancelBy is correct');
+		$this->assertSame(574.28, $instance->penalty, 'penalty is correct');
 
-        $this->unserialize(
-            '<CancellationPolicy>
-                <Penalty>574.28</Penalty>
-				<CancelBy>2020-07-11</CancelBy>
-			</CancellationPolicy>',
-            $cancellationPolicy
-        );
+		$this->doTest(...$details);
 
-        return $cancellationPolicy;
+		return $details;
     }
 
-    /**
-     * @depends testCancellationPolicy
-     */
-    public function testOneCancellationPolicies($cancellationPolicy)
+	#[Test]
+	public function cancellationPolicy2() : array
+	{
+		list($instance, , ) = $details = $this->getCancellationPolicy2();
+
+		$this->assertSame('2020-07-18', $instance->cancelBy, 'cancelBy is correct');
+		$this->assertSame(1148.55, $instance->penalty, 'penalty is correct');
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
+	#[Depends('cancellationPolicy1')]
+    public function oneCancellationPolicies(array $cancellationPolicy) : array
     {
-        $oneCancellationPolicy = new CancellationPolicies($cancellationPolicy);
+		list($cancellationPolicyInstance, , ) = $cancellationPolicy;
 
-        $this->serialize(
-            '<CancellationPolicies>
-				<CancellationPolicy>
-					<CancelBy>2020-07-11</CancelBy>
-					<Penalty>574.28</Penalty>
-				</CancellationPolicy>
-			</CancellationPolicies>',
-            $oneCancellationPolicy
-        );
+		list($instance, , ) = $details = $this->getOneCancellationPolicies($cancellationPolicy);
 
-        $this->unserialize(
-            '<CancellationPolicies>
-				<CancellationPolicy>
-					<CancelBy>2020-07-11</CancelBy>
-					<Penalty>574.28</Penalty>
-				</CancellationPolicy>
-			</CancellationPolicies>',
-            $oneCancellationPolicy
-        );
+		$this->assertCount(1, $instance, 'it only has one element');
+		$this->assertSame($cancellationPolicyInstance, $instance[0]);
+		$this->assertSame(
+			[$cancellationPolicyInstance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
 
-        return $oneCancellationPolicy;
+		$this->doTest(...$details);
+
+		return $details;
     }
 
-    /**
-     * @depends testCancellationPolicy
-     */
-    public function testCancellationPolicies($cancellationPolicy)
+	#[Test]
+	#[Depends('cancellationPolicy1')]
+	#[Depends('cancellationPolicy2')]
+    public function twoCancellationPolicies(array $cancellationPolicy1, array $cancellationPolicy2) : array
     {
-        $cancellationPolicies = new CancellationPolicies(
-            $cancellationPolicy,
-            new CancellationPolicy(
-                '2020-07-18',
-                1148.55
-            )
-        );
+		list($cancellationPolicy1Instance, , ) = $cancellationPolicy1;
+		list($cancellationPolicy2Instance, , ) = $cancellationPolicy2;
 
-        $this->serialize(
-            '<CancellationPolicies>
-				<CancellationPolicy>
-					<CancelBy>2020-07-11</CancelBy>
-					<Penalty>574.28</Penalty>
-				</CancellationPolicy>
-				<CancellationPolicy>
-					<CancelBy>2020-07-18</CancelBy>
-					<Penalty>1148.55</Penalty>
-				</CancellationPolicy>
-			</CancellationPolicies>',
-            $cancellationPolicies
-        );
+		list($instance, , ) = $details = $this->getTwoCancellationPolicies($cancellationPolicy1, $cancellationPolicy2);
 
-        $this->unserialize(
-            '<CancellationPolicies>
-				<CancellationPolicy>
-					<Penalty>574.28</Penalty>
-					<CancelBy>2020-07-11</CancelBy>
-				</CancellationPolicy>
-				<CancellationPolicy>
-					<CancelBy>2020-07-18</CancelBy>
-					<Penalty>1148.55</Penalty>
-				</CancellationPolicy>
-			</CancellationPolicies>',
-            $cancellationPolicies
-        );
+		$this->assertCount(2, $instance, 'it has two elements');
 
-        return $cancellationPolicies;
+		$this->assertSame($cancellationPolicy1Instance, $instance[0]);
+		$this->assertSame($cancellationPolicy2Instance, $instance[1]);
+
+		$this->assertSame(
+			[$cancellationPolicy1Instance, $cancellationPolicy2Instance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
+
+		$this->doTest(...$details);
+
+		return $details;
     }
 }

@@ -2,148 +2,22 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use XMLWorld\ApiClient\Requests\BookRequest;
+use PHPUnit\Framework\Attributes\Test;
+use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class BookRequestTest extends BookDetailsTest
+class BookRequestTest extends BaseSerializeXML
 {
-    /**
-     * @depends testLoginDetails
-     * @depends testTwoRoomBookingDetails
-     */
-    public function testBookRequest($loginDetails, $twoRoomBookingDetails)
+	use BookRequestTrait;
+
+	#[Test]
+    public function bookRequest() : array
     {
-        $bookRequest = new BookRequest(
-            $loginDetails[0],
-            $twoRoomBookingDetails,
-            true
-        );
+		list($instance, , ) = $details = $this->getBookRequest();
 
-        $this->serialize('<BookRequest>
-				<LoginDetails>
-					<Login>login</Login>
-					<Password>pass</Password>
-					<Version>version</Version>
-				</LoginDetails>
-				<Mock>True</Mock>
-				<BookDetails>
-					<ArrivalDate>2023-11-01</ArrivalDate>
-					<Duration>5</Duration>
-					<TradeReference>TEST_REF</TradeReference>
-					<TotalPrice>1040</TotalPrice>
-					<LeadGuest>
-						<FirstName>Jim</FirstName>
-						<LastName>Watsworth</LastName>
-						<Title>Mr</Title>
-					</LeadGuest>
-					<RoomBookings>
-						<RoomBooking>
-							<RoomID>155558</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<Guests>
-								<Guest>
-									<Type>Adult</Type>
-									<FirstName>Sally</FirstName>
-									<LastName>Smith</LastName>
-									<Title>Mrs</Title>
-									<Nationality>French</Nationality>
-								</Guest>
-							</Guests>
-						</RoomBooking>
-						<RoomBooking>
-							<RoomID>155448</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Adults>1</Adults>
-							<Children>1</Children>
-							<Infants>0</Infants>
-							<Guests>
-								<Guest>
-									<Type>Adult</Type>
-									<FirstName>Sally</FirstName>
-									<LastName>Smith</LastName>
-									<Title>Mrs</Title>
-									<Nationality>French</Nationality>
-								</Guest>
-								<Guest>
-									<Type>Child</Type>
-									<FirstName>Jimmy</FirstName>
-									<LastName>Smith</LastName>
-									<Age>5</Age>
-									<Nationality>French</Nationality>
-								</Guest>
-							</Guests>
-						</RoomBooking>
-					</RoomBookings>
-				</BookDetails>
-			</BookRequest>',
-            $bookRequest
-        );
+		/** @todo do assertions */
 
-        $this->unserialize('<BookRequest>
-				<LoginDetails>
-					<Login>login</Login>
-					<Password>pass</Password>
-					<Version>version</Version>
-				</LoginDetails>
-				<Mock>True</Mock>
-				<BookDetails>
-					<ArrivalDate>2023-11-01</ArrivalDate>
-					<Duration>5</Duration>
-					<TradeReference>TEST_REF</TradeReference>
-					<TotalPrice>1040</TotalPrice>
-					<LeadGuest>
-						<FirstName>Jim</FirstName>
-						<LastName>Watsworth</LastName>
-						<Title>Mr</Title>
-					</LeadGuest>
-					<RoomBookings>
-						<RoomBooking>
-							<RoomID>155558</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<Guests>
-								<Guest>
-									<Type>Adult</Type>
-									<FirstName>Sally</FirstName>
-									<LastName>Smith</LastName>
-									<Title>Mrs</Title>
-									<Nationality>French</Nationality>
-								</Guest>
-							</Guests>
-						</RoomBooking>
-						<RoomBooking>
-							<RoomID>155448</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Adults>1</Adults>
-							<Children>1</Children>
-							<Infants>0</Infants>
-							<Guests>
-								<Guest>
-									<Type>Adult</Type>
-									<FirstName>Sally</FirstName>
-									<LastName>Smith</LastName>
-									<Title>Mrs</Title>
-									<Nationality>French</Nationality>
-								</Guest>
-								<Guest>
-									<Type>Child</Type>
-									<FirstName>Jimmy</FirstName>
-									<LastName>Smith</LastName>
-									<Age>5</Age>
-									<Nationality>French</Nationality>
-								</Guest>
-							</Guests>
-						</RoomBooking>
-					</RoomBookings>
-				</BookDetails>
-			</BookRequest>',
-            $bookRequest
-        );
+		$this->doTest(...$details);
 
-        return $bookRequest;
+		return $details;
     }
 }

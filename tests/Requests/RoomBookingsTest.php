@@ -2,374 +2,77 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use XMLWorld\ApiClient\Common\Guest;
-use XMLWorld\ApiClient\Common\Guests;
-use XMLWorld\ApiClient\Requests\RoomBooking;
-use XMLWorld\ApiClient\Requests\RoomBookings;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class RoomBookingsTest extends LoginDetailsTest
+class RoomBookingsTest extends BaseSerializeXML
 {
-    public function testRoomBookingOneAdultOnly()
+	use RoomBookingsTrait;
+
+	#[Test]
+    public function roomBookingOneAdultOnly() : array
     {
-        $roomBookingOneAdultOnly = new RoomBooking(
-            155558,
-            1,
-            1,
-            0,
-            0
-        );              //the adult is the Leadguest so no adults here
+		list($instance, , ) = $details = $this->getRoomBookingOneAdultOnly();
 
-        $this->serialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<MealBasisID>1</MealBasisID>
-				<Adults>1</Adults>
-				<Children>0</Children>
-				<Infants>0</Infants>
-				<Guests/>
-			</RoomBooking>',
-            $roomBookingOneAdultOnly
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<MealBasisID>1</MealBasisID>
-				<Adults>1</Adults>
-				<Children>0</Children>
-				<Infants>0</Infants>
-				<Guests/>
-			</RoomBooking>',
-            $roomBookingOneAdultOnly
-        );
+		$this->doTest(...$details);
 
-        return $roomBookingOneAdultOnly;
+		return $details;
     }
 
-    public function testRoomBookingTwoAdults()
+	#[Test]
+    public function roomBookingTwoAdults() : array
     {
-        $oneGuest = new Guest(   //this is the second adult.
-            'Adult',
-            'Sally',
-            'Smith',
-            'Mrs',
-            null,
-            'French'
-        );
+		list($instance, , ) = $details = $this->getRoomBookingTwoAdults();
 
-        $roomBookingTwoAdults = new RoomBooking(
-            155558,
-            1,
-            2,
-            0,
-            0,
-            new Guests($oneGuest)
-        );
+		/** @todo do assertions */
 
-        $this->serialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<MealBasisID>1</MealBasisID>
-				<Adults>2</Adults>
-				<Children>0</Children>
-				<Infants>0</Infants>
-				<Guests>
-					<Guest>
-						<Type>Adult</Type>
-						<FirstName>Sally</FirstName>
-						<LastName>Smith</LastName>
-						<Title>Mrs</Title>
-						<Nationality>French</Nationality>
-					</Guest>
-				</Guests>
-			</RoomBooking>',
-            $roomBookingTwoAdults
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<RoomBooking>
-				<RoomID>155558</RoomID>
-				<MealBasisID>1</MealBasisID>
-				<Adults>2</Adults>
-				<Children>0</Children>
-				<Infants>0</Infants>
-				<Guests>
-					<Guest>
-						<Type>Adult</Type>
-						<FirstName>Sally</FirstName>
-						<LastName>Smith</LastName>
-						<Title>Mrs</Title>
-						<Nationality>French</Nationality>
-					</Guest>
-				</Guests>
-			</RoomBooking>',
-            $roomBookingTwoAdults
-        );
-
-        return $roomBookingTwoAdults;
+		return $details;
     }
 
-    public function testRoomBookingAdultAndChild()
+	#[Test]
+    public function roomBookingAdultAndChild() : array
     {
-        $adultGuestBook = new Guest(
-            'Adult',
-            'Sally',
-            'Smith',
-            'Mrs',
-            null,
-            'French'
-        );
+		list($instance, , ) = $details = $this->getRoomBookingAdultAndChild();
 
-        $childGuestBook = new Guest(
-            'Child',
-            'Jimmy',
-            'Smith',
-            null,
-            5,
-            'French'
-        );
+		/** @todo do assertions */
 
-        $roomBookingAdultAndChild = new RoomBooking(
-            155448,
-            1,
-            1,
-            1,
-            0,
-            new Guests(
-                $adultGuestBook,
-                $childGuestBook
-            )
-        );
+		$this->doTest(...$details);
 
-        $this->serialize(
-            '<RoomBooking>
-				<RoomID>155448</RoomID>
-				<MealBasisID>1</MealBasisID>
-				<Adults>1</Adults>
-				<Children>1</Children>
-				<Infants>0</Infants>
-				<Guests>
-					<Guest>
-						<Type>Adult</Type>
-						<FirstName>Sally</FirstName>
-						<LastName>Smith</LastName>
-						<Title>Mrs</Title>
-						<Nationality>French</Nationality>
-					</Guest>
-					<Guest>
-						<Type>Child</Type>
-						<FirstName>Jimmy</FirstName>
-						<LastName>Smith</LastName>
-						<Age>5</Age>
-						<Nationality>French</Nationality>
-					</Guest>
-				</Guests>
-			</RoomBooking>',
-            $roomBookingAdultAndChild
-        );
-
-        $this->unserialize(
-            '<RoomBooking>
-				<RoomID>155448</RoomID>
-				<MealBasisID>1</MealBasisID>
-				<Adults>1</Adults>
-				<Children>1</Children>
-				<Infants>0</Infants>
-				<Guests>
-					<Guest>
-						<Type>Adult</Type>
-						<FirstName>Sally</FirstName>
-						<LastName>Smith</LastName>
-						<Title>Mrs</Title>
-						<Nationality>French</Nationality>
-					</Guest>
-					<Guest>
-						<Type>Child</Type>
-						<FirstName>Jimmy</FirstName>
-						<LastName>Smith</LastName>
-						<Age>5</Age>
-						<Nationality>French</Nationality>
-					</Guest>
-				</Guests>
-			</RoomBooking>',
-            $roomBookingAdultAndChild
-        );
-
-        return $roomBookingAdultAndChild;
+		return $details;
     }
 
-    /**
-     * @depends testRoomBookingAdultAndChild
-     */
-    public function testOneRoomBookings($roomBookingAdultAndChild)
+	#[Test]
+	#[Depends('roomBookingOneAdultOnly')]
+    public function oneRoomBookings(array $roomBooking) : array
     {
-        $oneRoomBookings = new RoomBookings(
-            $roomBookingAdultAndChild
-        );
+		list($roomBookingInstance, , ) = $roomBooking;
+		list($instance, , ) = $details = $this->getOneRoomBookings($roomBooking);
 
-        $this->serialize(
-            '<RoomBookings>
-				<RoomBooking>
-					<RoomID>155448</RoomID>
-					<MealBasisID>1</MealBasisID>
-					<Adults>1</Adults>
-					<Children>1</Children>
-					<Infants>0</Infants>
-					<Guests>
-						<Guest>
-							<Type>Adult</Type>
-							<FirstName>Sally</FirstName>
-							<LastName>Smith</LastName>
-							<Title>Mrs</Title>
-							<Nationality>French</Nationality>
-						</Guest>
-						<Guest>
-							<Type>Child</Type>
-							<FirstName>Jimmy</FirstName>
-							<LastName>Smith</LastName>
-							<Age>5</Age>
-							<Nationality>French</Nationality>
-						</Guest>
-					</Guests>
-				</RoomBooking>
-			</RoomBookings>',
-            $oneRoomBookings
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<RoomBookings>
-				<RoomBooking>
-					<RoomID>155448</RoomID>
-					<MealBasisID>1</MealBasisID>
-					<Adults>1</Adults>
-					<Children>1</Children>
-					<Infants>0</Infants>
-					<Guests>
-						<Guest>
-							<Type>Adult</Type>
-							<FirstName>Sally</FirstName>
-							<LastName>Smith</LastName>
-							<Title>Mrs</Title>
-							<Nationality>French</Nationality>
-						</Guest>
-						<Guest>
-							<Type>Child</Type>
-							<FirstName>Jimmy</FirstName>
-							<LastName>Smith</LastName>
-							<Age>5</Age>
-							<Nationality>French</Nationality>
-						</Guest>
-					</Guests>
-				</RoomBooking>
-			</RoomBookings>',
-            $oneRoomBookings
-        );
+		$this->doTest(...$details);
 
-        return $oneRoomBookings;
+		return $details;
     }
 
-    /**
-     * @depends testRoomBookingTwoAdults
-     * @depends testRoomBookingAdultAndChild
-     */
-    public function testTwoRoomBookings($roomBookingTwoAdult, $roomBookingAdultAndChild)
+	#[Test]
+	#[Depends('roomBookingOneAdultOnly')]
+	#[Depends('roomBookingTwoAdults')]
+    public function twoRoomBookings(array $roomBooking1, array $roomBooking2) : array
     {
-        $twoRoomBookings = new RoomBookings(
-            $roomBookingTwoAdult,
-            $roomBookingAdultAndChild
-        );
+		list($roomBooking1Instance, , ) = $roomBooking1;
+		list($roomBooking2Instance, , ) = $roomBooking2;
+		list($instance, , ) = $details = $this->getTwoRoomBookings($roomBooking1, $roomBooking2);
 
-        $this->serialize(
-            '<RoomBookings>
-				<RoomBooking>
-					<RoomID>155558</RoomID>
-					<MealBasisID>1</MealBasisID>
-					<Adults>2</Adults>
-					<Children>0</Children>
-					<Infants>0</Infants>
-					<Guests>
-						<Guest>
-							<Type>Adult</Type>
-							<FirstName>Sally</FirstName>
-							<LastName>Smith</LastName>
-							<Title>Mrs</Title>
-							<Nationality>French</Nationality>
-						</Guest>
-					</Guests>
-				</RoomBooking>
-				<RoomBooking>
-					<RoomID>155448</RoomID>
-					<MealBasisID>1</MealBasisID>
-					<Adults>1</Adults>
-					<Children>1</Children>
-					<Infants>0</Infants>
-					<Guests>
-						<Guest>
-							<Type>Adult</Type>
-							<FirstName>Sally</FirstName>
-							<LastName>Smith</LastName>
-							<Title>Mrs</Title>
-							<Nationality>French</Nationality>
-						</Guest>
-						<Guest>
-							<Type>Child</Type>
-							<FirstName>Jimmy</FirstName>
-							<LastName>Smith</LastName>
-							<Age>5</Age>
-							<Nationality>French</Nationality>
-						</Guest>
-					</Guests>
-				</RoomBooking>
-			</RoomBookings>',
-            $twoRoomBookings
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<RoomBookings>
-				<RoomBooking>
-					<RoomID>155558</RoomID>
-					<MealBasisID>1</MealBasisID>
-					<Adults>2</Adults>
-					<Children>0</Children>
-					<Infants>0</Infants>
-					<Guests>
-						<Guest>
-							<Type>Adult</Type>
-							<FirstName>Sally</FirstName>
-							<LastName>Smith</LastName>
-							<Title>Mrs</Title>
-							<Nationality>French</Nationality>
-						</Guest>
-					</Guests>
-				</RoomBooking>
-				<RoomBooking>
-					<RoomID>155448</RoomID>
-					<MealBasisID>1</MealBasisID>
-					<Adults>1</Adults>
-					<Children>1</Children>
-					<Infants>0</Infants>
-					<Guests>
-						<Guest>
-							<Type>Adult</Type>
-							<FirstName>Sally</FirstName>
-							<LastName>Smith</LastName>
-							<Title>Mrs</Title>
-							<Nationality>French</Nationality>
-						</Guest>
-						<Guest>
-							<Type>Child</Type>
-							<FirstName>Jimmy</FirstName>
-							<LastName>Smith</LastName>
-							<Age>5</Age>
-							<Nationality>French</Nationality>
-						</Guest>
-					</Guests>
-				</RoomBooking>
-			</RoomBookings>',
-            $twoRoomBookings
-        );
+		$this->doTest(...$details);
 
-        return $twoRoomBookings;
+		return $details;
     }
 }

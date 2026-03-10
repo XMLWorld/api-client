@@ -2,25 +2,46 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use XMLWorld\ApiClient\Requests\ChildAge;
-use XMLWorld\ApiClient\Requests\ChildAges;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-/**
- * @method testChildAge
- * @method testTwoChildAges
- */
 class ChildAgesTest extends BaseSerializeXML
 {
-    use ChildAgesTrait {
-        testOneChildAges as traitOneChildAges;
-    }
+    use ChildAgesTrait;
 
-    /**
-     * @depends testChildAge
-     */
-    public function testOneChildAges($childAge)
-    {
-        return $this->traitOneChildAges($childAge);
-    }
+	#[Test]
+	public function childAge() : array
+	{
+		list($instance, , ) = $details = $this->getChildAge();
+
+		/** @todo do assertions */
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
+	public function oneChildAges() : array
+	{
+		list($instance, , ) = $details = $this->getOneChildAges();
+
+		/** @todo do assertions */
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
+	public function twoChildAges() : array
+	{
+		$details = $this->getTwoChildAges();
+
+		/** @todo do assertions */
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
 }

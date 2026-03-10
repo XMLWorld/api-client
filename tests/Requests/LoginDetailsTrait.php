@@ -6,30 +6,30 @@ use XMLWorld\ApiClient\Requests\LoginDetails;
 
 trait LoginDetailsTrait
 {
-    public function testLoginDetails()
+    protected function getLoginDetails() : array
     {
         $instance = new LoginDetails('login', 'pass', 'version');
 
-        $serialize = '<LoginDetails>
-				<Login>login</Login>
-				<Password>pass</Password>
-				<Version>version</Version>
-			</LoginDetails>';
+        $serialize = <<<'XML'
+<LoginDetails>
+	<Login>login</Login>
+	<Password>pass</Password>
+	<Version>version</Version>
+</LoginDetails>
+XML;
 
-        $unserialize = '<LoginDetails>
-                <Password>pass</Password>
-				<Login>login</Login>
-				<Version>version</Version>
-			</LoginDetails>';
+        $unserialize = <<<'XML'
+<LoginDetails>
+	<Password>pass</Password>
+	<Login>login</Login>
+	<Version>version</Version>
+</LoginDetails>
+XML;
 
-        $loginDetails = [
-            $instance,
-            $serialize,
-            $unserialize
-        ];
-
-        $this->doTest(...$loginDetails);
-
-        return $loginDetails;
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
     }
 }

@@ -2,121 +2,86 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\Errata;
-use XMLWorld\ApiClient\Responses\Erratum;
-use XMLWorld\ApiClient\Responses\Image;
-use XMLWorld\ApiClient\Responses\Images;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
-use XMLWorld\ApiClient\Responses\SpecialOffer;
-use XMLWorld\ApiClient\Responses\SpecialOffers;
-use XMLWorld\ApiClient\Responses\Supplement;
-use XMLWorld\ApiClient\Responses\Supplements;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class ImagesTest extends BaseSerializeXML
 {
-    public function testImage()
+	use ImagesTrait;
+
+	#[Test]
+    public function image1() : array
     {
-        $image = new Image(
-            'CMSImage_1000.jpg',
-            'CMSImageThumb_1000.jpg'
-        );
+		list($instance, , ) = $details = $this->getImage1();
 
-        $this->serialize(
-            '<Image>
-				<FullSize>CMSImage_1000.jpg</FullSize>
-				<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-			</Image>',
-            $image
-        );
+		$this->assertSame('CMSImage_1000.jpg', $instance->fullSize);
+		$this->assertSame('CMSImageThumb_1000.jpg', $instance->thumbnail);
 
-        $this->unserialize(
-            '<Image>
-				<FullSize>CMSImage_1000.jpg</FullSize>
-				<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-			</Image>',
-            $image
-        );
+		$this->doTest(...$details);
 
-        return $image;
+		return $details;
     }
 
+	#[Test]
+	public function image2() : array
+	{
+		list($instance, , ) = $details = $this->getImage2();
 
-    /**
-     * @depends testImage
-     */
-    public function testOneImage($image)
+		$this->assertSame('CMSImage_1001.jpg', $instance->fullSize);
+		$this->assertSame('CMSImageThumb_1001.jpg', $instance->thumbnail);
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
+	#[Depends('image1')]
+    public function oneImages(array $image) : array
     {
-        $oneImage = new Images($image);
+		list($imageInstance, , ) = $image;
 
-        $this->serialize(
-            '<Images>
-				<Image>
-					<FullSize>CMSImage_1000.jpg</FullSize>
-					<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-				</Image>
-			</Images>',
-            $oneImage
-        );
+		list($instance, , ) = $details = $this->getOneImages($image);
 
-        $this->unserialize(
-            '<Images>
-				<Image>
-					<FullSize>CMSImage_1000.jpg</FullSize>
-					<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-				</Image>
-			</Images>',
-            $oneImage
-        );
+		$this->assertCount(1, $instance, 'it only has one element');
 
-        return $oneImage;
+		$this->assertSame($imageInstance, $instance[0]);
+
+		$this->assertSame(
+			[$imageInstance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
+
+		$this->doTest(...$details);
+
+		return $details;
     }
 
-    /**
-     * @depends testImage
-     */
-    public function testTwoImages($image)
+	#[Test]
+	#[Depends('image1')]
+	#[Depends('image2')]
+    public function testTwoImages(array $image1, array $image2) : array
     {
-        $twoImages = new Images(
-            $image,
-            new Image(
-                'CMSImage_1001.jpg',
-                'CMSImageThumb_1001.jpg'
-            )
-        );
+		list($image1Instance, , ) = $image1;
+		list($image2Instance, , ) = $image2;
 
-        $this->serialize(
-            '<Images>
-				<Image>
-					<FullSize>CMSImage_1000.jpg</FullSize>
-					<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-				</Image>
-				<Image>
-					<FullSize>CMSImage_1001.jpg</FullSize>
-					<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-				</Image>
-			</Images>',
-            $twoImages
-        );
+		list($instance, , ) = $details = $this->getTwoImages($image1, $image2);
 
-        $this->unserialize(
-            '<Images>
-				<Image>
-					<FullSize>CMSImage_1000.jpg</FullSize>
-					<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-				</Image>
-				<Image>
-					<FullSize>CMSImage_1001.jpg</FullSize>
-					<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-				</Image>
-			</Images>',
-            $twoImages
-        );
+		$this->assertCount(2, $instance, 'it has two elements');
 
-        return $twoImages;
+		$this->assertSame($image1Instance, $instance[0]);
+		$this->assertSame($image2Instance, $instance[1]);
+
+		$this->assertSame(
+			[$image1Instance, $image2Instance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
+
+		$this->doTest(...$details);
+
+		return $details;
     }
-
 }

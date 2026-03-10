@@ -2,1361 +2,193 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Responses\Errata;
-use XMLWorld\ApiClient\Responses\Erratum;
-use XMLWorld\ApiClient\Responses\Image;
-use XMLWorld\ApiClient\Responses\Images;
-use XMLWorld\ApiClient\Responses\PropertyResult;
-use XMLWorld\ApiClient\Responses\PropertyResults;
-use XMLWorld\ApiClient\Responses\Supplier;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class PropertyResultTests extends RoomTypesTests
+class PropertyResultTests extends BaseSerializeXML
 {
-    public function testSupplier()
+	use PropertyResultTrait;
+
+	#[Test]
+	public function propertyResult0() : array
+	{
+		list($propertyResult, , ) = $details = $this->getPropertyResult0();
+
+		$this->assertSame(99, $propertyResult->propertyID);
+		$this->assertCount(1, $propertyResult->roomTypes);
+		$this->assertSame('Example Island', $propertyResult->propertyName);
+		$this->assertNull($propertyResult->gIATAID);
+		$this->assertSame('USD', $propertyResult->currency);
+		$this->assertSame(4.5, $propertyResult->rating);
+
+		$this->assertNull($propertyResult->geographyLevel1ID);
+		$this->assertNull($propertyResult->geographyLevel2ID);
+		$this->assertNull($propertyResult->geographyLevel3ID);
+
+		$this->assertSame('West Indies', $propertyResult->country);
+		$this->assertSame('St Vincent & Grenadines', $propertyResult->area);
+		$this->assertSame('Example Island', $propertyResult->region);
+
+		$this->assertNull($propertyResult->longitude);
+		$this->assertNull($propertyResult->latitude);
+		$this->assertNull($propertyResult->email);
+		$this->assertNull($propertyResult->postcode);
+		$this->assertNull($propertyResult->address1);
+		$this->assertNull($propertyResult->address2);
+
+		$this->assertSame('Intimate, exotic and all-inclusive', $propertyResult->strapline);
+		$this->assertSame('Example Island, a high-end luxury resort', $propertyResult->description);
+		$this->assertSame('https://xmlhost/custom/content/', $propertyResult->cMSBaseURL);
+		$this->assertSame('CMSImage_999.jpg', $propertyResult->mainImage);
+		$this->assertSame('CMSImageThumb_999.jpg', $propertyResult->mainImageThumbnail);
+
+		$this->assertNull($propertyResult->images);
+		$this->assertNull($propertyResult->errata);
+
+		$this->assertSame(6, $propertyResult->supplier->supplierID);
+		$this->assertSame('RMI', $propertyResult->supplier->supplierName);
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
+    public function propertyResult1() : array
     {
-        $supplier = new Supplier(
-            6,
-            'RMI'
-        );
+		list($propertyResult, , ) = $details = $this->getPropertyResult1();
 
-        $this->serialize(
-            '<Supplier>
-				<SupplierID>6</SupplierID>
-				<SupplierName>RMI</SupplierName>
-			</Supplier>',
-            $supplier
-        );
+		$this->assertSame(100, $propertyResult->propertyID);
+		$this->assertCount(1, $propertyResult->roomTypes);
+		$this->assertSame('Example Island', $propertyResult->propertyName);
+		$this->assertSame(99999, $propertyResult->gIATAID);
+		$this->assertSame('USD', $propertyResult->currency);
+		$this->assertSame(4.5, $propertyResult->rating);
 
-        $this->unserialize(
-            '<Supplier>
-				<SupplierID>6</SupplierID>
-				<SupplierName>RMI</SupplierName>
-			</Supplier>',
-            $supplier
-        );
+		$this->assertSame(6, $propertyResult->geographyLevel1ID);
+		$this->assertSame(10, $propertyResult->geographyLevel2ID);
+		$this->assertSame(22, $propertyResult->geographyLevel3ID);
 
-        return $supplier;
+		$this->assertSame('West Indies', $propertyResult->country);
+		$this->assertSame('St Vincent & Grenadines', $propertyResult->area);
+		$this->assertSame('Example Island', $propertyResult->region);
+
+		$this->assertNull($propertyResult->longitude);
+		$this->assertNull($propertyResult->latitude);
+		$this->assertNull($propertyResult->email);
+		$this->assertNull($propertyResult->postcode);
+		$this->assertNull($propertyResult->address1);
+		$this->assertNull($propertyResult->address2);
+
+		$this->assertSame('Intimate, exotic and all-inclusive', $propertyResult->strapline);
+		$this->assertSame('Example Island, a high-end luxury resort', $propertyResult->description);
+		$this->assertSame('https://xmlhost/custom/content/', $propertyResult->cMSBaseURL);
+		$this->assertSame('CMSImage_999.jpg', $propertyResult->mainImage);
+		$this->assertSame('CMSImageThumb_999.jpg', $propertyResult->mainImageThumbnail);
+
+		$this->assertCount(1, $propertyResult->images);
+		$this->assertCount(1, $propertyResult->errata);
+
+		$this->assertSame(6, $propertyResult->supplier->supplierID);
+		$this->assertSame('RMI', $propertyResult->supplier->supplierName);
+
+
+		$this->doTest(...$details);
+
+		return $details;
     }
 
-    /**
-     * @depends testSupplier
-     * @depends testTwoRoomTypes
-     */
-    public function testPropertyResult($supplier, $twoRoomTypes)
+	#[Test]
+	public function propertyResult2() : array
+	{
+		list($propertyResult, , ) = $details = $this->getPropertyResult2();
+
+		$this->assertSame(101, $propertyResult->propertyID);
+		$this->assertCount(2, $propertyResult->roomTypes);
+		$this->assertSame('Example Island', $propertyResult->propertyName);
+		$this->assertSame(99997, $propertyResult->gIATAID);
+		$this->assertSame('USD', $propertyResult->currency);
+		$this->assertSame(4.5, $propertyResult->rating);
+
+		$this->assertSame(6, $propertyResult->geographyLevel1ID);
+		$this->assertSame(10, $propertyResult->geographyLevel2ID);
+		$this->assertSame(22, $propertyResult->geographyLevel3ID);
+
+		$this->assertSame('West Indies', $propertyResult->country);
+		$this->assertSame('St Vincent & Grenadines', $propertyResult->area);
+		$this->assertSame('Example Island', $propertyResult->region);
+
+		$this->assertNull($propertyResult->longitude);
+		$this->assertNull($propertyResult->latitude);
+		$this->assertNull($propertyResult->email);
+		$this->assertNull($propertyResult->postcode);
+		$this->assertNull($propertyResult->address1);
+		$this->assertNull($propertyResult->address2);
+
+		$this->assertSame('Intimate, exotic and all-inclusive', $propertyResult->strapline);
+		$this->assertSame('Example Island, a high-end luxury resort', $propertyResult->description);
+		$this->assertSame('https://xmlhost/custom/content/', $propertyResult->cMSBaseURL);
+		$this->assertSame('CMSImage_999.jpg', $propertyResult->mainImage);
+		$this->assertSame('CMSImageThumb_999.jpg', $propertyResult->mainImageThumbnail);
+
+		$this->assertCount(2, $propertyResult->images);
+		$this->assertCount(2, $propertyResult->errata);
+
+		$this->assertSame(6, $propertyResult->supplier->supplierID);
+		$this->assertSame('RMI', $propertyResult->supplier->supplierName);
+
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
+	#[Depends('propertyResult1')]
+    public function onePropertyResult(array $propertyResult) : array
     {
-        $propertyResult = new PropertyResult(
-            99,
-            $twoRoomTypes,
-            'Example Island',
-            99999,
-            'USD',
-            4.5,
-            6,
-            10,
-            22,
-            'West Indies',
-            'St Vincent & Grenadines',
-            'Example Island',
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            'Intimate, exotic and all-inclusive',
-            'Example Island, a high-end luxury resort',
-            'https://xmlhost/custom/content/',
-            'CMSImage_999.jpg',
-            'CMSImageThumb_999.jpg',
-            new Images(
-                new Image(
-                    'CMSImage_1000.jpg',
-                    'CMSImageThumb_1000.jpg'
-                ),
-                new Image(
-                    'CMSImage_1001.jpg',
-                    'CMSImageThumb_1001.jpg'
-                )
-            ),
-            new Errata(new Erratum(
-                '2020-08-04',
-                '2020-08-11',
-                'Small pool will be closed for maintenance'
-            )),
-            $supplier
-        );
+		list($propertyResultInstance, , ) = $propertyResult;
 
-        $this->serialize(
-            '<PropertyResult>
-				<PropertyID>99</PropertyID>
-				<RoomTypes>
-					<RoomType>
-						<RoomID>999</RoomID>
-						<PropertyRoomTypeID>1</PropertyRoomTypeID>
-						<MealBasisID>1</MealBasisID>
-						<Name>Example Villa</Name>
-						<View>Sea View</View>
-						<Adults>2</Adults>
-						<Children>2</Children>
-						<Infants>1</Infants>
-						<OnRequest>True</OnRequest>
-						<SubTotal>5896.8</SubTotal>
-						<Total>6565.35</Total>
-						<RoomsAppliesTo>
-							<RoomRequest>1</RoomRequest>
-						</RoomsAppliesTo>
-						<Supplements>
-							<Supplement>
-								<Name>test supplement</Name>
-								<Duration>Per Night</Duration>
-								<Multiplier>Per Person</Multiplier>
-								<Total>220</Total>
-								<PaxType>Adult Only</PaxType>
-							</Supplement>
-						</Supplements>
-						<SpecialOffers>
-							<SpecialOffer>
-								<Name>Example special offer</Name>
-								<Type>Value Added</Type>
-								<Desc>test desc</Desc>
-							</SpecialOffer>
-							<SpecialOffer>
-								<Name>Example special offer 2</Name>
-								<Type>Free Kids</Type>
-								<Value>1</Value>
-								<Total>1000</Total>
-								<Desc>test desc</Desc>
-							</SpecialOffer>
-						</SpecialOffers>
-						<Taxes>
-							<Tax>
-								<TaxName>test %</TaxName>
-								<Inclusive>False</Inclusive>
-								<Total>1148.55</Total>
-							</Tax>
-							<Tax>
-								<TaxName>Government Tax</TaxName>
-								<Inclusive>True</Inclusive>
-								<Total>423.15</Total>
-							</Tax>
-							<Tax>
-								<TaxName>Service Charge</TaxName>
-								<Inclusive>True</Inclusive>
-								<Total>604.5</Total>
-							</Tax>
-							<Tax>
-								<TaxName>test</TaxName>
-								<Inclusive>False</Inclusive>
-								<Total>300</Total>
-							</Tax>
-						</Taxes>
-						<CancellationPolicies>
-							<CancellationPolicy>
-								<CancelBy>2020-07-11</CancelBy>
-								<Penalty>574.28</Penalty>
-							</CancellationPolicy>
-							<CancellationPolicy>
-								<CancelBy>2020-07-18</CancelBy>
-								<Penalty>1148.55</Penalty>
-							</CancellationPolicy>
-						</CancellationPolicies>
-					</RoomType>
-					<RoomType>
-						<RoomID>998</RoomID>
-						<MealBasisID>1</MealBasisID>
-						<Name>Example Villa</Name>
-						<View>Sea View</View>
-						<Adults>2</Adults>
-						<Children>0</Children>
-						<Infants>0</Infants>
-						<OnRequest>True</OnRequest>
-						<SubTotal>3960</SubTotal>
-						<Total>4400</Total>
-						<RoomsAppliesTo>
-							<RoomRequest>2</RoomRequest>
-						</RoomsAppliesTo>
-						<SpecialOffers>
-							<SpecialOffer>
-								<Name>Early Bird Booking</Name>
-								<Type>Adult Only</Type>
-								<Value>10</Value>
-								<PaxType>All</PaxType>
-								<Total>440</Total>
-							</SpecialOffer>
-						</SpecialOffers>
-						<Taxes>
-							<Tax>
-								<TaxName>Government Tax</TaxName>
-								<Inclusive>True</Inclusive>
-								<Total>423.15</Total>
-							</Tax>
-						</Taxes>
-						<CancellationPolicies>
-							<CancellationPolicy>
-								<CancelBy>2020-07-18</CancelBy>
-								<Penalty>440</Penalty>
-							</CancellationPolicy>
-						</CancellationPolicies>
-					</RoomType>
-				</RoomTypes>
-				<PropertyName>Example Island</PropertyName>
-				<GIATAID>99999</GIATAID>
-				<Currency>USD</Currency>
-				<Rating>4.5</Rating>
-				<GeographyLevel1ID>6</GeographyLevel1ID>
-				<GeographyLevel2ID>10</GeographyLevel2ID>
-				<GeographyLevel3ID>22</GeographyLevel3ID>
-				<Country>West Indies</Country>
-				<Area>St Vincent &amp; Grenadines</Area>
-				<Region>Example Island</Region>
-				<Strapline>Intimate, exotic and all-inclusive</Strapline>
-				<Description>Example Island, a high-end luxury resort</Description>
-				<CMSBaseURL>https://xmlhost/custom/content/</CMSBaseURL>
-				<MainImage>CMSImage_999.jpg</MainImage>
-				<MainImageThumbnail>CMSImageThumb_999.jpg</MainImageThumbnail>
-				<Images>
-					<Image>
-						<FullSize>CMSImage_1000.jpg</FullSize>
-						<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-					</Image>
-					<Image>
-						<FullSize>CMSImage_1001.jpg</FullSize>
-						<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-					</Image>
-				</Images>
-				<Errata>
-					<Erratum>
-						<StartDate>2020-08-04</StartDate>
-						<EndDate>2020-08-11</EndDate>
-						<Description>Small pool will be closed for maintenance</Description>
-					</Erratum>
-				</Errata>
-				<Supplier>
-					<SupplierID>6</SupplierID>
-					<SupplierName>RMI</SupplierName>
-				</Supplier>
-			</PropertyResult>',
-            $propertyResult
-        );
+		list($propertyResults, , ) = $details = $this->getOnePropertyResult($propertyResult);
 
-        $this->unserialize(
-            '<PropertyResult>
-				<PropertyID>99</PropertyID>
-				<RoomTypes>
-					<RoomType>
-						<RoomID>999</RoomID>
-						<PropertyRoomTypeID>1</PropertyRoomTypeID>
-						<MealBasisID>1</MealBasisID>
-						<Name>Example Villa</Name>
-						<View>Sea View</View>
-						<Adults>2</Adults>
-						<Children>2</Children>
-						<Infants>1</Infants>
-						<OnRequest>True</OnRequest>
-						<SubTotal>5896.8</SubTotal>
-						<Total>6565.35</Total>
-						<RoomsAppliesTo>
-							<RoomRequest>1</RoomRequest>
-						</RoomsAppliesTo>
-						<Supplements>
-							<Supplement>
-								<Name>test supplement</Name>
-								<Duration>Per Night</Duration>
-								<Multiplier>Per Person</Multiplier>
-								<Total>220</Total>
-								<PaxType>Adult Only</PaxType>
-							</Supplement>
-						</Supplements>
-						<SpecialOffers>
-							<SpecialOffer>
-								<Name>Example special offer</Name>
-								<Type>Value Added</Type>
-								<Desc>test desc</Desc>
-							</SpecialOffer>
-							<SpecialOffer>
-								<Name>Example special offer 2</Name>
-								<Type>Free Kids</Type>
-								<Value>1</Value>
-								<Total>1000</Total>
-								<Desc>test desc</Desc>
-							</SpecialOffer>
-						</SpecialOffers>
-						<Taxes>
-							<Tax>
-								<TaxName>test %</TaxName>
-								<Inclusive>False</Inclusive>
-								<Total>1148.55</Total>
-							</Tax>
-							<Tax>
-								<TaxName>Government Tax</TaxName>
-								<Inclusive>True</Inclusive>
-								<Total>423.15</Total>
-							</Tax>
-							<Tax>
-								<TaxName>Service Charge</TaxName>
-								<Inclusive>True</Inclusive>
-								<Total>604.5</Total>
-							</Tax>
-							<Tax>
-								<TaxName>test</TaxName>
-								<Inclusive>False</Inclusive>
-								<Total>300</Total>
-							</Tax>
-						</Taxes>
-						<CancellationPolicies>
-							<CancellationPolicy>
-								<CancelBy>2020-07-11</CancelBy>
-								<Penalty>574.28</Penalty>
-							</CancellationPolicy>
-							<CancellationPolicy>
-								<CancelBy>2020-07-18</CancelBy>
-								<Penalty>1148.55</Penalty>
-							</CancellationPolicy>
-						</CancellationPolicies>
-					</RoomType>
-					<RoomType>
-						<RoomID>998</RoomID>
-						<MealBasisID>1</MealBasisID>
-						<Name>Example Villa</Name>
-						<View>Sea View</View>
-						<Adults>2</Adults>
-						<Children>0</Children>
-						<Infants>0</Infants>
-						<OnRequest>True</OnRequest>
-						<SubTotal>3960</SubTotal>
-						<Total>4400</Total>
-						<RoomsAppliesTo>
-							<RoomRequest>2</RoomRequest>
-						</RoomsAppliesTo>
-						<Supplements/>
-						<SpecialOffers>
-							<SpecialOffer>
-								<Name>Early Bird Booking</Name>
-								<Type>Adult Only</Type>
-								<Value>10</Value>
-								<PaxType>All</PaxType>
-								<Total>440</Total>
-								<Desc/>
-							</SpecialOffer>
-						</SpecialOffers>
-						<Taxes>
-							<Tax>
-								<TaxName>Government Tax</TaxName>
-								<Inclusive>True</Inclusive>
-								<Total>423.15</Total>
-							</Tax>
-						</Taxes>
-						<CancellationPolicies>
-							<CancellationPolicy>
-								<CancelBy>2020-07-18</CancelBy>
-								<Penalty>440</Penalty>
-							</CancellationPolicy>
-						</CancellationPolicies>
-					</RoomType>
-				</RoomTypes>
-				<PropertyName>Example Island</PropertyName>
-				<Supplier>
-					<SupplierID>6</SupplierID>
-					<SupplierName>RMI</SupplierName>
-				</Supplier>
-				<GIATAID>99999</GIATAID>
-				<Currency>USD</Currency>
-				<Rating>4.5</Rating>
-				<GeographyLevel1ID>6</GeographyLevel1ID>
-				<GeographyLevel2ID>10</GeographyLevel2ID>
-				<GeographyLevel3ID>22</GeographyLevel3ID>
-				<Country>West Indies</Country>
-				<Area>St Vincent &amp; Grenadines</Area>
-				<Region>Example Island</Region>
-				<Email/>
-				<Postcode/>
-				<Address1/>
-				<Address2/>
-				<Strapline>Intimate, exotic and all-inclusive</Strapline>
-				<Description>Example Island, a high-end luxury resort</Description>
-				<CMSBaseURL>https://xmlhost/custom/content/</CMSBaseURL>
-				<MainImage>CMSImage_999.jpg</MainImage>
-				<MainImageThumbnail>CMSImageThumb_999.jpg</MainImageThumbnail>
-				<Images>
-					<Image>
-						<FullSize>CMSImage_1000.jpg</FullSize>
-						<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-					</Image>
-					<Image>
-						<FullSize>CMSImage_1001.jpg</FullSize>
-						<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-					</Image>
-				</Images>
-				<Errata>
-					<Erratum>
-						<StartDate>2020-08-04</StartDate>
-						<EndDate>2020-08-11</EndDate>
-						<Description>Small pool will be closed for maintenance</Description>
-					</Erratum>
-				</Errata>
-			</PropertyResult>',
-            $propertyResult
-        );
+		$this->assertCount(1, $propertyResults);
+		$this->assertSame(1, $propertyResults->totalProperties);
+		$this->assertSame($propertyResultInstance, $propertyResults[0]);
+		$this->assertSame([$propertyResultInstance], $propertyResults->getPropertyResults());
+		$this->assertSame([
+			'TotalProperties' => 1,
+			$propertyResultInstance
+		], iterator_to_array($propertyResults), 'we test the behaviour for a foreach');
 
-        return $propertyResult;
+		$this->doTest(...$details);
+
+		return $details;
     }
 
-    /**
-     * @depends testPropertyResult
-     */
-    public function testOnePropertyResult($propertyResult)
+	#[Test]
+	#[Depends('propertyResult1')]
+	#[Depends('propertyResult2')]
+    public function twoPropertyResults(array $propertyResult1, array $propertyResult2) : array
     {
-        $onePropertyResult = PropertyResults::fromPropertyResults($propertyResult);
+		list($propertyResult1Instance, , ) = $propertyResult1;
+		list($propertyResult2Instance, , ) = $propertyResult2;
 
-        $this->serialize(
-            '<PropertyResults>
-				<TotalProperties>1</TotalProperties>
-				<PropertyResult>
-					<PropertyID>99</PropertyID>
-					<RoomTypes>
-						<RoomType>
-							<RoomID>999</RoomID>
-							<PropertyRoomTypeID>1</PropertyRoomTypeID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>1</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>5896.8</SubTotal>
-							<Total>6565.35</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>1</RoomRequest>
-							</RoomsAppliesTo>
-							<Supplements>
-								<Supplement>
-									<Name>test&nbsp;supplement</Name>
-									<Duration>Per Night</Duration>
-									<Multiplier>Per Person</Multiplier>
-									<Total>220</Total>
-									<PaxType>Adult Only</PaxType>
-								</Supplement>
-							</Supplements>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Example special offer</Name>
-									<Type>Value Added</Type>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-								<SpecialOffer>
-									<Name>Example special offer 2</Name>
-									<Type>Free Kids</Type>
-									<Value>1</Value>
-									<Total>1000</Total>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>test %</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>1148.55</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Service Charge</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>604.5</Total>
-								</Tax>
-								<Tax>
-									<TaxName>test</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>300</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-11</CancelBy>
-									<Penalty>574.28</Penalty>
-								</CancellationPolicy>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>1148.55</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-						<RoomType>
-							<RoomID>998</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>3960</SubTotal>
-							<Total>4400</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>2</RoomRequest>
-							</RoomsAppliesTo>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Early Bird Booking</Name>
-									<Type>Adult Only</Type>
-									<Value>10</Value>
-									<PaxType>All</PaxType>
-									<Total>440</Total>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>440</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-					</RoomTypes>
-					<PropertyName>Example Island</PropertyName>
-					<GIATAID>99999</GIATAID>
-					<Currency>USD</Currency>
-					<Rating>4.5</Rating>
-					<GeographyLevel1ID>6</GeographyLevel1ID>
-					<GeographyLevel2ID>10</GeographyLevel2ID>
-					<GeographyLevel3ID>22</GeographyLevel3ID>
-					<Country>West Indies</Country>
-					<Area>St Vincent &amp; Grenadines</Area>
-					<Region>Example Island</Region>
-					<Strapline>Intimate, exotic and all-inclusive</Strapline>
-					<Description>Example Island, a high-end luxury resort</Description>
-					<CMSBaseURL>https://xmlhost/custom/content/</CMSBaseURL>
-					<MainImage>CMSImage_999.jpg</MainImage>
-					<MainImageThumbnail>CMSImageThumb_999.jpg</MainImageThumbnail>
-					<Images>
-						<Image>
-							<FullSize>CMSImage_1000.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-						</Image>
-						<Image>
-							<FullSize>CMSImage_1001.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-						</Image>
-					</Images>
-					<Errata>
-						<Erratum>
-							<StartDate>2020-08-04</StartDate>
-							<EndDate>2020-08-11</EndDate>
-							<Description>Small pool will be closed for maintenance</Description>
-						</Erratum>
-					</Errata>
-					<Supplier>
-						<SupplierID>6</SupplierID>
-						<SupplierName>RMI</SupplierName>
-					</Supplier>
-				</PropertyResult>
-			</PropertyResults>',
-            $onePropertyResult
-        );
+		list($propertyResults, , ) = $details = $this->getTwoPropertyResults($propertyResult1, $propertyResult2);
 
-        $this->unserialize(
-            '<PropertyResults>
-				<TotalProperties>1</TotalProperties>
-				<PropertyResult>
-					<PropertyID>99</PropertyID>
-					<RoomTypes>
-						<RoomType>
-							<RoomID>999</RoomID>
-							<PropertyRoomTypeID>1</PropertyRoomTypeID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>1</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>5896.8</SubTotal>
-							<Total>6565.35</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>1</RoomRequest>
-							</RoomsAppliesTo>
-							<Supplements>
-								<Supplement>
-									<Name>test&nbsp;supplement</Name>
-									<Duration>Per Night</Duration>
-									<Multiplier>Per Person</Multiplier>
-									<Total>220</Total>
-									<PaxType>Adult Only</PaxType>
-								</Supplement>
-							</Supplements>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Example special offer</Name>
-									<Type>Value Added</Type>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-								<SpecialOffer>
-									<Name>Example special offer 2</Name>
-									<Type>Free Kids</Type>
-									<Value>1</Value>
-									<Total>1000</Total>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>test %</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>1148.55</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Service Charge</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>604.5</Total>
-								</Tax>
-								<Tax>
-									<TaxName>test</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>300</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-11</CancelBy>
-									<Penalty>574.28</Penalty>
-								</CancellationPolicy>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>1148.55</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-						<RoomType>
-							<RoomID>998</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>3960</SubTotal>
-							<Total>4400</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>2</RoomRequest>
-							</RoomsAppliesTo>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Early Bird Booking</Name>
-									<Type>Adult Only</Type>
-									<Value>10</Value>
-									<PaxType>All</PaxType>
-									<Total>440</Total>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>440</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-					</RoomTypes>
-					<PropertyName>Example Island</PropertyName>
-					<Supplier>
-						<SupplierID>6</SupplierID>
-						<SupplierName>RMI</SupplierName>
-					</Supplier>
-					<GIATAID>99999</GIATAID>
-					<Currency>USD</Currency>
-					<Rating>4.5</Rating>
-					<GeographyLevel1ID>6</GeographyLevel1ID>
-					<GeographyLevel2ID>10</GeographyLevel2ID>
-					<GeographyLevel3ID>22</GeographyLevel3ID>
-					<Country>West Indies</Country>
-					<Area>St Vincent &amp; Grenadines</Area>
-					<Region>Example Island</Region>
-					<Email/>
-					<Postcode/>
-					<Address1/>
-					<Address2/>
-					<Strapline>Intimate, exotic and all-inclusive</Strapline>
-					<Description>Example Island, a high-end luxury resort</Description>
-					<CMSBaseURL>https://xmlhost/custom/content/</CMSBaseURL>
-					<MainImage>CMSImage_999.jpg</MainImage>
-					<MainImageThumbnail>CMSImageThumb_999.jpg</MainImageThumbnail>
-					<Images>
-						<Image>
-							<FullSize>CMSImage_1000.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-						</Image>
-						<Image>
-							<FullSize>CMSImage_1001.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-						</Image>
-					</Images>
-					<Errata>
-						<Erratum>
-							<StartDate>2020-08-04</StartDate>
-							<EndDate>2020-08-11</EndDate>
-							<Description>Small pool will be closed for maintenance</Description>
-						</Erratum>
-					</Errata>
-				</PropertyResult>
-			</PropertyResults>',
-            $onePropertyResult
-        );
+		$this->assertCount(2, $propertyResults);
+		$this->assertSame(2, $propertyResults->totalProperties);
+		$this->assertSame($propertyResult1Instance, $propertyResults[0]);
+		$this->assertSame($propertyResult2Instance, $propertyResults[1]);
+		$this->assertSame([$propertyResult1Instance, $propertyResult2Instance], $propertyResults->getPropertyResults());
+		$this->assertSame([
+			'TotalProperties' => 2,
+			$propertyResult1Instance,
+			$propertyResult2Instance
+		], iterator_to_array($propertyResults), 'we test the behaviour for a foreach');
 
-        return $onePropertyResult;
-    }
+		$this->doTest(...$details);
 
-    /**
-     * @depends testPropertyResult
-     */
-    public function testTwoPropertyResults($propertyResult)
-    {
-        $twoPropertyResults = PropertyResults::fromPropertyResults(
-            $propertyResult,
-            $propertyResult
-        );
-
-        $this->serialize(
-            '<PropertyResults>
-				<TotalProperties>2</TotalProperties>
-				<PropertyResult>
-					<PropertyID>99</PropertyID>
-					<RoomTypes>
-						<RoomType>
-							<RoomID>999</RoomID>
-							<PropertyRoomTypeID>1</PropertyRoomTypeID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>1</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>5896.8</SubTotal>
-							<Total>6565.35</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>1</RoomRequest>
-							</RoomsAppliesTo>
-							<Supplements>
-								<Supplement>
-									<Name>test supplement</Name>
-									<Duration>Per Night</Duration>
-									<Multiplier>Per Person</Multiplier>
-									<Total>220</Total>
-									<PaxType>Adult Only</PaxType>
-								</Supplement>
-							</Supplements>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Example special offer</Name>
-									<Type>Value Added</Type>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-								<SpecialOffer>
-									<Name>Example special offer 2</Name>
-									<Type>Free Kids</Type>
-									<Value>1</Value>
-									<Total>1000</Total>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>test %</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>1148.55</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Service Charge</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>604.5</Total>
-								</Tax>
-								<Tax>
-									<TaxName>test</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>300</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-11</CancelBy>
-									<Penalty>574.28</Penalty>
-								</CancellationPolicy>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>1148.55</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-						<RoomType>
-							<RoomID>998</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>3960</SubTotal>
-							<Total>4400</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>2</RoomRequest>
-							</RoomsAppliesTo>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Early Bird Booking</Name>
-									<Type>Adult Only</Type>
-									<Value>10</Value>
-									<PaxType>All</PaxType>
-									<Total>440</Total>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>440</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-					</RoomTypes>
-					<PropertyName>Example Island</PropertyName>
-					<GIATAID>99999</GIATAID>
-					<Currency>USD</Currency>
-					<Rating>4.5</Rating>
-					<GeographyLevel1ID>6</GeographyLevel1ID>
-					<GeographyLevel2ID>10</GeographyLevel2ID>
-					<GeographyLevel3ID>22</GeographyLevel3ID>
-					<Country>West Indies</Country>
-					<Area>St Vincent &amp; Grenadines</Area>
-					<Region>Example Island</Region>
-					<Strapline>Intimate, exotic and all-inclusive</Strapline>
-					<Description>Example Island, a high-end luxury resort</Description>
-					<CMSBaseURL>https://xmlhost/custom/content/</CMSBaseURL>
-					<MainImage>CMSImage_999.jpg</MainImage>
-					<MainImageThumbnail>CMSImageThumb_999.jpg</MainImageThumbnail>
-					<Images>
-						<Image>
-							<FullSize>CMSImage_1000.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-						</Image>
-						<Image>
-							<FullSize>CMSImage_1001.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-						</Image>
-					</Images>
-					<Errata>
-						<Erratum>
-							<StartDate>2020-08-04</StartDate>
-							<EndDate>2020-08-11</EndDate>
-							<Description>Small pool will be closed for maintenance</Description>
-						</Erratum>
-					</Errata>
-					<Supplier>
-						<SupplierID>6</SupplierID>
-						<SupplierName>RMI</SupplierName>
-					</Supplier>
-				</PropertyResult>
-				<PropertyResult>
-					<PropertyID>99</PropertyID>
-					<RoomTypes>
-						<RoomType>
-							<RoomID>999</RoomID>
-							<PropertyRoomTypeID>1</PropertyRoomTypeID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>1</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>5896.8</SubTotal>
-							<Total>6565.35</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>1</RoomRequest>
-							</RoomsAppliesTo>
-							<Supplements>
-								<Supplement>
-									<Name>test supplement</Name>
-									<Duration>Per Night</Duration>
-									<Multiplier>Per Person</Multiplier>
-									<Total>220</Total>
-									<PaxType>Adult Only</PaxType>
-								</Supplement>
-							</Supplements>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Example special offer</Name>
-									<Type>Value Added</Type>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-								<SpecialOffer>
-									<Name>Example special offer 2</Name>
-									<Type>Free Kids</Type>
-									<Value>1</Value>
-									<Total>1000</Total>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>test %</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>1148.55</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Service Charge</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>604.5</Total>
-								</Tax>
-								<Tax>
-									<TaxName>test</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>300</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-11</CancelBy>
-									<Penalty>574.28</Penalty>
-								</CancellationPolicy>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>1148.55</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-						<RoomType>
-							<RoomID>998</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>3960</SubTotal>
-							<Total>4400</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>2</RoomRequest>
-							</RoomsAppliesTo>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Early Bird Booking</Name>
-									<Type>Adult Only</Type>
-									<Value>10</Value>
-									<PaxType>All</PaxType>
-									<Total>440</Total>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>440</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-					</RoomTypes>
-					<PropertyName>Example Island</PropertyName>
-					<GIATAID>99999</GIATAID>
-					<Currency>USD</Currency>
-					<Rating>4.5</Rating>
-					<GeographyLevel1ID>6</GeographyLevel1ID>
-					<GeographyLevel2ID>10</GeographyLevel2ID>
-					<GeographyLevel3ID>22</GeographyLevel3ID>
-					<Country>West Indies</Country>
-					<Area>St Vincent &amp; Grenadines</Area>
-					<Region>Example Island</Region>
-					<Strapline>Intimate, exotic and all-inclusive</Strapline>
-					<Description>Example Island, a high-end luxury resort</Description>
-					<CMSBaseURL>https://xmlhost/custom/content/</CMSBaseURL>
-					<MainImage>CMSImage_999.jpg</MainImage>
-					<MainImageThumbnail>CMSImageThumb_999.jpg</MainImageThumbnail>
-					<Images>
-						<Image>
-							<FullSize>CMSImage_1000.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-						</Image>
-						<Image>
-							<FullSize>CMSImage_1001.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-						</Image>
-					</Images>
-					<Errata>
-						<Erratum>
-							<StartDate>2020-08-04</StartDate>
-							<EndDate>2020-08-11</EndDate>
-							<Description>Small pool will be closed for maintenance</Description>
-						</Erratum>
-					</Errata>
-					<Supplier>
-						<SupplierID>6</SupplierID>
-						<SupplierName>RMI</SupplierName>
-					</Supplier>
-				</PropertyResult>
-			</PropertyResults>',
-            $twoPropertyResults
-        );
-
-        $this->unserialize(
-            '<PropertyResults>
-				<TotalProperties>2</TotalProperties>
-				<PropertyResult>
-					<PropertyID>99</PropertyID>
-					<RoomTypes>
-						<RoomType>
-							<RoomID>999</RoomID>
-							<PropertyRoomTypeID>1</PropertyRoomTypeID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>1</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>5896.8</SubTotal>
-							<Total>6565.35</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>1</RoomRequest>
-							</RoomsAppliesTo>
-							<Supplements>
-								<Supplement>
-									<Name>test supplement</Name>
-									<Duration>Per Night</Duration>
-									<Multiplier>Per Person</Multiplier>
-									<Total>220</Total>
-									<PaxType>Adult Only</PaxType>
-								</Supplement>
-							</Supplements>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Example special offer</Name>
-									<Type>Value Added</Type>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-								<SpecialOffer>
-									<Name>Example special offer 2</Name>
-									<Type>Free Kids</Type>
-									<Value>1</Value>
-									<Total>1000</Total>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>test %</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>1148.55</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Service Charge</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>604.5</Total>
-								</Tax>
-								<Tax>
-									<TaxName>test</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>300</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-11</CancelBy>
-									<Penalty>574.28</Penalty>
-								</CancellationPolicy>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>1148.55</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-						<RoomType>
-							<RoomID>998</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>3960</SubTotal>
-							<Total>4400</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>2</RoomRequest>
-							</RoomsAppliesTo>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Early Bird Booking</Name>
-									<Type>Adult Only</Type>
-									<Value>10</Value>
-									<PaxType>All</PaxType>
-									<Desc/>
-									<Total>440</Total>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>440</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-					</RoomTypes>
-					<PropertyName>Example Island</PropertyName>
-					<Supplier>
-						<SupplierID>6</SupplierID>
-						<SupplierName>RMI</SupplierName>
-					</Supplier>
-					<GIATAID>99999</GIATAID>
-					<Currency>USD</Currency>
-					<Rating>4.5</Rating>
-					<GeographyLevel1ID>6</GeographyLevel1ID>
-					<GeographyLevel2ID>10</GeographyLevel2ID>
-					<GeographyLevel3ID>22</GeographyLevel3ID>
-					<Country>West Indies</Country>
-					<Area>St Vincent &amp; Grenadines</Area>
-					<Region>Example Island</Region>
-					<Email/>
-					<Postcode/>
-					<Address1/>
-					<Address2/>
-					<Strapline>Intimate, exotic and all-inclusive</Strapline>
-					<Description>Example Island, a high-end luxury resort</Description>
-					<CMSBaseURL>https://xmlhost/custom/content/</CMSBaseURL>
-					<MainImage>CMSImage_999.jpg</MainImage>
-					<MainImageThumbnail>CMSImageThumb_999.jpg</MainImageThumbnail>
-					<Images>
-						<Image>
-							<FullSize>CMSImage_1000.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-						</Image>
-						<Image>
-							<FullSize>CMSImage_1001.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-						</Image>
-					</Images>
-					<Errata>
-						<Erratum>
-							<StartDate>2020-08-04</StartDate>
-							<EndDate>2020-08-11</EndDate>
-							<Description>Small pool will be closed for maintenance</Description>
-						</Erratum>
-					</Errata>
-				</PropertyResult>
-				<PropertyResult>
-					<PropertyID>99</PropertyID>
-					<RoomTypes>
-						<RoomType>
-							<RoomID>999</RoomID>
-							<PropertyRoomTypeID>1</PropertyRoomTypeID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>2</Children>
-							<Infants>1</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>5896.8</SubTotal>
-							<Total>6565.35</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>1</RoomRequest>
-							</RoomsAppliesTo>
-							<Supplements>
-								<Supplement>
-									<Name>test supplement</Name>
-									<Duration>Per Night</Duration>
-									<Multiplier>Per Person</Multiplier>
-									<Total>220</Total>
-									<PaxType>Adult Only</PaxType>
-								</Supplement>
-							</Supplements>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Example special offer</Name>
-									<Type>Value Added</Type>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-								<SpecialOffer>
-									<Name>Example special offer 2</Name>
-									<Type>Free Kids</Type>
-									<Value>1</Value>
-									<Total>1000</Total>
-									<Desc>test desc</Desc>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>test %</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>1148.55</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-								<Tax>
-									<TaxName>Service Charge</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>604.5</Total>
-								</Tax>
-								<Tax>
-									<TaxName>test</TaxName>
-									<Inclusive>False</Inclusive>
-									<Total>300</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-11</CancelBy>
-									<Penalty>574.28</Penalty>
-								</CancellationPolicy>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>1148.55</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-						<RoomType>
-							<RoomID>998</RoomID>
-							<MealBasisID>1</MealBasisID>
-							<Name>Example Villa</Name>
-							<View>Sea View</View>
-							<Adults>2</Adults>
-							<Children>0</Children>
-							<Infants>0</Infants>
-							<OnRequest>True</OnRequest>
-							<SubTotal>3960</SubTotal>
-							<Total>4400</Total>
-							<RoomsAppliesTo>
-								<RoomRequest>2</RoomRequest>
-							</RoomsAppliesTo>
-							<SpecialOffers>
-								<SpecialOffer>
-									<Name>Early Bird Booking</Name>
-									<Type>Adult Only</Type>
-									<Value>10</Value>
-									<PaxType>All</PaxType>
-									<Total>440</Total>
-								</SpecialOffer>
-							</SpecialOffers>
-							<Taxes>
-								<Tax>
-									<TaxName>Government Tax</TaxName>
-									<Inclusive>True</Inclusive>
-									<Total>423.15</Total>
-								</Tax>
-							</Taxes>
-							<CancellationPolicies>
-								<CancellationPolicy>
-									<CancelBy>2020-07-18</CancelBy>
-									<Penalty>440</Penalty>
-								</CancellationPolicy>
-							</CancellationPolicies>
-						</RoomType>
-					</RoomTypes>
-					<PropertyName>Example Island</PropertyName>
-					<Supplier>
-						<SupplierID>6</SupplierID>
-						<SupplierName>RMI</SupplierName>
-					</Supplier>
-					<GIATAID>99999</GIATAID>
-					<Currency>USD</Currency>
-					<Rating>4.5</Rating>
-					<GeographyLevel1ID>6</GeographyLevel1ID>
-					<GeographyLevel2ID>10</GeographyLevel2ID>
-					<GeographyLevel3ID>22</GeographyLevel3ID>
-					<Country>West Indies</Country>
-					<Area>St Vincent &amp; Grenadines</Area>
-					<Region>Example Island</Region>
-					<Email/>
-					<Postcode/>
-					<Address1/>
-					<Address2/>
-					<Strapline>Intimate, exotic and all-inclusive</Strapline>
-					<Description>Example Island, a high-end luxury resort</Description>
-					<CMSBaseURL>https://xmlhost/custom/content/</CMSBaseURL>
-					<MainImage>CMSImage_999.jpg</MainImage>
-					<MainImageThumbnail>CMSImageThumb_999.jpg</MainImageThumbnail>
-					<Images>
-						<Image>
-							<FullSize>CMSImage_1000.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1000.jpg</Thumbnail>
-						</Image>
-						<Image>
-							<FullSize>CMSImage_1001.jpg</FullSize>
-							<Thumbnail>CMSImageThumb_1001.jpg</Thumbnail>
-						</Image>
-					</Images>
-					<Errata>
-						<Erratum>
-							<StartDate>2020-08-04</StartDate>
-							<EndDate>2020-08-11</EndDate>
-							<Description>Small pool will be closed for maintenance</Description>
-						</Erratum>
-					</Errata>
-				</PropertyResult>
-			</PropertyResults>',
-            $twoPropertyResults
-        );
-
-        return $twoPropertyResults;
+		return $details;
     }
 }

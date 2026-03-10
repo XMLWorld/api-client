@@ -2,166 +2,106 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
-use XMLWorld\ApiClient\Responses\SpecialOffer;
-use XMLWorld\ApiClient\Responses\SpecialOffers;
-use XMLWorld\ApiClient\Responses\Supplement;
-use XMLWorld\ApiClient\Responses\Supplements;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class SpecialOffersTest extends BaseSerializeXML
 {
-    public function testSpecialOffer1()
+	use SpecialOffersTrait;
+
+	#[Test]
+    public function specialOffer1() : array
     {
-        $specialOffer1 = new SpecialOffer(
-            'Example special offer',
-            'Value Added',
-            null,
-            null,
-            null,
-            'test desc'
-        );
+		list($instance, , ) = $details = $this->getSpecialOffer1();
 
-        $this->serialize(
-            '<SpecialOffer>
-				<Name>Example special offer</Name>
-				<Type>Value Added</Type>
-				<Desc>test desc</Desc>
-			</SpecialOffer>',
-            $specialOffer1
-        );
+		$this->assertSame('Example special offer', $instance->name, 'name is correct');
+		$this->assertSame('Value Added', $instance->type, 'type is correct');
+		$this->assertNull($instance->value, 'value is correct');
+		$this->assertNull($instance->paxType, 'paxType is correct');
+		$this->assertNull($instance->total, 'total is correct');
+		$this->assertSame('test desc', $instance->desc, 'type is correct');
 
-        $this->unserialize(
-            '<SpecialOffer>
-				<Name>Example special offer</Name>
-				<Type>Value Added</Type>
-				<Desc>test desc</Desc>
-			</SpecialOffer>',
-            $specialOffer1
-        );
+		$this->doTest(...$details);
 
-        return $specialOffer1;
+		return $details;
     }
 
-    public function testSpecialOffer2()
+	#[Test]
+    public function specialOffer2()
     {
-        $specialOffer2 = new SpecialOffer(
-            'Example special offer 2',
-            'Free Kids',
-            1,
-            null,
-            1000,
-            'test desc'
-        );
+		list($instance, , ) = $details = $this->getSpecialOffer2();
 
-        $this->serialize(
-            '<SpecialOffer>
-				<Name>Example special offer 2</Name>
-				<Type>Free Kids</Type>
-				<Value>1</Value>
-				<Total>1000</Total>
-				<Desc>test desc</Desc>
-			</SpecialOffer>',
-            $specialOffer2
-        );
+		$this->assertSame('Example special offer 2', $instance->name, 'name is correct');
+		$this->assertSame('Free Kids', $instance->type, 'type is correct');
+		$this->assertSame(1.0, $instance->value, 'value is correct');
+		$this->assertNull($instance->paxType, 'paxType is correct');
+		$this->assertSame(1000.0, $instance->total, 'total is correct');
+		$this->assertSame('test desc', $instance->desc, 'type is correct');
 
-        $this->unserialize(
-            '<SpecialOffer>
-				<Name>Example special offer 2</Name>
-				<Value>1</Value>
-				<Type>Free Kids</Type>
-				<Total>1000</Total>
-				<Desc>test desc</Desc>
-			</SpecialOffer>',
-            $specialOffer2
-        );
+		$this->doTest(...$details);
 
-        return $specialOffer2;
+		return $details;
     }
 
-    /**
-     * @depends testSpecialOffer1
-     */
-    public function testOneSpecialOffer($specialOffer1)
+	#[Test]
+	public function specialOffer3()
+	{
+		list($instance, , ) = $details = $this->getSpecialOffer3();
+
+		$this->assertSame('Early Bird Booking', $instance->name, 'name is correct');
+		$this->assertSame('Adult Only', $instance->type, 'type is correct');
+		$this->assertSame(10.0, $instance->value, 'value is correct');
+		$this->assertSame('All', $instance->paxType, 'paxType is correct');
+		$this->assertSame(440.0, $instance->total, 'total is correct');
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
+	#[Depends('specialOffer1')]
+    public function oneSpecialOffer(array $specialOffer1) : array
     {
-        $oneSpecialOffer = new SpecialOffers($specialOffer1);
+		list($specialOffer1Instance, , ) = $specialOffer1;
 
-        $this->serialize(
-            '<SpecialOffers>
-				<SpecialOffer>
-					<Name>Example special offer</Name>
-					<Type>Value Added</Type>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-			</SpecialOffers>',
-            $oneSpecialOffer
-        );
+		list($instance, , ) = $details = $this->getOneSpecialOffers($specialOffer1);
 
-        $this->unserialize(
-            '<SpecialOffers>
-				<SpecialOffer>
-					<Name>Example special offer</Name>
-					<Type>Value Added</Type>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-			</SpecialOffers>',
-            $oneSpecialOffer
-        );
+		$this->assertCount(1, $instance, 'it only has one element');
+		$this->assertSame($specialOffer1Instance, $instance[0]);
+		$this->assertSame(
+			[$specialOffer1Instance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
 
-        return $oneSpecialOffer;
+		$this->doTest(...$details);
+
+		return $details;
     }
 
-    /**
-     * @depends testSpecialOffer1
-     * @depends testSpecialOffer2
-     */
-    public function testTwoSpecialOffers($specialOffer1, $specialOffer2)
+	#[Test]
+	#[Depends('specialOffer1')]
+	#[Depends('specialOffer2')]
+    public function twoSpecialOffers(array $specialOffer1, array $specialOffer2) : array
     {
-        $twoSpecialOffers = new SpecialOffers(
-            $specialOffer1,
-            $specialOffer2
-        );
+		list($specialOffer1Instance, , ) = $specialOffer1;
+		list($specialOffer2Instance, , ) = $specialOffer2;
 
-        $this->serialize(
-            '<SpecialOffers>
-				<SpecialOffer>
-					<Name>Example special offer</Name>
-					<Type>Value Added</Type>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-				<SpecialOffer>
-					<Name>Example special offer 2</Name>
-					<Type>Free Kids</Type>
-					<Value>1</Value>
-					<Total>1000</Total>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-			</SpecialOffers>',
-            $twoSpecialOffers
-        );
+		list($instance, , ) = $details = $this->getTwoSpecialOffers($specialOffer1, $specialOffer2);
 
-        $this->unserialize(
-            '<SpecialOffers>
-				<SpecialOffer>
-					<Name>Example special offer</Name>
-					<Type>Value Added</Type>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-				<SpecialOffer>
-					<Name>Example special offer 2</Name>
-					<Type>Free Kids</Type>
-					<Value>1</Value>
-					<Total>1000</Total>
-					<Desc>test desc</Desc>
-				</SpecialOffer>
-			</SpecialOffers>',
-            $twoSpecialOffers
-        );
+		$this->assertCount(2, $instance, 'it has two elements');
+		$this->assertSame($specialOffer1Instance, $instance[0]);
+		$this->assertSame($specialOffer2Instance, $instance[1]);
+		$this->assertSame(
+			[$specialOffer1Instance, $specialOffer2Instance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
 
-        return $twoSpecialOffers;
+		$this->doTest(...$details);
+
+		return $details;
     }
-
 }

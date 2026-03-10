@@ -7,356 +7,320 @@ use XMLWorld\ApiClient\Requests\RoomRequests;
 
 trait RoomRequestsTrait
 {
-    public function testTwoAdults()
+    protected function getRoomRequest1() : array
     {
         $instance = RoomRequest::fromAges(2);
 
-        $serialize = '<RoomRequest>
-				<Adults>2</Adults>
-				<Children>0</Children>
-			</RoomRequest>';
+        $serialize = <<<'XML'
+<RoomRequest>
+	<Adults>2</Adults>
+	<Children>0</Children>
+</RoomRequest>
+XML;
 
-        $unserialize = '<RoomRequest>
-				<Children>0</Children>
-				<Adults>2</Adults>
-				<ChildAges/>
-			</RoomRequest>';
+        $unserialize = <<<'XML'
+<RoomRequest>
+	<Children>0</Children>
+	<Adults>2</Adults>
+	<ChildAges/>
+</RoomRequest>
+XML;
 
-        $twoAdults = [
+        return [
             $instance,
             $serialize,
             $unserialize,
         ];
-
-        $this->doTest(...$twoAdults);
-
-        return $twoAdults;
     }
 
-    public function testTwoAdultsOneChild()
+	protected function getRoomRequest2() : array
     {
         $instance = RoomRequest::fromAges(
             2,
             10
         );
 
-        $serialize = '<RoomRequest>
-				<Adults>2</Adults>
-				<Children>1</Children>
-				<ChildAges>
-					<ChildAge>
-						<Age>10</Age>
-					</ChildAge>
-				</ChildAges>
-			</RoomRequest>';
+        $serialize = <<<'XML'
+<RoomRequest>
+	<Adults>2</Adults>
+	<Children>1</Children>
+	<ChildAges>
+		<ChildAge>
+			<Age>10</Age>
+		</ChildAge>
+	</ChildAges>
+</RoomRequest>
+XML;
 
-        $unserialize = '<RoomRequest>
-				<ChildAges>
-					<ChildAge>
-						<Age>10</Age>
-					</ChildAge>
-				</ChildAges>
-				<Adults>2</Adults>
-				<Children>1</Children>
-			</RoomRequest>';
+        $unserialize = <<<'XML'
+<RoomRequest>
+	<ChildAges>
+		<ChildAge>
+			<Age>10</Age>
+		</ChildAge>
+	</ChildAges>
+	<Adults>2</Adults>
+	<Children>1</Children>
+</RoomRequest>
+XML;
 
-        $twoAdultsOneChild = [
+        return [
             $instance,
             $serialize,
             $unserialize,
         ];
-
-        $this->doTest(...$twoAdultsOneChild);
-
-        return $twoAdultsOneChild;
     }
 
-    public function testTwoAdultsTwoInfants()
+	protected function getRoomRequest3() : array
     {
         $instance = RoomRequest::fromAges(
             2,
             1, 2
         );
 
-        $serialize = '<RoomRequest>
-				<Adults>2</Adults>
-				<Children>2</Children>
-				<ChildAges>
-					<ChildAge>
-						<Age>1</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>2</Age>
-					</ChildAge>
-				</ChildAges>
-			</RoomRequest>';
+        $serialize = <<<'XML'
+<RoomRequest>
+	<Adults>2</Adults>
+	<Children>2</Children>
+	<ChildAges>
+		<ChildAge>
+			<Age>1</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>2</Age>
+		</ChildAge>
+	</ChildAges>
+</RoomRequest>
+XML;
 
-        $unserialize = '<RoomRequest>
-				<Adults>2</Adults>
-				<Children>2</Children>
-				<ChildAges>
-					<ChildAge>
-						<Age>1</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>2</Age>
-					</ChildAge>
-				</ChildAges>
-			</RoomRequest>';
+        $unserialize = <<<'XML'
+<RoomRequest>
+	<Adults>2</Adults>
+	<Children>2</Children>
+	<ChildAges>
+		<ChildAge>
+			<Age>1</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>2</Age>
+		</ChildAge>
+	</ChildAges>
+</RoomRequest>
+XML;
 
-        $twoAdultsTwoInfants = [
+       	return [
             $instance,
             $serialize,
             $unserialize,
         ];
-
-        $this->doTest(...$twoAdultsTwoInfants);
-
-        return $twoAdultsTwoInfants;
     }
 
-    public function testTwoAdultsTwoChildrenTwoInfants()
+	protected function getRoomRequest4() : array
     {
         $instance = RoomRequest::fromAges(
             2,
             9, 1, 8, 2
         );
 
-        $serialize = '<RoomRequest>
-				<Adults>2</Adults>
-				<Children>4</Children>
-				<ChildAges>
-					<ChildAge>
-						<Age>9</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>1</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>8</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>2</Age>
-					</ChildAge>
-				</ChildAges>
-			</RoomRequest>';
+        $serialize = <<<'XML'
+<RoomRequest>
+	<Adults>2</Adults>
+	<Children>4</Children>
+	<ChildAges>
+		<ChildAge>
+			<Age>9</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>1</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>8</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>2</Age>
+		</ChildAge>
+	</ChildAges>
+</RoomRequest>
+XML;
 
-        $unserialize = '<RoomRequest>
-				<Children>4</Children>
-				<ChildAges>
-					<ChildAge>
-						<Age>9</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>1</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>8</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>2</Age>
-					</ChildAge>
-				</ChildAges>
-				<Adults>2</Adults>
-			</RoomRequest>';
+        $unserialize = <<<'XML'
+<RoomRequest>
+	<Children>4</Children>
+	<ChildAges>
+		<ChildAge>
+			<Age>9</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>1</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>8</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>2</Age>
+		</ChildAge>
+	</ChildAges>
+	<Adults>2</Adults>
+</RoomRequest>
+XML;
 
-        $twoAdultsTwoChildrenTwoInfants = [
+        return [
             $instance,
             $serialize,
             $unserialize,
         ];
-
-        $this->doTest(...$twoAdultsTwoChildrenTwoInfants);
-
-        return $twoAdultsTwoChildrenTwoInfants;
     }
 
-    public function testOneChildTwoInfants()
+	protected function getRoomRequest5() : array
     {
         $instance = RoomRequest::fromAges(
             null,
             1, 2, 10
         );
 
-        $serialize = '<RoomRequest>
-				<Adults>0</Adults>
-				<Children>3</Children>
-				<ChildAges>
-					<ChildAge>
-						<Age>1</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>2</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>10</Age>
-					</ChildAge>
-				</ChildAges>
-			</RoomRequest>';
+        $serialize = <<<'XML'
+<RoomRequest>
+	<Adults>0</Adults>
+	<Children>3</Children>
+	<ChildAges>
+		<ChildAge>
+			<Age>1</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>2</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>10</Age>
+		</ChildAge>
+	</ChildAges>
+</RoomRequest>
+XML;
 
-        $unserialize = '<RoomRequest>
-				<Children>3</Children>
-				<ChildAges>
-					<ChildAge>
-						<Age>1</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>2</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>10</Age>
-					</ChildAge>
-				</ChildAges>
-				<Adults>0</Adults>
-			</RoomRequest>';
+        $unserialize = <<<'XML'
+<RoomRequest>
+	<Children>3</Children>
+	<ChildAges>
+		<ChildAge>
+			<Age>1</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>2</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>10</Age>
+		</ChildAge>
+	</ChildAges>
+	<Adults>0</Adults>
+</RoomRequest>
+XML;
 
-        $oneChildTwoInfants = [
+        return [
             $instance,
             $serialize,
             $unserialize,
         ];
-
-        $this->doTest(...$oneChildTwoInfants);
-
-        return $oneChildTwoInfants;
     }
 
-    public function testTwoAdultsOneChildrenTwoInfants()
+	protected function getRoomRequest6() : array
     {
         $instance = RoomRequest::fromAges(
             2,
             1, 8, 2
         );
 
-        $serialize = '<RoomRequest>
-				<Adults>2</Adults>
-				<Children>3</Children>
-				<ChildAges>
-					<ChildAge>
-						<Age>1</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>8</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>2</Age>
-					</ChildAge>
-				</ChildAges>
-			</RoomRequest>';
+        $serialize = <<<'XML'
+<RoomRequest>
+	<Adults>2</Adults>
+	<Children>3</Children>
+	<ChildAges>
+		<ChildAge>
+			<Age>1</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>8</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>2</Age>
+		</ChildAge>
+	</ChildAges>
+</RoomRequest>
+XML;
 
-        $unserialize = '<RoomRequest>
-				<Adults>2</Adults>
-				<Children>3</Children>
-				<ChildAges>
-					<ChildAge>
-						<Age>1</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>8</Age>
-					</ChildAge>
-					<ChildAge>
-						<Age>2</Age>
-					</ChildAge>
-				</ChildAges>
-			</RoomRequest>';
+        $unserialize = <<<'XML'
+<RoomRequest>
+	<Adults>2</Adults>
+	<Children>3</Children>
+	<ChildAges>
+		<ChildAge>
+			<Age>1</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>8</Age>
+		</ChildAge>
+		<ChildAge>
+			<Age>2</Age>
+		</ChildAge>
+	</ChildAges>
+</RoomRequest>
+XML;
 
-        $twoAdultsOneChildrenTwoInfants = [
+        return [
             $instance,
             $serialize,
             $unserialize,
         ];
-
-        $this->doTest(...$twoAdultsOneChildrenTwoInfants);
-
-        return $twoAdultsOneChildrenTwoInfants;
     }
 
-    /**
-     * @depends testTwoAdults
-     */
-    public function testRoomRequestsTwoAdults($twoAdults)
+	protected function getOneRoomRequests(array $roomRequest) : array
     {
-        list($instance, $serialize, $unserialize) = $twoAdults;
+        list($instance, $serialize, $unserialize) = $roomRequest;
 
         $instance = new RoomRequests($instance);
 
-        $roomRequestsTwoAdults = $this->wrap($instance, $serialize, $unserialize);
-
-        $this->doTest(...$roomRequestsTwoAdults);
-
-        return $roomRequestsTwoAdults;
+        $serialize = <<<XML
+<RoomRequests>
+	$serialize
+</RoomRequests>
+XML;
+		$unserialize = <<<XML
+<RoomRequests>
+	$unserialize
+</RoomRequests>
+XML;
+		return [
+			$instance,
+			$serialize,
+			$unserialize,
+		];
     }
 
-    /**
-     * @depends testTwoAdultsTwoInfants
-     */
-    public function testRoomRequestsTwoAdultsTwoInfants($twoAdultsTwoInfants)
-    {
-        list($instance, $serialize, $unserialize) = $twoAdultsTwoInfants;
-
-        $instance = new RoomRequests($instance);
-
-        $roomRequestsTwoAdultsTwoInfants = $this->wrap($instance, $serialize, $unserialize);
-
-        $this->doTest(...$roomRequestsTwoAdultsTwoInfants);
-
-        return $roomRequestsTwoAdultsTwoInfants;
-    }
-
-    /**
-     * @depends testTwoAdultsOneChild
-     */
-    public function testRoomRequestsTwoAdultsOneChild($twoAdultsOneChild)
-    {
-        list($instance, $serialize, $unserialize) = $twoAdultsOneChild;
-
-        $instance = new RoomRequests($instance);
-
-        $roomRequestsTwoAdultsOneChild = $this->wrap($instance, $serialize, $unserialize);
-
-        $this->doTest(...$roomRequestsTwoAdultsOneChild);
-
-        return $roomRequestsTwoAdultsOneChild;
-    }
-
-    /**
-     * @depends testTwoAdultsTwoChildrenTwoInfants
-     */
-    public function testRoomRequestsTwoAdultsTwoChildrenTwoInfants($twoAdultsTwoChildrenTwoInfants)
-    {
-        list($instance, $serialize, $unserialize) = $twoAdultsTwoChildrenTwoInfants;
-
-        $instance = new RoomRequests($instance);
-
-        $roomRequestsTwoAdultsTwoChildrenTwoInfants = $this->wrap($instance, $serialize, $unserialize);
-
-        $this->doTest(...$roomRequestsTwoAdultsTwoChildrenTwoInfants);
-
-        return $roomRequestsTwoAdultsTwoChildrenTwoInfants;
-    }
-
-    /**
-     * @depends testTwoAdultsTwoInfants
-     * @depends testTwoAdultsOneChild
-     * @depends testTwoAdultsTwoChildrenTwoInfants
-     */
-    public function testThreeRoomRequests($twoAdultsTwoInfants, $twoAdultsOneChild, $twoAdultsTwoChildrenTwoInfants)
+    public function getThreeRoomRequests(array $roomRquest1, array $roomRquest2, array $roomRquest3) : array
     {
         $instances = $serializes = $unserializes = [];
-        list($instances[0], $serializes[0], $unserializes[0]) = $twoAdultsTwoInfants;
-        list($instances[1], $serializes[1], $unserializes[1]) = $twoAdultsOneChild;
-        list($instances[2], $serializes[2], $unserializes[2]) = $twoAdultsTwoChildrenTwoInfants;
+        list($instances[0], $serializes[0], $unserializes[0]) = $roomRquest1;
+        list($instances[1], $serializes[1], $unserializes[1]) = $roomRquest2;
+        list($instances[2], $serializes[2], $unserializes[2]) = $roomRquest3;
 
         $instance = new RoomRequests(...$instances);
 
-        $threeRoomRequests = $this->wrap(
-            $instance,
-            implode(PHP_EOL, $serializes),
-            implode(PHP_EOL, $unserializes),
-        );
-
-        $this->doTest(...$threeRoomRequests);
-
-        return $threeRoomRequests;
+		$serialize = <<<XML
+<RoomRequests>
+	$serializes[0]
+	$serializes[1]
+	$serializes[2]
+</RoomRequests>
+XML;
+		$unserialize = <<<XML
+<RoomRequests>
+	$unserializes[0]
+	$unserializes[1]
+	$unserializes[2]
+</RoomRequests>
+XML;
+		return [
+			$instance,
+			$serialize,
+			$unserialize,
+		];
     }
 }

@@ -2,59 +2,38 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class RoomsAppliesToTest extends BaseSerializeXML
 {
-    public function testRoomsAppliesToOneRoom()
+	use RoomsAppliesToTrait;
+
+	#[Test]
+    public function roomsAppliesToOneRoom() : array
     {
-        $roomsAppliesTo = new RoomsAppliesTo(1);
+		list($instance, , ) = $details = $this->getRoomsAppliesTo();
 
-        $this->serialize(
-            '<RoomsAppliesTo>
-				<RoomRequest>1</RoomRequest>
-			</RoomsAppliesTo>',
-            $roomsAppliesTo
-        );
+		$this->assertCount(1, $instance->roomRequest, 'it only contains one element');
+		$this->assertIsArray($instance->roomRequest, 'the container roomRequest is an array');
+		$this->assertSame([1], $instance->roomRequest, 'the content is correct');
 
-        $this->unserialize(
-            '<RoomsAppliesTo>
-				<RoomRequest>1</RoomRequest>
-			</RoomsAppliesTo>',
-            $roomsAppliesTo
-        );
+		$this->doTest(...$details);
 
-        return $roomsAppliesTo;
+		return $details;
     }
 
-    public function testRoomsAppliesToTowRooms()
+	#[Test]
+    public function roomsAppliesToTowRooms() : array
     {
-        $roomsAppliesTo = new RoomsAppliesTo(1, 2, 3, 4);
+		list($instance, , ) = $details = $this->getRoomsAppliesToFourRooms();
 
-        $this->serialize(
-            '<RoomsAppliesTo>
-				<RoomRequest>1</RoomRequest>
-				<RoomRequest>2</RoomRequest>
-				<RoomRequest>3</RoomRequest>
-				<RoomRequest>4</RoomRequest>
-			</RoomsAppliesTo>',
-            $roomsAppliesTo
-        );
+		$this->assertCount(4, $instance->roomRequest, 'it contains two elements');
+		$this->assertIsArray($instance->roomRequest, 'the container roomRequest is an array');
+		$this->assertSame([1, 2, 3, 4], $instance->roomRequest, 'the content is correct');
 
-        $this->unserialize(
-            '<RoomsAppliesTo>
-				<RoomRequest>1</RoomRequest>
-				<RoomRequest>2</RoomRequest>
-				<RoomRequest>3</RoomRequest>
-				<RoomRequest>4</RoomRequest>
-			</RoomsAppliesTo>',
-            $roomsAppliesTo
-        );
+		$this->doTest(...$details);
 
-        return $roomsAppliesTo;
+		return $details;
     }
 }

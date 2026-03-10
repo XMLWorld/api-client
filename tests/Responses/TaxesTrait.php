@@ -2,21 +2,12 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
-use XMLWorld\ApiClient\Responses\SpecialOffer;
-use XMLWorld\ApiClient\Responses\SpecialOffers;
-use XMLWorld\ApiClient\Responses\Supplement;
-use XMLWorld\ApiClient\Responses\Supplements;
 use XMLWorld\ApiClient\Responses\Tax;
 use XMLWorld\ApiClient\Responses\Taxes;
-use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 trait TaxesTrait
 {
-    public function testTax()
+    protected function getTax1() : array
     {
         $instance = new Tax(
             'test %',
@@ -24,59 +15,93 @@ trait TaxesTrait
             1148.55
         );
 
-        $serialize = '<Tax>
-				<TaxName>test %</TaxName>
-				<Inclusive>False</Inclusive>
-				<Total>1148.55</Total>
-			</Tax>';
+        $serialize = <<<'XML'
+<Tax>
+	<TaxName>test %</TaxName>
+	<Inclusive>False</Inclusive>
+	<Total>1148.55</Total>
+</Tax>
+XML;
 
-        $unSerialize = '<Tax>
-				<Inclusive>False</Inclusive>
-				<Total>1148.55</Total>
-				<TaxName>test %</TaxName>
-			</Tax>';
+        $unSerialize = <<<'XML'
+<Tax>
+	<Inclusive>False</Inclusive>
+	<Total>1148.55</Total>
+	<TaxName>test %</TaxName>
+</Tax>
+XML;
 
-        $oneTax = [
+        return [
             $instance,
             $serialize,
             $unSerialize
         ];
-
-        $this->doTest(...$oneTax);
-
-        return $oneTax;
     }
 
-    /**
-     * @depends testTax
-     */
-    public function testOneTaxes($oneTax)
+	protected function getTax2() : array
+	{
+		$instance = new Tax(
+			'Government Tax',
+			true,
+			423.15
+		);
+
+		$serialize = <<<'XML'
+<Tax>
+	<TaxName>Government Tax</TaxName>
+	<Inclusive>True</Inclusive>
+	<Total>423.15</Total>
+</Tax>
+XML;
+
+		$unSerialize = <<<'XML'
+<Tax>
+	<Inclusive>True</Inclusive>
+	<Total>423.15</Total>
+	<TaxName>Government Tax</TaxName>
+</Tax>
+XML;
+
+		return [
+			$instance,
+			$serialize,
+			$unSerialize
+		];
+	}
+
+	protected function getOneTaxes(array $tax1) : array
     {
-        list($instance, $serialize, $unserialize) = $oneTax;
+        list($instance, $serialize, $unserialize) = $tax1;
 
         $instance = new Taxes($instance);
 
-        $oneTaxes = $this->wrap($instance, $serialize, $unserialize);
+		$serialize = <<<XML
+<Taxes>
+	$serialize
+</Taxes>
+XML;
 
-        $this->doTest(...$oneTaxes);
+		$unSerialize = <<<XML
+<Taxes>
+	$unserialize
+</Taxes>
+XML;
 
-        return $oneTaxes;
+		return [
+			$instance,
+			$serialize,
+			$unSerialize
+		];
     }
 
-    /**
-     * @depends testTax
-     */
-    public function testTaxes($oneTax)
+	protected function getFourTaxes(array $tax1, array $tax2) : array
     {
-        list($instance, $serialize, $unserialize) = $oneTax;
+        list($tax1Instance, $tax1Serialize, $tax1Unserialize) = $tax1;
+		list($tax2Instance, $tax2Serialize, $tax2Unserialize) = $tax2;
 
         $instance = new Taxes(
-            $instance,
-            new Tax(
-                'Government Tax',
-                true,
-                423.15
-            ),
+			$tax1Instance,
+			$tax2Instance,
             new Tax(
                 'Service Charge',
                 true,
@@ -89,52 +114,44 @@ trait TaxesTrait
             ),
         );
 
-        $serialize = "<Taxes>
-				{$serialize}
-				<Tax>
-					<TaxName>Government Tax</TaxName>
-					<Inclusive>True</Inclusive>
-					<Total>423.15</Total>
-				</Tax>
-				<Tax>
-					<TaxName>Service Charge</TaxName>
-					<Inclusive>True</Inclusive>
-					<Total>604.5</Total>
-				</Tax>
-				<Tax>
-					<TaxName>test</TaxName>
-					<Inclusive>False</Inclusive>
-					<Total>300</Total>
-				</Tax>
-			</Taxes>";
+        $serialize = <<<XML
+<Taxes>
+	$tax1Serialize
+	$tax2Serialize
+	<Tax>
+		<TaxName>Service Charge</TaxName>
+		<Inclusive>True</Inclusive>
+		<Total>604.5</Total>
+	</Tax>
+	<Tax>
+		<TaxName>test</TaxName>
+		<Inclusive>False</Inclusive>
+		<Total>300</Total>
+	</Tax>
+</Taxes>
+XML;
 
-        $unSerialize = "<Taxes>
-				{$unserialize}
-				<Tax>
-					<TaxName>Government Tax</TaxName>
-					<Inclusive>True</Inclusive>
-					<Total>423.15</Total>
-				</Tax>
-				<Tax>
-					<Total>604.5</Total>
-					<TaxName>Service Charge</TaxName>
-					<Inclusive>True</Inclusive>
-				</Tax>
-				<Tax>
-					<TaxName>test</TaxName>
-					<Inclusive>False</Inclusive>
-					<Total>300</Total>
-				</Tax>
-			</Taxes>";
+        $unSerialize = <<<XML
+<Taxes>
+	$tax1Unserialize
+	$tax2Unserialize
+	<Tax>
+		<Total>604.5</Total>
+		<TaxName>Service Charge</TaxName>
+		<Inclusive>True</Inclusive>
+	</Tax>
+	<Tax>
+		<TaxName>test</TaxName>
+		<Inclusive>False</Inclusive>
+		<Total>300</Total>
+	</Tax>
+</Taxes>
+XML;
 
-        $fourTaxes = [
+        return [
             $instance,
             $serialize,
             $unSerialize
         ];
-
-        $this->doTest(...$fourTaxes);
-
-        return $fourTaxes;
     }
 }

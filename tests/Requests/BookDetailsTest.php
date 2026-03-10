@@ -2,236 +2,34 @@
 
 namespace XMLWorld\ApiClient\Test\Requests;
 
-use XMLWorld\ApiClient\Common\LeadGuest;
-use XMLWorld\ApiClient\Requests\BookDetails;
-use XMLWorld\ApiClient\Requests\RoomBookings;
+use PHPUnit\Framework\Attributes\Test;
+use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class BookDetailsTest extends RoomBookingsTest
+class BookDetailsTest extends BaseSerializeXML
 {
-    /**
-     * @depends testRoomBookingTwoAdults
-     */
-    public function testOneRoomBookingDetails($roomBookingTwoAdults)
+	use BookDetailsTrait;
+
+	#[Test]
+    public function oneRoomBookingDetails() : array
     {
-        $simpleLeadGuestBook = new LeadGuest(
-            'Jim',
-            'Watsworth',
-            'Mr'
-        );
+		list($instance, , ) = $details = $this->getOneRoomBookingDetails();
 
-        $oneRoomBookingDetails = new BookDetails(
-            '2023-11-01',
-            5,
-            'TEST_REF',
-            1040,
-            $simpleLeadGuestBook,
-            null,
-            new RoomBookings($roomBookingTwoAdults)
-        );
+		/** @todo do assertions */
 
-        $this->serialize(
-            '<BookDetails>
-				<ArrivalDate>2023-11-01</ArrivalDate>
-				<Duration>5</Duration>
-				<TradeReference>TEST_REF</TradeReference>
-				<TotalPrice>1040</TotalPrice>
-				<LeadGuest>
-					<FirstName>Jim</FirstName>
-					<LastName>Watsworth</LastName>
-					<Title>Mr</Title>
-				</LeadGuest>
-				<RoomBookings>
-					<RoomBooking>
-						<RoomID>155558</RoomID>
-						<MealBasisID>1</MealBasisID>
-						<Adults>2</Adults>
-						<Children>0</Children>
-						<Infants>0</Infants>
-						<Guests>
-							<Guest>
-								<Type>Adult</Type>
-								<FirstName>Sally</FirstName>
-								<LastName>Smith</LastName>
-								<Title>Mrs</Title>
-								<Nationality>French</Nationality>
-							</Guest>
-						</Guests>
-					</RoomBooking>
-				</RoomBookings>
-			</BookDetails>',
-            $oneRoomBookingDetails
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<BookDetails>
-				<ArrivalDate>2023-11-01</ArrivalDate>
-				<Duration>5</Duration>
-				<TradeReference>TEST_REF</TradeReference>
-				<TotalPrice>1040</TotalPrice>
-				<LeadGuest>
-					<FirstName>Jim</FirstName>
-					<LastName>Watsworth</LastName>
-					<Title>Mr</Title>
-				</LeadGuest>
-				<RoomBookings>
-					<RoomBooking>
-						<RoomID>155558</RoomID>
-						<MealBasisID>1</MealBasisID>
-						<Adults>2</Adults>
-						<Children>0</Children>
-						<Infants>0</Infants>
-						<Guests>
-							<Guest>
-								<Type>Adult</Type>
-								<FirstName>Sally</FirstName>
-								<LastName>Smith</LastName>
-								<Title>Mrs</Title>
-								<Nationality>French</Nationality>
-							</Guest>
-						</Guests>
-					</RoomBooking>
-				</RoomBookings>
-			</BookDetails>',
-            $oneRoomBookingDetails
-        );
-
-        return $oneRoomBookingDetails;
+		return $details;
     }
 
-    /**
-     * @depends testTwoRoomBookings
-     */
-    public function testTwoRoomBookingDetails($twoRoomBookings)
+	#[Test]
+    public function twoRoomBookingDetails() : array
     {
-        $simpleLeadGuestBook = new LeadGuest(
-            'Jim',
-            'Watsworth',
-            'Mr'
-        );
+		list($instance, , ) = $details = $this->getTwoRoomBookingDetails();
 
-        $oneRoomBookingDetails = new BookDetails(
-            '2023-11-01',
-            5,
-            'TEST_REF',
-            1040,
-            $simpleLeadGuestBook,
-            null,
-            $twoRoomBookings
-        );
+		/** @todo do assertions */
 
-        $this->serialize(
-            '<BookDetails>
-				<ArrivalDate>2023-11-01</ArrivalDate>
-				<Duration>5</Duration>
-				<TradeReference>TEST_REF</TradeReference>
-				<TotalPrice>1040</TotalPrice>
-				<LeadGuest>
-					<FirstName>Jim</FirstName>
-					<LastName>Watsworth</LastName>
-					<Title>Mr</Title>
-				</LeadGuest>
-				<RoomBookings>
-					<RoomBooking>
-						<RoomID>155558</RoomID>
-						<MealBasisID>1</MealBasisID>
-						<Adults>2</Adults>
-						<Children>0</Children>
-						<Infants>0</Infants>
-						<Guests>
-							<Guest>
-								<Type>Adult</Type>
-								<FirstName>Sally</FirstName>
-								<LastName>Smith</LastName>
-								<Title>Mrs</Title>
-								<Nationality>French</Nationality>
-							</Guest>
-						</Guests>
-					</RoomBooking>
-					<RoomBooking>
-						<RoomID>155448</RoomID>
-						<MealBasisID>1</MealBasisID>
-						<Adults>1</Adults>
-						<Children>1</Children>
-						<Infants>0</Infants>
-						<Guests>
-							<Guest>
-								<Type>Adult</Type>
-								<FirstName>Sally</FirstName>
-								<LastName>Smith</LastName>
-								<Title>Mrs</Title>
-								<Nationality>French</Nationality>
-							</Guest>
-							<Guest>
-								<Type>Child</Type>
-								<FirstName>Jimmy</FirstName>
-								<LastName>Smith</LastName>
-								<Age>5</Age>
-								<Nationality>French</Nationality>
-							</Guest>
-						</Guests>
-					</RoomBooking>
-				</RoomBookings>
-			</BookDetails>',
-            $oneRoomBookingDetails
-        );
+		$this->doTest(...$details);
 
-        $this->unserialize(
-            '<BookDetails>
-				<ArrivalDate>2023-11-01</ArrivalDate>
-				<Duration>5</Duration>
-				<TradeReference>TEST_REF</TradeReference>
-				<TotalPrice>1040</TotalPrice>
-				<LeadGuest>
-					<FirstName>Jim</FirstName>
-					<LastName>Watsworth</LastName>
-					<Title>Mr</Title>
-				</LeadGuest>
-				<RoomBookings>
-					<RoomBooking>
-						<RoomID>155558</RoomID>
-						<MealBasisID>1</MealBasisID>
-						<Adults>2</Adults>
-						<Children>0</Children>
-						<Infants>0</Infants>
-						<Guests>
-							<Guest>
-								<Type>Adult</Type>
-								<FirstName>Sally</FirstName>
-								<LastName>Smith</LastName>
-								<Title>Mrs</Title>
-								<Nationality>French</Nationality>
-							</Guest>
-						</Guests>
-					</RoomBooking>
-					<RoomBooking>
-						<RoomID>155448</RoomID>
-						<MealBasisID>1</MealBasisID>
-						<Adults>1</Adults>
-						<Children>1</Children>
-						<Infants>0</Infants>
-						<Guests>
-							<Guest>
-								<Type>Adult</Type>
-								<FirstName>Sally</FirstName>
-								<LastName>Smith</LastName>
-								<Title>Mrs</Title>
-								<Nationality>French</Nationality>
-							</Guest>
-							<Guest>
-								<Type>Child</Type>
-								<FirstName>Jimmy</FirstName>
-								<LastName>Smith</LastName>
-								<Age>5</Age>
-								<Nationality>French</Nationality>
-							</Guest>
-						</Guests>
-					</RoomBooking>
-				</RoomBookings>
-			</BookDetails>',
-            $oneRoomBookingDetails
-        );
-
-        return $oneRoomBookingDetails;
+		return $details;
     }
-
 }

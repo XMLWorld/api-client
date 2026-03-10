@@ -2,787 +2,162 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\CancellationPolicies;
-use XMLWorld\ApiClient\Responses\CancellationPolicy;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
-use XMLWorld\ApiClient\Responses\RoomType;
-use XMLWorld\ApiClient\Responses\RoomTypes;
-use XMLWorld\ApiClient\Responses\SpecialOffer;
-use XMLWorld\ApiClient\Responses\SpecialOffers;
-use XMLWorld\ApiClient\Responses\Supplement;
-use XMLWorld\ApiClient\Responses\Supplements;
-use XMLWorld\ApiClient\Responses\Tax;
-use XMLWorld\ApiClient\Responses\Taxes;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
-class RoomTypesTests extends ResponseTest
+class RoomTypesTests extends BaseSerializeXML
 {
-    public function testRoomTypeOne()
+	use RoomTypesTrait;
+
+	#[Test]
+	public function roomType0() : array
+	{
+		list($roomType, , ) = $details = $this->getRoomType0();
+
+		$this->assertSame(997, $roomType->roomID);
+		$this->assertNull($roomType->rateCode);
+		$this->assertNull($roomType->propertyRoomTypeID);
+		$this->assertSame(1, $roomType->mealBasisID);
+		$this->assertSame('Example Villa', $roomType->name);
+		$this->assertSame('Sea View', $roomType->view);
+
+		$this->assertSame(1, $roomType->adults);
+		$this->assertSame(0, $roomType->children);
+		$this->assertSame(0, $roomType->infants);
+
+		$this->assertTrue($roomType->onRequest);
+
+		$this->assertSame(4896.80, $roomType->subTotal);
+		$this->assertSame(5565.35, $roomType->total);
+
+		$this->assertIsArray($roomType->roomsAppliesTo->roomRequest);
+		$this->assertCount(1, $roomType->roomsAppliesTo->roomRequest);
+		$this->assertSame(1, $roomType->roomsAppliesTo->roomRequest[0]);
+
+		$this->assertNull($roomType->supplements);
+		$this->assertNull($roomType->specialOffers);
+		$this->assertNull($roomType->taxes);
+		$this->assertNull($roomType->cancellationPolicies);
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
+    public function roomType1() : array
     {
-        $roomTypeOne = new RoomType(
-            999,
-            null,
-            1,
-            1,
-            'Example Villa',
-            'Sea View',
-            2,
-            2,
-            1,
-            true,
-            5896.80,
-            6565.35,
-            new RoomsAppliesTo(1),
-            new Supplements(new Supplement(
-                'test supplement',
-                'Per Night',
-                'Per Person',
-                220,
-                'Adult Only'
-            )),
-            new SpecialOffers(
-                new SpecialOffer(
-                    'Example special offer',
-                    'Value Added',
-                    null,
-                    null,
-                    null,
-                    'test desc'
-                ),
-                new SpecialOffer(
-                    'Example special offer 2',
-                    'Free Kids',
-                    1,
-                    null,
-                    1000,
-                    'test desc'
-                )
-            ),
-            new Taxes(
-                new Tax(
-                    'test %',
-                    false,
-                    1148.55
-                ),
-                new Tax(
-                    'Government Tax',
-                    true,
-                    423.15
-                ),
-                new Tax(
-                    'Service Charge',
-                    true,
-                    604.5
-                ),
-                new Tax(
-                    'test',
-                    false,
-                    300
-                ),
-            ),
-            new CancellationPolicies(
-                new CancellationPolicy(
-                    '2020-07-11',
-                    574.28
-                ),
-                new CancellationPolicy(
-                    '2020-07-18',
-                    1148.55
-                )
-            ),
-        );
+		list($roomType, , ) = $details = $this->getRoomType1();
 
-        $this->serialize(
-            '<RoomType>
-				<RoomID>999</RoomID>
-				<PropertyRoomTypeID>1</PropertyRoomTypeID>
-				<MealBasisID>1</MealBasisID>
-				<Name>Example Villa</Name>
-				<View>Sea View</View>
-				<Adults>2</Adults>
-				<Children>2</Children>
-				<Infants>1</Infants>
-				<OnRequest>True</OnRequest>
-				<SubTotal>5896.8</SubTotal>
-				<Total>6565.35</Total>
-				<RoomsAppliesTo>
-					<RoomRequest>1</RoomRequest>
-				</RoomsAppliesTo>
-				<Supplements>
-					<Supplement>
-						<Name>test supplement</Name>
-						<Duration>Per Night</Duration>
-						<Multiplier>Per Person</Multiplier>
-						<Total>220</Total>
-						<PaxType>Adult Only</PaxType>
-					</Supplement>
-				</Supplements>
-				<SpecialOffers>
-					<SpecialOffer>
-						<Name>Example special offer</Name>
-						<Type>Value Added</Type>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-					<SpecialOffer>
-						<Name>Example special offer 2</Name>
-						<Type>Free Kids</Type>
-						<Value>1</Value>
-						<Total>1000</Total>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-				</SpecialOffers>
-				<Taxes>
-					<Tax>
-						<TaxName>test %</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>1148.55</Total>
-					</Tax>
-					<Tax>
-						<TaxName>Government Tax</TaxName>
-						<Inclusive>True</Inclusive>
-						<Total>423.15</Total>
-					</Tax>
-					<Tax>
-						<TaxName>Service Charge</TaxName>
-						<Inclusive>True</Inclusive>
-						<Total>604.5</Total>
-					</Tax>
-					<Tax>
-						<TaxName>test</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>300</Total>
-					</Tax>
-				</Taxes>
-				<CancellationPolicies>
-					<CancellationPolicy>
-						<CancelBy>2020-07-11</CancelBy>
-						<Penalty>574.28</Penalty>
-					</CancellationPolicy>
-					<CancellationPolicy>
-						<CancelBy>2020-07-18</CancelBy>
-						<Penalty>1148.55</Penalty>
-					</CancellationPolicy>
-				</CancellationPolicies>
-			</RoomType>',
-            $roomTypeOne
-        );
+		$this->assertSame(998, $roomType->roomID);
+		$this->assertNull($roomType->rateCode);
+		$this->assertNull($roomType->propertyRoomTypeID);
+		$this->assertSame(1, $roomType->mealBasisID);
+		$this->assertSame('Example Villa', $roomType->name);
+		$this->assertSame('Sea View', $roomType->view);
 
-        $this->unserialize(
-            '<RoomType>
-				<RoomID>999</RoomID>
-				<PropertyRoomTypeID>1</PropertyRoomTypeID>
-				<MealBasisID>1</MealBasisID>
-				<Name>Example Villa</Name>
-				<View>Sea View</View>
-				<Adults>2</Adults>
-				<Children>2</Children>
-				<Infants>1</Infants>
-				<OnRequest>True</OnRequest>
-				<SubTotal>5896.8</SubTotal>
-				<Total>6565.35</Total>
-				<RoomsAppliesTo>
-					<RoomRequest>1</RoomRequest>
-				</RoomsAppliesTo>
-				<Supplements>
-					<Supplement>
-						<Name>test supplement</Name>
-						<Duration>Per Night</Duration>
-						<Multiplier>Per Person</Multiplier>
-						<Total>220</Total>
-						<PaxType>Adult Only</PaxType>
-					</Supplement>
-				</Supplements>
-				<SpecialOffers>
-					<SpecialOffer>
-						<Name>Example special offer</Name>
-						<Type>Value Added</Type>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-					<SpecialOffer>
-						<Name>Example special offer 2</Name>
-						<Type>Free Kids</Type>
-						<Value>1</Value>
-						<Total>1000</Total>
-						<Desc>test desc</Desc>
-					</SpecialOffer>
-				</SpecialOffers>
-				<Taxes>
-					<Tax>
-						<TaxName>test %</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>1148.55</Total>
-					</Tax>
-					<Tax>
-						<TaxName>Government Tax</TaxName>
-						<Inclusive>True</Inclusive>
-						<Total>423.15</Total>
-					</Tax>
-					<Tax>
-						<TaxName>Service Charge</TaxName>
-						<Inclusive>True</Inclusive>
-						<Total>604.5</Total>
-					</Tax>
-					<Tax>
-						<TaxName>test</TaxName>
-						<Inclusive>False</Inclusive>
-						<Total>300</Total>
-					</Tax>
-				</Taxes>
-				<CancellationPolicies>
-					<CancellationPolicy>
-						<CancelBy>2020-07-11</CancelBy>
-						<Penalty>574.28</Penalty>
-					</CancellationPolicy>
-					<CancellationPolicy>
-						<CancelBy>2020-07-18</CancelBy>
-						<Penalty>1148.55</Penalty>
-					</CancellationPolicy>
-				</CancellationPolicies>
-			</RoomType>',
-            $roomTypeOne
-        );
+		$this->assertSame(2, $roomType->adults);
+		$this->assertSame(2, $roomType->children);
+		$this->assertSame(1, $roomType->infants);
 
-        return $roomTypeOne;
+		$this->assertTrue($roomType->onRequest);
+
+		$this->assertSame(5896.80, $roomType->subTotal);
+		$this->assertSame(6565.35, $roomType->total);
+
+		$this->assertIsArray($roomType->roomsAppliesTo->roomRequest);
+		$this->assertCount(1, $roomType->roomsAppliesTo->roomRequest);
+		$this->assertSame(1, $roomType->roomsAppliesTo->roomRequest[0]);
+
+		$this->assertCount(1, $roomType->supplements);
+		$this->assertCount(1, $roomType->specialOffers);
+		$this->assertCount(1, $roomType->taxes);
+		$this->assertCount(1, $roomType->cancellationPolicies);
+
+
+		$this->doTest(...$details);
+
+		return $details;
     }
 
-    public function testRoomTypeTwo()
+	#[Test]
+    public function roomType2() : array
     {
-        $roomTypeTwo = new RoomType(
-            998,
-            null,
-            null,
-            1,
-            'Example Villa',
-            'Sea View',
-            2,
-            0,
-            0,
-            true,
-            3960,
-            4400,
-            new RoomsAppliesTo(2),
-            null,
-            new SpecialOffers(
-                new SpecialOffer(
-                    'Early Bird Booking',
-                    'Adult Only',
-                    10,
-                    'All',
-                    440
-                )
-            ),
-            new Taxes(
-                new Tax(
-                    'Government Tax',
-                    true,
-                    423.15
-                )
-            ),
-            new CancellationPolicies(
-                new CancellationPolicy(
-                    '2020-07-18',
-                    440
-                )
-            ),
-        );
+		list($roomType, , ) = $details = $this->getRoomType2();
 
-        $this->serialize(
-            '<RoomType>
-					<RoomID>998</RoomID>
-					<MealBasisID>1</MealBasisID>
-					<Name>Example Villa</Name>
-					<View>Sea View</View>
-					<Adults>2</Adults>
-					<Children>0</Children>
-					<Infants>0</Infants>
-					<OnRequest>True</OnRequest>
-					<SubTotal>3960</SubTotal>
-					<Total>4400</Total>
-					<RoomsAppliesTo>
-						<RoomRequest>2</RoomRequest>
-					</RoomsAppliesTo>
-					<SpecialOffers>
-						<SpecialOffer>
-							<Name>Early Bird Booking</Name>
-							<Type>Adult Only</Type>
-							<Value>10</Value>
-							<PaxType>All</PaxType>
-							<Total>440</Total>
-						</SpecialOffer>
-					</SpecialOffers>
-					<Taxes>
-						<Tax>
-							<TaxName>Government Tax</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>423.15</Total>
-						</Tax>
-					</Taxes>
-					<CancellationPolicies>
-						<CancellationPolicy>
-							<CancelBy>2020-07-18</CancelBy>
-							<Penalty>440</Penalty>
-						</CancellationPolicy>
-					</CancellationPolicies>
-				</RoomType>',
-            $roomTypeTwo
-        );
+		$this->assertSame(999, $roomType->roomID);
+		$this->assertSame('RATECODE', $roomType->rateCode);
+		$this->assertSame(2, $roomType->propertyRoomTypeID);
+		$this->assertSame(1, $roomType->mealBasisID);
+		$this->assertSame('Example Villa', $roomType->name);
+		$this->assertSame('Sea View', $roomType->view);
 
-        $this->unserialize(
-            '<RoomType>
-					<RoomID>998</RoomID>
-					<PropertyRoomTypeID/>
-					<MealBasisID>1</MealBasisID>
-					<Name>Example Villa</Name>
-					<View>Sea View</View>
-					<Adults>2</Adults>
-					<Children>0</Children>
-					<Infants>0</Infants>
-					<OnRequest>True</OnRequest>
-					<SubTotal>3960</SubTotal>
-					<Total>4400</Total>
-					<RoomsAppliesTo>
-						<RoomRequest>2</RoomRequest>
-					</RoomsAppliesTo>
-					<Supplements/>
-					<SpecialOffers>
-						<SpecialOffer>
-							<Name>Early Bird Booking</Name>
-							<Type>Adult Only</Type>
-							<Value>10</Value>
-							<PaxType>All</PaxType>
-							<Total>440</Total>
-							<Desc/>
-						</SpecialOffer>
-					</SpecialOffers>
-					<Taxes>
-						<Tax>
-							<TaxName>Government Tax</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>423.15</Total>
-						</Tax>
-					</Taxes>
-					<CancellationPolicies>
-						<CancellationPolicy>
-							<CancelBy>2020-07-18</CancelBy>
-							<Penalty>440</Penalty>
-						</CancellationPolicy>
-					</CancellationPolicies>
-				</RoomType>',
-            $roomTypeTwo
-        );
+		$this->assertSame(2, $roomType->adults);
+		$this->assertSame(0, $roomType->children);
+		$this->assertSame(0, $roomType->infants);
 
-        return $roomTypeTwo;
+		$this->assertTrue($roomType->onRequest);
+
+		$this->assertSame(3960.0, $roomType->subTotal);
+		$this->assertSame(4400.0, $roomType->total);
+
+		$this->assertIsArray($roomType->roomsAppliesTo->roomRequest);
+		$this->assertCount(1, $roomType->roomsAppliesTo->roomRequest);
+		$this->assertSame(3, $roomType->roomsAppliesTo->roomRequest[0]);
+
+		$this->assertCount(2, $roomType->supplements);
+		$this->assertCount(2, $roomType->specialOffers);
+		$this->assertCount(4, $roomType->taxes);
+		$this->assertCount(2, $roomType->cancellationPolicies);
+
+		$this->doTest(...$details);
+
+		return $details;
     }
 
-    /**
-     * @depends testRoomTypeOne
-     */
-    public function testOneRoomType($roomType)
+	#[Test]
+	#[Depends('roomType1')]
+    public function oneRoomTypes(array $roomType) : array
     {
-        $oneRoomType = new RoomTypes($roomType);
+		list($roomTypeInstance, , ) = $roomType;
 
-        $this->serialize(
-            '<RoomTypes>
-				<RoomType>
-					<RoomID>999</RoomID>
-					<PropertyRoomTypeID>1</PropertyRoomTypeID>
-					<MealBasisID>1</MealBasisID>
-					<Name>Example Villa</Name>
-					<View>Sea View</View>
-					<Adults>2</Adults>
-					<Children>2</Children>
-					<Infants>1</Infants>
-					<OnRequest>True</OnRequest>
-					<SubTotal>5896.8</SubTotal>
-					<Total>6565.35</Total>
-					<RoomsAppliesTo>
-						<RoomRequest>1</RoomRequest>
-					</RoomsAppliesTo>
-					<Supplements>
-						<Supplement>
-							<Name>test supplement</Name>
-							<Duration>Per Night</Duration>
-							<Multiplier>Per Person</Multiplier>
-							<Total>220</Total>
-							<PaxType>Adult Only</PaxType>
-						</Supplement>
-					</Supplements>
-					<SpecialOffers>
-						<SpecialOffer>
-							<Name>Example special offer</Name>
-							<Type>Value Added</Type>
-							<Desc>test desc</Desc>
-						</SpecialOffer>
-						<SpecialOffer>
-							<Name>Example special offer 2</Name>
-							<Type>Free Kids</Type>
-							<Value>1</Value>
-							<Total>1000</Total>
-							<Desc>test desc</Desc>
-						</SpecialOffer>
-					</SpecialOffers>
-					<Taxes>
-						<Tax>
-							<TaxName>test %</TaxName>
-							<Inclusive>False</Inclusive>
-							<Total>1148.55</Total>
-						</Tax>
-						<Tax>
-							<TaxName>Government Tax</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>423.15</Total>
-						</Tax>
-						<Tax>
-							<TaxName>Service Charge</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>604.5</Total>
-						</Tax>
-						<Tax>
-							<TaxName>test</TaxName>
-							<Inclusive>False</Inclusive>
-							<Total>300</Total>
-						</Tax>
-					</Taxes>
-					<CancellationPolicies>
-						<CancellationPolicy>
-							<CancelBy>2020-07-11</CancelBy>
-							<Penalty>574.28</Penalty>
-						</CancellationPolicy>
-						<CancellationPolicy>
-							<CancelBy>2020-07-18</CancelBy>
-							<Penalty>1148.55</Penalty>
-						</CancellationPolicy>
-					</CancellationPolicies>
-				</RoomType>
-			</RoomTypes>',
-            $oneRoomType
-        );
+		list($instance, , ) = $details = $this->getOneRoomTypes($roomType);
 
-        $this->unserialize(
-            '<RoomTypes>
-				<RoomType>
-					<RoomID>999</RoomID>
-					<PropertyRoomTypeID>1</PropertyRoomTypeID>
-					<MealBasisID>1</MealBasisID>
-					<Name>Example Villa</Name>
-					<View>Sea View</View>
-					<Adults>2</Adults>
-					<Children>2</Children>
-					<Infants>1</Infants>
-					<OnRequest>True</OnRequest>
-					<SubTotal>5896.8</SubTotal>
-					<Total>6565.35</Total>
-					<RoomsAppliesTo>
-						<RoomRequest>1</RoomRequest>
-					</RoomsAppliesTo>
-					<Supplements>
-						<Supplement>
-							<Name>test supplement</Name>
-							<Duration>Per Night</Duration>
-							<Multiplier>Per Person</Multiplier>
-							<Total>220</Total>
-							<PaxType>Adult Only</PaxType>
-						</Supplement>
-					</Supplements>
-					<SpecialOffers>
-						<SpecialOffer>
-							<Name>Example special offer</Name>
-							<Type>Value Added</Type>
-							<Desc>test desc</Desc>
-						</SpecialOffer>
-						<SpecialOffer>
-							<Name>Example special offer 2</Name>
-							<Type>Free Kids</Type>
-							<Value>1</Value>
-							<Total>1000</Total>
-							<Desc>test desc</Desc>
-						</SpecialOffer>
-					</SpecialOffers>
-					<Taxes>
-						<Tax>
-							<TaxName>test %</TaxName>
-							<Inclusive>False</Inclusive>
-							<Total>1148.55</Total>
-						</Tax>
-						<Tax>
-							<TaxName>Government Tax</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>423.15</Total>
-						</Tax>
-						<Tax>
-							<TaxName>Service Charge</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>604.5</Total>
-						</Tax>
-						<Tax>
-							<TaxName>test</TaxName>
-							<Inclusive>False</Inclusive>
-							<Total>300</Total>
-						</Tax>
-					</Taxes>
-					<CancellationPolicies>
-						<CancellationPolicy>
-							<CancelBy>2020-07-11</CancelBy>
-							<Penalty>574.28</Penalty>
-						</CancellationPolicy>
-						<CancellationPolicy>
-							<CancelBy>2020-07-18</CancelBy>
-							<Penalty>1148.55</Penalty>
-						</CancellationPolicy>
-					</CancellationPolicies>
-				</RoomType>
-			</RoomTypes>',
-            $oneRoomType
-        );
+		$this->assertCount(1, $instance, 'it only has one element');
+		$this->assertSame($roomTypeInstance, $instance[0]);
+		$this->assertSame(
+			[$roomTypeInstance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
 
-        return $oneRoomType;
+		$this->doTest(...$details);
+
+		return $details;
     }
 
-    /**
-     * @depends testRoomTypeOne
-     * @depends testRoomTypeTwo
-     */
-    public function testTwoRoomTypes($roomTypeOne, $roomTypeTwo)
+	#[Test]
+	#[Depends('roomType1')]
+	#[Depends('roomType2')]
+    public function twoRoomTypes(array $roomType1, array $roomType2) : array
     {
-        $twoRoomTypes = new RoomTypes(
-            $roomTypeOne,
-            $roomTypeTwo
-        );
+		list($roomType1Instance, , ) = $roomType1;
+		list($roomType2Instance, , ) = $roomType2;
 
-        $this->serialize(
-            '<RoomTypes>
-				<RoomType>
-					<RoomID>999</RoomID>
-					<PropertyRoomTypeID>1</PropertyRoomTypeID>
-					<MealBasisID>1</MealBasisID>
-					<Name>Example Villa</Name>
-					<View>Sea View</View>
-					<Adults>2</Adults>
-					<Children>2</Children>
-					<Infants>1</Infants>
-					<OnRequest>True</OnRequest>
-					<SubTotal>5896.8</SubTotal>
-					<Total>6565.35</Total>
-					<RoomsAppliesTo>
-						<RoomRequest>1</RoomRequest>
-					</RoomsAppliesTo>
-					<Supplements>
-						<Supplement>
-							<Name>test supplement</Name>
-							<Duration>Per Night</Duration>
-							<Multiplier>Per Person</Multiplier>
-							<Total>220</Total>
-							<PaxType>Adult Only</PaxType>
-						</Supplement>
-					</Supplements>
-					<SpecialOffers>
-						<SpecialOffer>
-							<Name>Example special offer</Name>
-							<Type>Value Added</Type>
-							<Desc>test desc</Desc>
-						</SpecialOffer>
-						<SpecialOffer>
-							<Name>Example special offer 2</Name>
-							<Type>Free Kids</Type>
-							<Value>1</Value>
-							<Total>1000</Total>
-							<Desc>test desc</Desc>
-						</SpecialOffer>
-					</SpecialOffers>
-					<Taxes>
-						<Tax>
-							<TaxName>test %</TaxName>
-							<Inclusive>False</Inclusive>
-							<Total>1148.55</Total>
-						</Tax>
-						<Tax>
-							<TaxName>Government Tax</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>423.15</Total>
-						</Tax>
-						<Tax>
-							<TaxName>Service Charge</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>604.5</Total>
-						</Tax>
-						<Tax>
-							<TaxName>test</TaxName>
-							<Inclusive>False</Inclusive>
-							<Total>300</Total>
-						</Tax>
-					</Taxes>
-					<CancellationPolicies>
-						<CancellationPolicy>
-							<CancelBy>2020-07-11</CancelBy>
-							<Penalty>574.28</Penalty>
-						</CancellationPolicy>
-						<CancellationPolicy>
-							<CancelBy>2020-07-18</CancelBy>
-							<Penalty>1148.55</Penalty>
-						</CancellationPolicy>
-					</CancellationPolicies>
-				</RoomType>
-				<RoomType>
-					<RoomID>998</RoomID>
-					<MealBasisID>1</MealBasisID>
-					<Name>Example Villa</Name>
-					<View>Sea View</View>
-					<Adults>2</Adults>
-					<Children>0</Children>
-					<Infants>0</Infants>
-					<OnRequest>True</OnRequest>
-					<SubTotal>3960</SubTotal>
-					<Total>4400</Total>
-					<RoomsAppliesTo>
-						<RoomRequest>2</RoomRequest>
-					</RoomsAppliesTo>
-					<SpecialOffers>
-						<SpecialOffer>
-							<Name>Early Bird Booking</Name>
-							<Type>Adult Only</Type>
-							<Value>10</Value>
-							<PaxType>All</PaxType>
-							<Total>440</Total>
-						</SpecialOffer>
-					</SpecialOffers>
-					<Taxes>
-						<Tax>
-							<TaxName>Government Tax</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>423.15</Total>
-						</Tax>
-					</Taxes>
-					<CancellationPolicies>
-						<CancellationPolicy>
-							<CancelBy>2020-07-18</CancelBy>
-							<Penalty>440</Penalty>
-						</CancellationPolicy>
-					</CancellationPolicies>
-				</RoomType>
-			</RoomTypes>',
-            $twoRoomTypes
-        );
+		list($instance, , ) = $details = $this->getTwoRoomTypes($roomType1, $roomType2);
 
-        $this->unserialize(
-            '<RoomTypes>
-				<RoomType>
-					<RoomID>999</RoomID>
-					<PropertyRoomTypeID>1</PropertyRoomTypeID>
-					<MealBasisID>1</MealBasisID>
-					<Name>Example Villa</Name>
-					<View>Sea View</View>
-					<Adults>2</Adults>
-					<Children>2</Children>
-					<Infants>1</Infants>
-					<OnRequest>True</OnRequest>
-					<SubTotal>5896.8</SubTotal>
-					<Total>6565.35</Total>
-					<RoomsAppliesTo>
-						<RoomRequest>1</RoomRequest>
-					</RoomsAppliesTo>
-					<Supplements>
-						<Supplement>
-							<Name>test supplement</Name>
-							<Duration>Per Night</Duration>
-							<Multiplier>Per Person</Multiplier>
-							<Total>220</Total>
-							<PaxType>Adult Only</PaxType>
-						</Supplement>
-					</Supplements>
-					<SpecialOffers>
-						<SpecialOffer>
-							<Name>Example special offer</Name>
-							<Type>Value Added</Type>
-							<Desc>test desc</Desc>
-						</SpecialOffer>
-						<SpecialOffer>
-							<Name>Example special offer 2</Name>
-							<Type>Free Kids</Type>
-							<Value>1</Value>
-							<Total>1000</Total>
-							<Desc>test desc</Desc>
-						</SpecialOffer>
-					</SpecialOffers>
-					<Taxes>
-						<Tax>
-							<TaxName>test %</TaxName>
-							<Inclusive>False</Inclusive>
-							<Total>1148.55</Total>
-						</Tax>
-						<Tax>
-							<TaxName>Government Tax</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>423.15</Total>
-						</Tax>
-						<Tax>
-							<TaxName>Service Charge</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>604.5</Total>
-						</Tax>
-						<Tax>
-							<TaxName>test</TaxName>
-							<Inclusive>False</Inclusive>
-							<Total>300</Total>
-						</Tax>
-					</Taxes>
-					<CancellationPolicies>
-						<CancellationPolicy>
-							<CancelBy>2020-07-11</CancelBy>
-							<Penalty>574.28</Penalty>
-						</CancellationPolicy>
-						<CancellationPolicy>
-							<CancelBy>2020-07-18</CancelBy>
-							<Penalty>1148.55</Penalty>
-						</CancellationPolicy>
-					</CancellationPolicies>
-				</RoomType>
-				<RoomType>
-					<RoomID>998</RoomID>
-					<PropertyRoomTypeID/>
-					<MealBasisID>1</MealBasisID>
-					<Name>Example Villa</Name>
-					<View>Sea View</View>
-					<Adults>2</Adults>
-					<Children>0</Children>
-					<Infants>0</Infants>
-					<OnRequest>True</OnRequest>
-					<SubTotal>3960</SubTotal>
-					<Total>4400</Total>
-					<RoomsAppliesTo>
-						<RoomRequest>2</RoomRequest>
-					</RoomsAppliesTo>
-					<Supplements/>
-					<SpecialOffers>
-						<SpecialOffer>
-							<Name>Early Bird Booking</Name>
-							<Type>Adult Only</Type>
-							<Value>10</Value>
-							<PaxType>All</PaxType>
-							<Total>440</Total>
-							<Desc/>
-						</SpecialOffer>
-					</SpecialOffers>
-					<Taxes>
-						<Tax>
-							<TaxName>Government Tax</TaxName>
-							<Inclusive>True</Inclusive>
-							<Total>423.15</Total>
-						</Tax>
-					</Taxes>
-					<CancellationPolicies>
-						<CancellationPolicy>
-							<CancelBy>2020-07-18</CancelBy>
-							<Penalty>440</Penalty>
-						</CancellationPolicy>
-					</CancellationPolicies>
-				</RoomType>
-			</RoomTypes>',
-            $twoRoomTypes
-        );
+		$this->assertCount(2, $instance, 'it has two elements');
+		$this->assertSame($roomType1Instance, $instance[0]);
+		$this->assertSame($roomType2Instance, $instance[1]);
+		$this->assertSame(
+			[$roomType1Instance, $roomType2Instance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
 
-        return $twoRoomTypes;
+		$this->doTest(...$details);
+
+		return $details;
     }
 }

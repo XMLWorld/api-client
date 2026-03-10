@@ -2,93 +2,46 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class ResponseTest extends BaseSerializeXML
 {
-    public function testResponseInfo()
+	use ResponseTrait;
+
+	#[Test]
+    public function responseInfo() : array
     {
-        $requestInfo = new RequestInfo(
-            1687253937,
-            '2023-06-20T09:38:57+00:00',
-            'xml.centriumres.com.localdomain.ee',
-            '10.0.1.182',
-            '649173b14aadb8.17864349'
-        );
+		$details = $this->getResponseInfo();
 
-        $this->serialize(
-            '<RequestInfo>
-				<Timestamp>1687253937</Timestamp>
-				<TimestampISO>2023-06-20T09:38:57+00:00</TimestampISO>
-				<Host>xml.centriumres.com.localdomain.ee</Host>
-				<HostIP>10.0.1.182</HostIP>
-				<ReqID>649173b14aadb8.17864349</ReqID>
-			</RequestInfo>',
-            $requestInfo
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<RequestInfo>
-				<Timestamp>1687253937</Timestamp>
-				<Host>xml.centriumres.com.localdomain.ee</Host>
-				<HostIP>10.0.1.182</HostIP>
-				<ReqID>649173b14aadb8.17864349</ReqID>
-				<TimestampISO>2023-06-20T09:38:57+00:00</TimestampISO>
-			</RequestInfo>',
-            $requestInfo
-        );
+		$this->doTest(...$details);
 
-        return $requestInfo;
+		return $details;
     }
 
-    public function testReturnStatusTrue()
+	#[Test]
+    public function returnStatusTrue() : array
     {
-        $returnStatusTrue = new ReturnStatus(true);
+		$details = $this->getReturnStatusTrue();
 
-        $this->serialize(
-            '<ReturnStatus>
-				<Success>True</Success>
-			</ReturnStatus>',
-            $returnStatusTrue
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<ReturnStatus>
-				<Success>True</Success>
-				<Exception/>
-			</ReturnStatus>',
-            $returnStatusTrue
-        );
+		$this->doTest(...$details);
 
-        return $returnStatusTrue;
+		return $details;
     }
 
-    public function testReturnStatusFalse()
+	#[Test]
+    public function returnStatusFalse() : array
     {
-        $returnBookingStatusFalse = new ReturnStatus(
-            false,
-            'Supplier Reference not found for Booking Reference HCL0011 in SupplierBooking'
-        );
+		list($instance, , ) = $details = $this->getReturnStatusFalse();
 
-        $this->serialize(
-            '<ReturnStatus>
-				<Success>False</Success>
-				<Exception>Supplier Reference not found for Booking Reference HCL0011 in SupplierBooking</Exception>
-			</ReturnStatus>',
-            $returnBookingStatusFalse
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<ReturnStatus>
-				<Success>False</Success>
-				<Exception>Supplier Reference not found for Booking Reference HCL0011 in SupplierBooking</Exception>
-			</ReturnStatus>',
-            $returnBookingStatusFalse
-        );
+		$this->doTest(...$details);
 
-        return $returnBookingStatusFalse;
+		return $details;
     }
 }

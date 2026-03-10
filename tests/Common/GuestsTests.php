@@ -2,173 +2,65 @@
 
 namespace XMLWorld\ApiClient\Test\Common;
 
-use XMLWorld\ApiClient\Common\Guest;
-use XMLWorld\ApiClient\Common\Guests;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class GuestsTests extends BaseSerializeXML
 {
-    public function testAdultGuest()
+	use GuestsTrait;
+
+	#[Test]
+    public function guest1() : array
     {
-        $adultGuestBook = new Guest(
-            'Adult',
-            'Sally',
-            'Smith',
-            'Mrs',
-            null,
-            'French'
-        );
+		list($instance, , ) = $details = $this->getGuest1();
 
-        $this->serialize(
-            '<Guest>
-				<Type>Adult</Type>
-				<FirstName>Sally</FirstName>
-				<LastName>Smith</LastName>
-				<Title>Mrs</Title>
-				<Nationality>French</Nationality>
-			</Guest>',
-            $adultGuestBook
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<Guest>
-				<Type>Adult</Type>
-				<FirstName>Sally</FirstName>
-				<LastName>Smith</LastName>
-				<Title>Mrs</Title>
-				<Nationality>French</Nationality>
-			</Guest>',
-            $adultGuestBook
-        );
+		$this->doTest(...$details);
 
-        return $adultGuestBook;
+		return $details;
     }
 
-    public function testChildGuest()
+	#[Test]
+    public function guest2() : array
     {
-        $childGuestBook = new Guest(
-            'Child',
-            'Jimmy',
-            'Smith',
-            null,
-            5,
-            'French'
-        );
+		list($instance, , ) = $details = $this->getGuest2();
 
-        $this->serialize(
-            '<Guest>
-				<Type>Child</Type>
-				<FirstName>Jimmy</FirstName>
-				<LastName>Smith</LastName>
-				<Age>5</Age>
-				<Nationality>French</Nationality>
-			</Guest>',
-            $childGuestBook
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<Guest>
-				<Type>Child</Type>
-				<FirstName>Jimmy</FirstName>
-				<LastName>Smith</LastName>
-				<Age>5</Age>
-				<Nationality>French</Nationality>
-			</Guest>',
-            $childGuestBook
-        );
+		$this->doTest(...$details);
 
-        return $childGuestBook;
+		return $details;
     }
 
-
-    /**
-     * @depends testAdultGuest
-     */
-    public function testOneGuests($adultGuestBook)
+	#[Test]
+	#[Depends('guest1')]
+    public function oneGuests(array $guest) : array
     {
-        $oneGuests = new Guests($adultGuestBook);
+		list($guestInstance, , ) = $guest;
+		list($instance, , ) = $details = $this->getOneGuests($guest);
 
-        $this->serialize(
-            '<Guests>
-				<Guest>
-					<Type>Adult</Type>
-					<FirstName>Sally</FirstName>
-					<LastName>Smith</LastName>
-					<Title>Mrs</Title>
-					<Nationality>French</Nationality>
-				</Guest>
-			</Guests>',
-            $oneGuests
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<Guests>
-				<Guest>
-					<Type>Adult</Type>
-					<FirstName>Sally</FirstName>
-					<LastName>Smith</LastName>
-					<Title>Mrs</Title>
-					<Nationality>French</Nationality>
-				</Guest>
-			</Guests>',
-            $oneGuests
-        );
+		$this->doTest(...$details);
 
-        return $oneGuests;
+		return $details;
     }
 
-    /**
-     * @depends testAdultGuest
-     * @depends testChildGuest
-     */
-    public function testTwoGuests($adultGuestBook, $childGuestBook)
+	#[Test]
+	#[Depends('guest1')]
+	#[Depends('guest2')]
+    public function twoGuests(array $guest1, array $guest2) : array
     {
-        $twoGuests = new Guests(
-            $adultGuestBook,
-            $childGuestBook
-        );
+		list($guest1Instance, , ) = $guest1;
+		list($guest2Instance, , ) = $guest2;
+		list($instance, , ) = $details = $this->getTwoGuests($guest1, $guest2);
 
-        $this->serialize(
-            '<Guests>
-				<Guest>
-					<Type>Adult</Type>
-					<FirstName>Sally</FirstName>
-					<LastName>Smith</LastName>
-					<Title>Mrs</Title>
-					<Nationality>French</Nationality>
-				</Guest>
-				<Guest>
-					<Type>Child</Type>
-					<FirstName>Jimmy</FirstName>
-					<LastName>Smith</LastName>
-					<Age>5</Age>
-					<Nationality>French</Nationality>
-				</Guest>
-			</Guests>',
-            $twoGuests
-        );
+		/** @todo do assertions */
 
-        $this->unserialize(
-            '<Guests>
-				<Guest>
-					<Type>Adult</Type>
-					<FirstName>Sally</FirstName>
-					<LastName>Smith</LastName>
-					<Title>Mrs</Title>
-					<Nationality>French</Nationality>
-				</Guest>
-				<Guest>
-					<Type>Child</Type>
-					<FirstName>Jimmy</FirstName>
-					<LastName>Smith</LastName>
-					<Age>5</Age>
-					<Nationality>French</Nationality>
-				</Guest>
-			</Guests>',
-            $twoGuests
-        );
+		$this->doTest(...$details);
 
-        return $twoGuests;
+		return $details;
     }
-
 }

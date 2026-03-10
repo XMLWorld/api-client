@@ -1,0 +1,44 @@
+<?php
+
+namespace XMLWorld\ApiClient\Test\Requests;
+
+use XMLWorld\ApiClient\Requests\BookRequest;
+
+trait BookRequestTrait
+{
+	use LoginDetailsTrait;
+	use BookDetailsTrait;
+
+    protected function getBookRequest() : array
+    {
+		list($loginDetailsInstance, 			$loginDetailsSerialize, 			$loginDetailsUnserialize) 			= $this->getLoginDetails();
+		list($twoRoomBookingDetailsInstance,	$twoRoomBookingDetailsSerialize,	$twoRoomBookingDetailsUnserialize)	= $this->getTwoRoomBookingDetails();
+
+        $instance = new BookRequest(
+			$loginDetailsInstance,
+			$twoRoomBookingDetailsInstance,
+            true
+        );
+
+		$serialize = <<<XML
+<BookRequest>
+	$loginDetailsSerialize
+	<Mock>True</Mock>
+	$twoRoomBookingDetailsSerialize
+</BookRequest>
+XML;
+
+		$unserialize = <<<XML
+<BookRequest>
+	$loginDetailsUnserialize <Mock>True</Mock>
+	$twoRoomBookingDetailsUnserialize
+</BookRequest>
+XML;
+
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
+    }
+}

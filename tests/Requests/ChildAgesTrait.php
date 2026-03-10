@@ -7,64 +7,79 @@ use XMLWorld\ApiClient\Requests\ChildAges;
 
 trait ChildAgesTrait
 {
-    public function testChildAge()
+    protected function getChildAge() : array
     {
         $instance = new ChildAge(15);
 
-        $expected = '<ChildAge>
-				<Age>15</Age>
-			</ChildAge>';
+        $expected = <<<'XML'
+<ChildAge>
+	<Age>15</Age>
+</ChildAge>
+XML;
 
-        $childAge = [
+        return [
             $instance,
             $expected,
             $expected
         ];
-
-        $this->doTest(...$childAge);
-
-        return $childAge;
     }
 
-    /**
-     * @depends testChildAge
-     */
-    public function testOneChildAges($childAge)
+	protected function getOneChildAges() : array
     {
-        list($instance, $serialize, ) = $childAge;
+        list($childAgeInstance, $childAgeSerialize, $childAgeUnserialize) = $this->getChildAge();
 
-        $instance = new ChildAges($instance);
+        $instance = new ChildAges($childAgeInstance);
 
-        $oneChildAges = $this->wrap($instance, $serialize);
+		$serialize = <<<XML
+<ChildAges>
+	$childAgeSerialize
+</ChildAges>
+XML;
 
-        $this->doTest(...$oneChildAges);
+		$unserialize = <<<XML
+<ChildAges>
+	$childAgeUnserialize
+</ChildAges>
+XML;
 
-        return $oneChildAges;
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
     }
 
-    public function testTwoChildAges()
+	protected function getTwoChildAges() : array
     {
         $instance = ChildAges::fromAges(
             8, 15
         );
 
-        $expected = '<ChildAges>
-				<ChildAge>
-					<Age>8</Age>
-				</ChildAge>
-				<ChildAge>
-					<Age>15</Age>
-				</ChildAge>
-			</ChildAges>';
+		$serialize = <<<XML
+<ChildAges>
+	<ChildAge>
+		<Age>8</Age>
+	</ChildAge>
+	<ChildAge>
+		<Age>15</Age>
+	</ChildAge>
+</ChildAges>
+XML;
 
-        $twoChildAges = [
+		$unserialize = <<<XML
+<ChildAges>
+	<ChildAge>
+		<Age>8</Age>
+	</ChildAge>
+	<ChildAge><Age>15</Age>
+	</ChildAge>
+</ChildAges>
+XML;
+
+        return [
             $instance,
-            $expected,
-            $expected
+			$serialize,
+			$unserialize
         ];
-
-        $this->doTest(...$twoChildAges);
-
-        return $twoChildAges;
     }
 }

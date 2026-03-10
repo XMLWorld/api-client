@@ -2,170 +2,86 @@
 
 namespace XMLWorld\ApiClient\Test\Responses;
 
-use XMLWorld\ApiClient\Requests\LoginDetails;
-use XMLWorld\ApiClient\Responses\RequestInfo;
-use XMLWorld\ApiClient\Responses\ReturnStatus;
-use XMLWorld\ApiClient\Responses\RoomsAppliesTo;
-use XMLWorld\ApiClient\Responses\Supplement;
-use XMLWorld\ApiClient\Responses\Supplements;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class SupplementsTest extends BaseSerializeXML
 {
-    public function testSupplementWeekend()
+	use SupplementsTrait;
+
+	#[Test]
+    public function supplement1() : array
     {
-        $supplementWeekend = new Supplement(
-            'Weekend Stay (Fri - Sun)',
-            'Per Night',
-            'Per Room',
-            60
-        );
+		list($instance, , ) = $details = $this->getSupplement1();
 
-        $this->serialize(
-            '<Supplement>
-				<Name>Weekend Stay (Fri - Sun)</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Room</Multiplier>
-				<Total>60</Total>
-			</Supplement>',
-            $supplementWeekend
-        );
+		$this->assertSame('Weekend Stay (Fri - Sun)', $instance->name);
+		$this->assertSame('Per Night', $instance->duration);
+		$this->assertSame('Per Room', $instance->multiplier);
+		$this->assertSame(60.0, $instance->total);
+		$this->assertNull($instance->paxType);
 
-        $this->unserialize(
-            '<Supplement>
-				<Name>Weekend Stay (Fri - Sun)</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Room</Multiplier>
-				<PaxType/>
-				<Total>60</Total>
-			</Supplement>',
-            $supplementWeekend
-        );
+		$this->doTest(...$details);
 
-        return $supplementWeekend;
+		return $details;
     }
 
-    public function testTestSupplement()
+	#[Test]
+    public function supplement2() : array
     {
-        $testSupplement = new Supplement(
-            'test supplement',
-            'Per Night',
-            'Per Person',
-            220,
-            'Adult Only'
-        );
+		list($instance, , ) = $details = $this->getSupplement2();
 
-        $this->serialize(
-            '<Supplement>
-				<Name>test supplement</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Person</Multiplier>
-				<Total>220</Total>
-				<PaxType>Adult Only</PaxType>
-			</Supplement>',
-            $testSupplement
-        );
+		$this->assertSame('test supplement', $instance->name);
+		$this->assertSame('Per Night', $instance->duration);
+		$this->assertSame('Per Person', $instance->multiplier);
+		$this->assertSame(220.0, $instance->total);
+		$this->assertSame('Adult Only', $instance->paxType);
 
-        $this->unserialize(
-            '<Supplement>
-				<Name>test supplement</Name>
-				<Duration>Per Night</Duration>
-				<Multiplier>Per Person</Multiplier>
-				<PaxType>Adult Only</PaxType>
-				<Total>220</Total>
-			</Supplement>',
-            $testSupplement
-        );
+		$this->doTest(...$details);
 
-        return $testSupplement;
+		return $details;
     }
 
-    /**
-     * @depends testTestSupplement
-     */
-    public function testOneSupplements($testSupplement)
+	#[Test]
+	#[Depends('supplement1')]
+    public function oneSupplements($supplement1) : array
     {
-        $oneSupplements = new Supplements($testSupplement);
+		list($supplement1Instance, , ) = $supplement1;
+		list($instance, , ) = $details = $this->getOneSupplements($supplement1);
 
-        $this->serialize(
-            '<Supplements>
-				<Supplement>
-					<Name>test supplement</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Person</Multiplier>
-					<Total>220</Total>
-					<PaxType>Adult Only</PaxType>
-				</Supplement>
-			</Supplements>',
-            $oneSupplements
-        );
+		$this->assertCount(1, $instance, 'it only has one element');
+		$this->assertSame($supplement1Instance, $instance[0]);
+		$this->assertSame(
+			[$supplement1Instance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
 
-        $this->unserialize(
-            '<Supplements>
-				<Supplement>
-					<Name>test supplement</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Person</Multiplier>
-					<Total>220</Total>
-					<PaxType>Adult Only</PaxType>
-				</Supplement>
-			</Supplements>',
-            $oneSupplements
-        );
+		$this->doTest(...$details);
 
-        return $oneSupplements;
+		return $details;
     }
 
-    /**
-     * @depends testSupplementWeekend
-     * @depends testTestSupplement
-     */
-    public function testTwoSupplements($supplementWeekend, $testSupplement)
+	#[Test]
+	#[Depends('supplement1')]
+	#[Depends('supplement2')]
+    public function testTwoSupplements(array $supplement1, array $supplement2) : array
     {
-        $twoSupplements = new Supplements(
-            $supplementWeekend,
-            $testSupplement
-        );
+		list($supplement1Instance, , ) = $supplement1;
+		list($supplement2Instance, , ) = $supplement2;
+		list($instance, , ) = $details = $this->getTwoSupplements($supplement1, $supplement2);
 
-        $this->serialize(
-            '<Supplements>
-				<Supplement>
-					<Name>Weekend Stay (Fri - Sun)</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Room</Multiplier>
-					<Total>60</Total>
-				</Supplement>
-				<Supplement>
-					<Name>test supplement</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Person</Multiplier>
-					<Total>220</Total>
-					<PaxType>Adult Only</PaxType>
-				</Supplement>
-			</Supplements>',
-            $twoSupplements
-        );
+		$this->assertCount(2, $instance, 'it has two elements');
+		$this->assertSame($supplement1Instance, $instance[0]);
+		$this->assertSame($supplement2Instance, $instance[1]);
+		$this->assertSame(
+			[$supplement1Instance, $supplement2Instance],
+			iterator_to_array($instance),
+			'we test the behaviour for a foreach'
+		);
 
-        $this->unserialize(
-            '<Supplements>
-				<Supplement>
-					<Name>Weekend Stay (Fri - Sun)</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Room</Multiplier>
-					<Total>60</Total>
-				</Supplement>
-				<Supplement>
-					<Name>test supplement</Name>
-					<Duration>Per Night</Duration>
-					<Multiplier>Per Person</Multiplier>
-					<Total>220</Total>
-					<PaxType>Adult Only</PaxType>
-				</Supplement>
-			</Supplements>',
-            $twoSupplements
-        );
+		$this->doTest(...$details);
 
-        return $twoSupplements;
+		return $details;
     }
-
 }

@@ -2,37 +2,32 @@
 
 namespace XMLWorld\ApiClient\Test\Common;
 
-use XMLWorld\ApiClient\Common\LeadGuest;
+use PHPUnit\Framework\Attributes\Test;
 use XMLWorld\ApiClient\Test\BaseSerializeXML;
 
 class LeadGuestsTests extends BaseSerializeXML
 {
-    public function testAdultGuest()
+	use LeadGuestsTrait;
+
+	#[Test]
+    public function leadGuest() : array
     {
-        $simpleLeadGuestBook = new LeadGuest(
-            'Jim',
-            'Watsworth',
-            'Mr'
-        );
+		list($instance, , ) = $details = $this->getLeadGuest();
 
-        $this->serialize(
-            '<LeadGuest>
-				<FirstName>Jim</FirstName>
-				<LastName>Watsworth</LastName>
-				<Title>Mr</Title>
-			</LeadGuest>',
-            $simpleLeadGuestBook
-        );
+		$this->assertSame('Jim', $instance->firstName);
+		$this->assertSame('Watsworth', $instance->lastName);
+		$this->assertSame('Mr', $instance->title);
+		$this->assertNull($instance->address1);
+		$this->assertNull($instance->address2);
+		$this->assertNull($instance->townCity);
+		$this->assertNull($instance->county);
+		$this->assertNull($instance->postcode);
+		$this->assertNull($instance->phone);
+		$this->assertNull($instance->email);
+		$this->assertNull($instance->request);
 
-        $this->unserialize(
-            '<LeadGuest>
-				<FirstName>Jim</FirstName>
-				<LastName>Watsworth</LastName>
-				<Title>Mr</Title>
-			</LeadGuest>',
-            $simpleLeadGuestBook
-        );
+		$this->doTest(...$details);
 
-        return $simpleLeadGuestBook;
+		return $details;
     }
 }

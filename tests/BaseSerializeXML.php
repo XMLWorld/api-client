@@ -5,7 +5,6 @@ namespace XMLWorld\ApiClient\Test;
 use PHPUnit\Framework\TestCase;
 use XMLWorld\ApiClient\Interfaces\Serializable;
 use XMLWorld\ApiClient\Interfaces\Serializer;
-use XMLWorld\ApiClient\Requests\AbstractRequest;
 use XMLWorld\ApiClient\SerializeXML;
 use ReflectionClass;
 
