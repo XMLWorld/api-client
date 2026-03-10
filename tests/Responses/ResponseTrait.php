@@ -67,6 +67,58 @@ XML;
 		];
     }
 
+	protected function getCouldNotFindRoomsStatus()
+	{
+		$instance = new ReturnStatus(
+			false,
+			'Could not find any rooms for RoomRequest'
+		);
+
+		$serialize = <<<'XML'
+<ReturnStatus>
+	<Success>False</Success>
+	<Exception>Could not find any rooms for RoomRequest</Exception>
+</ReturnStatus>
+XML;
+
+		$unserialize = <<<'XML'
+<ReturnStatus>
+	<Success>False</Success>	<Exception>Could not find any rooms for RoomRequest</Exception>
+</ReturnStatus>
+XML;
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
+	}
+
+	protected function getPriceDoesNotMatchStatus()
+	{
+		$instance = new ReturnStatus(
+			false,
+			'Current room total price does not match that expected. Please search again to obtain current rates'
+		);
+
+		$serialize = <<<'XML'
+<ReturnStatus>
+	<Success>False</Success>
+	<Exception>Current room total price does not match that expected. Please search again to obtain current rates</Exception>
+</ReturnStatus>
+XML;
+
+		$unserialize = <<<'XML'
+<ReturnStatus>
+	<Success>False</Success>	<Exception>Current room total price does not match that expected. Please search again to obtain current rates</Exception>
+</ReturnStatus>
+XML;
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
+	}
+
     protected function getReturnStatusFalse()
     {
         $instance = new ReturnStatus(
@@ -93,4 +145,31 @@ XML;
 			$unserialize
 		];
     }
+
+	protected function getNoResponseFromSupplier()
+	{
+		$instance = new ReturnStatus(
+			false,
+			'No response from supplier'
+		);
+
+		$serialize = <<<'XML'
+<ReturnStatus>
+	<Success>False</Success>
+	<Exception>No response from supplier</Exception>
+</ReturnStatus>
+XML;
+
+		$unserialize = <<<'XML'
+<ReturnStatus>
+	<Success>False</Success>	<Exception>No response from supplier</Exception>
+</ReturnStatus>
+XML;
+		return [
+			$instance,
+			$serialize,
+			$unserialize
+		];
+	}
+
 }

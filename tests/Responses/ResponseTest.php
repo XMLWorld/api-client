@@ -34,6 +34,30 @@ class ResponseTest extends BaseSerializeXML
     }
 
 	#[Test]
+	public function couldNotFindRoomsStatus() : array
+	{
+		list($instance, , ) = $details = $this->getCouldNotFindRoomsStatus();
+
+		/** @todo do assertions */
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
+	public function priceDoesNotMatchStatus() : array
+	{
+		list($instance, , ) = $details = $this->getPriceDoesNotMatchStatus();
+
+		/** @todo do assertions */
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
+
+	#[Test]
     public function returnStatusFalse() : array
     {
 		list($instance, , ) = $details = $this->getReturnStatusFalse();
@@ -44,4 +68,16 @@ class ResponseTest extends BaseSerializeXML
 
 		return $details;
     }
+
+	#[Test]
+	public function noResponseFromSupplier() : array
+	{
+		list($instance, , ) = $details = $this->getNoResponseFromSupplier();
+
+		/** @todo do assertions */
+
+		$this->doTest(...$details);
+
+		return $details;
+	}
 }

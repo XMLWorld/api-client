@@ -13,7 +13,7 @@ trait BookDetailsTrait
 
     protected function getOneRoomBookingDetails()
     {
-		list($leadGuestInstance, $leadGuestSerialize, $leadGuestUnserialize) = $this->getLeadGuest();
+		list($leadGuestInstance, $leadGuestSerialize, $leadGuestUnserialize) = $this->getSimpleLeadGuest();
 		list($instance, $serialize, $unserialize) = $this->getRoomBookingTwoAdults();
 
         $instance = new BookDetails(
@@ -60,7 +60,7 @@ XML;
 
     protected function getTwoRoomBookingDetails()
     {
-		list($leadGuestInstance, $leadGuestSerialize, $leadGuestUnserialize) = $this->getLeadGuest();
+		list($leadGuestInstance, $leadGuestSerialize, $leadGuestUnserialize) = $this->getSimpleLeadGuest();
 		list($twoRoomBookingsInstance, $twoRoomBookingsSerialize, $twoRoomBookingsUnserialize) = $this->getTwoRoomBookings($this->getRoomBookingTwoAdults(), $this->getRoomBookingOneAdultOnly());
 
         $instance = new BookDetails(
