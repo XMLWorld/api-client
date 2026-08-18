@@ -34,10 +34,9 @@ XML;
 		$unserialize = <<<'XML'
 <RoomBooking>
 	<RoomID>155558</RoomID>
-	<MealBasisID>1</MealBasisID>
-	<Adults>1</Adults>
+	<MealBasisID>1</MealBasisID>	<Adults>1</Adults>
 	
-	<Infants>0</Infants> <Children>0</Children>
+	<Children>0</Children><Infants>0</Infants>
 	<Guests/>
 </RoomBooking>
 XML;
@@ -78,8 +77,7 @@ XML;
 	<RoomID>155558</RoomID>
 	<MealBasisID>1</MealBasisID>
 	<Adults>2</Adults>
-	<Children>0</Children>
-	<Infants>0</Infants>
+	<Children>0</Children><Infants>0</Infants>
 	$oneGuestsUnserialize
 </RoomBooking>
 XML;
@@ -120,8 +118,7 @@ XML;
 	<RoomID>155448</RoomID>
 	<MealBasisID>1</MealBasisID>
 	<Adults>1</Adults>
-	<Children>1</Children>
-	<Infants>0</Infants>
+	<Children>1</Children><Infants>0</Infants>
 	$unserialize
 </RoomBooking>
 XML;
