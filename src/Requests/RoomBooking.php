@@ -11,6 +11,7 @@ class RoomBooking extends AbstractRequest
 		public int $mealBasisID,
 		public int $adults,
 		public int $children,
+		public int $infants,
 		public ?Guests $guests = null
 	){
 		if(is_null($guests)){

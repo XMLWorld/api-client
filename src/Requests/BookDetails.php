@@ -10,9 +10,9 @@ class BookDetails extends AbstractRequest
 		public string $arrivalDate,
 		public int $duration,
 		public string $tradeReference,
-		public ?float $totalPrice = null,
+		public ?float $totalPrice,
 		public LeadGuest $leadGuest,
-        public ?string $request = null,     //Comment
+        public ?string $request,     //Comment
 		public RoomBookings $roomBookings,
 	){}
 }

@@ -16,6 +16,7 @@ trait RoomBookingsTrait
             155558,
             1,
             1,
+            0,
             0
         );              //the adult is the Leadguest so no adults here
 
@@ -25,6 +26,7 @@ trait RoomBookingsTrait
 	<MealBasisID>1</MealBasisID>
 	<Adults>1</Adults>
 	<Children>0</Children>
+	<Infants>0</Infants>
 	<Guests/>
 </RoomBooking>
 XML;
@@ -34,7 +36,7 @@ XML;
 	<RoomID>155558</RoomID>
 	<MealBasisID>1</MealBasisID>	<Adults>1</Adults>
 	
-	<Children>0</Children>
+	<Children>0</Children><Infants>0</Infants>
 	<Guests/>
 </RoomBooking>
 XML;
@@ -55,6 +57,7 @@ XML;
             1,
             2,
             0,
+            0,
 			$oneGuestsInstance
         );
 
@@ -64,6 +67,7 @@ XML;
 	<MealBasisID>1</MealBasisID>
 	<Adults>2</Adults>
 	<Children>0</Children>
+	<Infants>0</Infants>
 	$oneGuestsSerialize
 </RoomBooking>
 XML;
@@ -73,7 +77,7 @@ XML;
 	<RoomID>155558</RoomID>
 	<MealBasisID>1</MealBasisID>
 	<Adults>2</Adults>
-	<Children>0</Children>
+	<Children>0</Children><Infants>0</Infants>
 	$oneGuestsUnserialize
 </RoomBooking>
 XML;
@@ -94,6 +98,7 @@ XML;
             1,
             1,
             1,
+            0,
 			$instance
         );
 
@@ -103,6 +108,7 @@ XML;
 	<MealBasisID>1</MealBasisID>
 	<Adults>1</Adults>
 	<Children>1</Children>
+	<Infants>0</Infants>
 	$serialize
 </RoomBooking>
 XML;
@@ -112,7 +118,7 @@ XML;
 	<RoomID>155448</RoomID>
 	<MealBasisID>1</MealBasisID>
 	<Adults>1</Adults>
-	<Children>1</Children>
+	<Children>1</Children><Infants>0</Infants>
 	$unserialize
 </RoomBooking>
 XML;

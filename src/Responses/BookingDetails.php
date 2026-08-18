@@ -11,7 +11,7 @@ class BookingDetails extends AbstractResponse
 		public string $bookingReference,
 		public ?string $supplierReference, //This is optional
 		public string $status,
-		public ?string $cancellationReason = null,
+		public ?string $cancellationReason,
 		public string $currency,
 		public ?float $amount = null,
 		public ?string $arrivalDate = null,

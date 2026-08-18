@@ -8,8 +8,8 @@ class Guest extends AbstractCommon
 		public string $type,
 		public string $firstName,
 		public string $lastName,
-		public ?string $title = null,
-		public ?int $age = null,
-		public ?string $nationality = null
+		public ?string $title,
+		public ?int $age,
+		public ?string $nationality
 	){}
 }
