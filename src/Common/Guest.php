@@ -10,6 +10,6 @@ class Guest extends AbstractCommon
 		public string $lastName,
 		public ?string $title,
 		public ?int $age,
-		public ?string $nationality
+		public ?string $nationality = null
 	){}
 }
