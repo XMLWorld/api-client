@@ -34,4 +34,17 @@ class SupplierTest extends BaseSerializeXML
 
 		return $details;
 	}
+
+    #[Test]
+    public function noNameSupplier() : array
+    {
+        list($instance, , ) = $details = $this->getNoNameSupplier();
+
+        $this->assertSame(11, $instance->supplierID);
+        $this->assertNull($instance->supplierName);
+
+        $this->doTest(...$details);
+
+        return $details;
+    }
 }

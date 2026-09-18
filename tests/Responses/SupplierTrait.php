@@ -59,4 +59,29 @@ XML;
 			$unserialize
 		];
 	}
+
+    protected function getNoNameSupplier() : array
+    {
+        $instance = new Supplier(
+            11
+        );
+
+        $serialize = <<<'XML'
+<Supplier>
+	<SupplierID>11</SupplierID>
+</Supplier>
+XML;
+
+        $unserialize = <<<'XML'
+<Supplier>
+	<SupplierID>11</SupplierID>
+	<SupplierName/>
+</Supplier>
+XML;
+        return [
+            $instance,
+            $serialize,
+            $unserialize
+        ];
+    }
 }
